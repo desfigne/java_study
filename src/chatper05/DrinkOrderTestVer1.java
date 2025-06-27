@@ -59,7 +59,7 @@ public class DrinkOrderTestVer1 {
 			
 			if(scan.hasNextInt()) {
 				payPrice += scan.nextInt();
-				System.out.println("총 입력 금액 > " + payLeft);
+				System.out.println("총 입력 금액 > " + payPrice);
 				
 				if(payPrice >= menuPrice) {
 					payLeft = payPrice - menuPrice;
