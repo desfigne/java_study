@@ -18,6 +18,8 @@ public class LunchOrderTestVerRenew {
 		int menuNo = -1; // 메뉴 번호 디폴트 선언
 		String menuName = ""; // 메뉴 이름 선언
 		int menuPrice = 0;// 메뉴 금액 선언
+		int payCash = 0;  // 지불 금액 선언
+		int leftCash = 0; // 잔액 선언
 		
 		// 1. 메뉴 선택
 		System.out.println("원하시는 메뉴의 번호를 입력해주세요 > "); // 메뉴 입력 안내
@@ -42,8 +44,8 @@ public class LunchOrderTestVerRenew {
 		System.out.println("선택하신 메뉴는 " + menuName + "이며 결제가 필요한 금액은 " + menuPrice + "원입니다."); // 선택된 메뉴 안내
 		
 		// 2. 주문 메뉴 결제
-		int payCash = 0;  // 지불 금액 선언
-		int leftCash = 0; // 잔액 선언
+//		int charge = 0; 최상위로 이동
+//		int change = 0; 최상위로 이동
 		
 		System.out.println("지불할 금액을 입력해주세요. > "); // 결제 금액 입력 안내
 		
@@ -61,7 +63,7 @@ public class LunchOrderTestVerRenew {
 		}
 		
 		// 3. 주문 내역 출력 : 주문한 메뉴는 (햄버거), 결제금액(), 잔돈() 입니다.
-		System.out.println("주문하신 내역 : " + menuName + " / 지불 금액 " + payCash + "원, 주문 금액 " + menuPrice + "원, 결제 후 잔액은 " + leftCash + "입니다."); // 지불 금액 - 메뉴 가격 = 잔액 계산 후 화면 표시
+		System.out.println("주문하신 내역 : " + menuName + " / 지불 금액 " + payCash + "원, 주문 금액 " + menuPrice + "원, 결제 후 잔액은 " + leftCash + "원입니다."); // 지불 금액 - 메뉴 가격 = 잔액 계산 후 화면 표시
 		
 	}
 }

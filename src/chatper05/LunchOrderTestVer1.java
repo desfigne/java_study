@@ -18,6 +18,8 @@ public class LunchOrderTestVer1 {
 		int menuNo = -1;
 		String menuName = "";
 		int menuPrice = 0;
+		int charge = 0;
+		int change = 0;
 		
 		// 1. 메뉴 선택
 		System.out.println("메뉴를 선택(숫자)해주세요. > ");
@@ -61,8 +63,8 @@ public class LunchOrderTestVer1 {
 		System.out.println("주문하신 메뉴는 " + menuName + ", 가격은 " + menuPrice + "원입니다.");
 		
 		// 2. 주문 메뉴 결제
-		int charge = 0;
-		int change = 0;
+//		int charge = 0; 최상위로 이동
+//		int change = 0; 최상위로 이동
 		
 		System.out.println("결제할 요금을 입력(숫자)해주세요. >");
 		
