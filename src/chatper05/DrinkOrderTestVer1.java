@@ -72,8 +72,8 @@ public class DrinkOrderTestVer1 {
 				System.out.println("입력 금액이 올바르지 않습니다, 다시 시도해주세요.");
 				scan.next();
 			}
-			System.out.println("-- 결제 종료, 내역 시작 --");
 		}
+		System.out.println("-- 결제 종료, 내역 시작 --");
 		
 		// Step 4 : 주문 완료
 		System.out.println("이용해주셔서 감사합니다.");
