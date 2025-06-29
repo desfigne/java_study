@@ -1,4 +1,4 @@
-package chapter03;
+package chatper05;
 
 import java.util.Scanner;
 
