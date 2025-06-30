@@ -2,9 +2,9 @@ package chapter03;
 
 import java.util.Scanner;
 
-public class ScannerTest {
+public class Scanner01 {
 	public static void main(String[] args) {
-		Scanner scan = new Scanner(System.in);
+		Scanner01 scan = new Scanner01(System.in);
 		
 		System.out.print("이름 > ");
 		String name = scan.next();

@@ -2,7 +2,7 @@ package chapter03;
 
 import java.util.Scanner;
 
-public class MenuTest {
+public class Menu {
 
 	public static void main(String[] args) {		
 		

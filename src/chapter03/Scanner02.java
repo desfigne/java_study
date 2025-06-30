@@ -2,7 +2,7 @@ package chapter03; // 이 파일이 속한 패키지를 정의함
 
 import java.util.Scanner; // 사용자 입력을 받기 위한 Scanner 클래스를 import함
 
-public class ScannerTest2 { // 클래스 선언
+public class Scanner02 { // 클래스 선언
 
 	public static void main(String[] args) { // 메인 메서드 시작 (프로그램의 진입점)
 		

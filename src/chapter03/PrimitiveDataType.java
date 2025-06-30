@@ -1,6 +1,6 @@
 package chapter03;
 
-public class PrimitiveDataTypeTest {
+public class PrimitiveDataType {
 	public static void main(String[] args) {
 		// 논리형
 		boolean run = true;

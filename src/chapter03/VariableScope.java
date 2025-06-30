@@ -4,7 +4,7 @@ package chapter03;
  * 변수의 범위 설정 : Global(전역), Local(지역, 로컬)
  */
 
-public class VariableScopeTest {
+public class VariableScope {
 	
 	// 전역 변수
 	static int gnumber = 10;

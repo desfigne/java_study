@@ -4,7 +4,7 @@ package chapter03;
  * 자동(묵시적) 형변환, 강제(명시적) 형변환
  */
 
-public class TypeCastingTest {
+public class TypeCasting {
 
 	public static void main(String[] args) {
 		// 자동(묵시적) 형변환 : 작은 데이터 타입 > 큰 데이터 타입

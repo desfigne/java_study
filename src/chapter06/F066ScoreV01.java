@@ -6,7 +6,7 @@ import java.util.Scanner;
  * 학생 한명의 국어, 영어, 수학 점수를 입력받아 출력하는 로직
  */
 
-public class F066ScoreV1 {
+public class F066ScoreV01 {
 
 	public static void main(String[] args) {
 		
