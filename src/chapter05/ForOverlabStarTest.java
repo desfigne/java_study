@@ -1,4 +1,4 @@
-package chatper05;
+package chapter05;
 
 /*
  [시작]

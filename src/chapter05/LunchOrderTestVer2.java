@@ -1,4 +1,4 @@
-package chatper05;
+package chapter05;
 
 // https://github.com/TJG404
 

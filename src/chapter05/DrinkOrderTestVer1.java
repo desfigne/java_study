@@ -1,4 +1,4 @@
-package chatper05; // 패키지명 선언
+package chapter05; // 패키지명 선언
 
 import java.util.Scanner; // Scanner 클래스 import
 
