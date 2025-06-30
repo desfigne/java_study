@@ -2,10 +2,6 @@ package chapter05;
 
 import java.util.Scanner;
 
-/*
- * 
- */
-
 public class JAVA0504For02ForOverlab {
 
 	public static void main(String[] args) {

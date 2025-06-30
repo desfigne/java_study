@@ -1,7 +1,7 @@
 package chapter04;
 
 /*
- *  사칙 연산자 : +, -, *, /, %
+ * 사칙 연산자 : +, -, *, /, %
  */
 
 public class JAVA0401Op01Arithmetic {
