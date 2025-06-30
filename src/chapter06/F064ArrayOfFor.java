@@ -4,7 +4,7 @@ package chapter06;
  * 향상된 for - 배열이나 컬렉션(List) 객체에 사용됨
  */
 
-public class ArrayOfForTest {
+public class F064ArrayOfFor {
 
 	public static void main(String[] args) {
 

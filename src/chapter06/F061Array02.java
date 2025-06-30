@@ -1,6 +1,6 @@
 package chapter06;
 
-public class ArrayTest02 {
+public class F061Array02 {
 
 	public static void main(String[] args) {
 		

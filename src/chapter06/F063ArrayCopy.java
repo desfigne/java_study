@@ -6,7 +6,7 @@ import java.util.Arrays;
  * 배열 복사 : for, System.arrayCopy(), Arrays.copyOf()
  */
 
-public class ArrayCopyTest {
+public class F063ArrayCopy {
 
 	public static void main(String[] args) {
 

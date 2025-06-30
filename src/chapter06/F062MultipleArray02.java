@@ -1,6 +1,6 @@
 package chapter06;
 
-public class multipleArrayTest02 {
+public class F062MultipleArray02 {
 
 	public static void main(String[] args) {
 

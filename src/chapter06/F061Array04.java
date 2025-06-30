@@ -2,7 +2,7 @@ package chapter06;
 
 import java.util.Scanner;
 
-public class ArrayTest04 {
+public class F061Array04 {
 
 	public static void main(String[] args) {
 		

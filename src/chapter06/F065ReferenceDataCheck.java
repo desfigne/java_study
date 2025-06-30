@@ -6,7 +6,7 @@ import java.util.Scanner;
  * 기본형 데이터와 참조형 데이터의 저장구조를 정리
  */
 
-public class ReferenceDataCheckTest {
+public class F065ReferenceDataCheck {
 
 	public static void main(String[] args) {
 
