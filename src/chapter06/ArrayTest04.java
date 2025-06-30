@@ -28,10 +28,10 @@ public class ArrayTest04 {
 		System.out.println(scanList[1]);
 		System.out.println(scanList[2]);
 		
-		// JDK > 런타임 영역
-		// 1. 메모리 (Stack) > scanList []라는 빈칸이 생성됨
-		// 2. 메모리 (Heap) > scanList []라는 담는 영역(1칸)에 들어갈 수 있는 내가 지정한 개수에 맞게 빈칸이 생성됨
-		// 3. 메모리 (Heap) > 힙의 지정된 개수에 맞게 scanner(system.in)라는 개체를 순서대로 넣음
+		// JDK > 런타임 영역 > 메모리
+		// 1. Stack > scanList []라는 빈칸이 생성됨
+		// 2. Heap > scanList []라는 담는 영역(1칸)에 들어갈 수 있는 내가 지정한 개수에 맞게 빈칸이 생성됨
+		// 3. Heap > 힙의 지정된 개수에 맞게 scanner(system.in)라는 개체를 순서대로 넣음
 		
 		// scanList[0] = scanList[2}; <- 힙 영역의 0번지 칸에 2번지의 내용을 넣는다.
 		// 메모리에 값이 저장될 경우 call by value *객체 생성 없이 값이 바로 변경됨
