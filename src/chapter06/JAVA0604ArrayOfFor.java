@@ -37,35 +37,38 @@ public class JAVA0604ArrayOfFor {
         }                                        
         System.out.println();                    
         // 줄바꿈: 출력 완료 후 새 줄로 이동
-
-        // --- 4. 학습용 주석 처리된 예시 비교 ---
-        /*
-         * [예시] 인덱스 대신 while문으로 순회
-         * int idx = 0;
-         * while (idx < nlist.length) {
-         *     System.out.print(nlist[idx] + "\t");
-         *     idx++;
-         * }
-         * System.out.println();
-         *
-         * -- 해설 --
-         * while문은 조건만 주고 반복동작을 제어합니다.
-         * 초기값 설정, 증감식, 조건을 직접 관리해야 하므로
-         * for문보다 코드가 다소 장황해질 수 있습니다.
-         */
-
-        /*
-         * [예시] 컬렉션(List)에서 향상된 for문 사용
-         * List<Integer> list = Arrays.asList(1,2,3,4,5);
-         * for (int num : list) {
-         *     System.out.print(num + "\t");
-         * }
-         * System.out.println();
-         *
-         * -- 해설 --
-         * 배열뿐 아니라 List, Set 같은 Iterable을 구현한 컬렉션에서도
-         * 향상된 for문을 똑같이 사용할 수 있습니다.
-         */
+	
+	    // ------------------------------------------------------------------
+	    // --- 4. 학습용 주석 처리된 예시 비교 ---
+	    // ------------------------------------------------------------------
+	
+	    /*
+	    // [예시 3] while문으로 배열 순회
+	    // int idx = 0;
+	    // while (idx < nlist.length) {
+	    //     System.out.print(nlist[idx] + "\t");
+	    //     idx++;
+	    // }
+	    // System.out.println();
+	    //
+	    // -- 해설 --
+	    // while문은 조건만 주고 반복동작을 제어합니다.
+	    // 초기값 설정, 증감식, 조건을 직접 관리해야 하므로
+	    // for문보다 코드가 다소 장황해질 수 있습니다.
+	    */
+	
+	    /*
+	    // [예시 4] 컬렉션(List)에서 향상된 for문 사용
+	    // List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+	    // for (int num : list) {
+	    //     System.out.print(num + "\t");
+	    // }
+	    // System.out.println();
+	    //
+	    // -- 해설 --
+	    // 배열뿐 아니라 List, Set 같은 Iterable을 구현한 컬렉션에서도
+	    // 향상된 for문을 동일하게 사용할 수 있습니다.
+	    */
     }                                           
 }
 //
