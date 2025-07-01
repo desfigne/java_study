@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class JAVA0306Scanner01 {
 	public static void main(String[] args) {
-		JAVA0306Scanner01 scan = new JAVA0306Scanner01(System.in);
+		Scanner scan = new Scanner(System.in);
 		
 		System.out.print("이름 > ");
 		String name = scan.next();
