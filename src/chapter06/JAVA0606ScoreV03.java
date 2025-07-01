@@ -27,13 +27,16 @@ public class JAVA0606ScoreV03 {
         boolean menuFlag = true; // 6.
         
         // 배열 선언
-        String[] nameList = null;
-        int[] korList = null;
-        int[] engList = null;
-        int[] mathList = null;
-        int[] totList = null;
-        int[] avgList = null;
-        int MAX_SIZE = 0;
+        // 16.
+        System.out.print("등록할 학생의 수를 입력해주세요. > ");
+        final int MAX_SIZE = scan.nextInt();
+        
+        String[] nameList = new String[MAX_SIZE];
+        int[] korList = new int[MAX_SIZE];
+        int[] engList = new int[MAX_SIZE];
+        int[] mathList = new int[MAX_SIZE];
+        int[] totList = new int[MAX_SIZE];
+        int[] avgList = new int[MAX_SIZE];
         
         int count = 0; // 등록된 학생수 저장
 
@@ -47,20 +50,10 @@ public class JAVA0606ScoreV03 {
     		System.out.println("9. 프로그램 종료");
     		System.out.println("-----------------------------------------------");
         	
-            System.out.print("메뉴선택 (숫자) > "); // 3.
+//            System.out.print("메뉴선택 (숫자) > "); // 3.
             menu = scan.nextInt();
 
             if (menu == 1) { // 10.
-				// 16.
-                System.out.print("등록할 학생의 수를 입력해주세요. > ");
-                MAX_SIZE = scan.nextInt();
-                
-                nameList = new String[MAX_SIZE];
-                korList = new int[MAX_SIZE];
-                engList = new int[MAX_SIZE];
-                mathList = new int[MAX_SIZE];
-                totList = new int[MAX_SIZE];
-                avgList = new int[MAX_SIZE];
 
                 // 학생 정보 입력
                 for (int i = count; i < MAX_SIZE; i++) {
