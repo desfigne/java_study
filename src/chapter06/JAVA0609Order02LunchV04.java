@@ -557,7 +557,7 @@ public class JAVA0609Order02LunchV04 {
 				paymentCount++;
 				break;
 			case 4 : // 결제 조회
-				if(orderCount != 0) {
+				if(paymentCount != 0) {
 					System.out.println("--------------------------------------------");
 					System.out.println("\t이전 음식 결제 내역");
 					System.out.println("--------------------------------------------");
