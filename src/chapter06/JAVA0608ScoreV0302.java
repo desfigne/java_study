@@ -16,7 +16,7 @@ import java.util.Scanner;
 *   - 빈 공간에 뒤의 값들을 앞으로 옮겨야 하는데, 옮기려면 인덱스 i 값을 -1 주고 카운트 count -1 값을 줘야 함
 */
 
-public class JAVA0606ScoreV03 {
+public class JAVA0608ScoreV0302 {
 
 	public static void main(String[] args) {
 
@@ -153,12 +153,7 @@ public class JAVA0606ScoreV03 {
 			                // 3) 검색어는 있으나 일치하는 데이터가 없을 때
 			                System.out.println("=> 검색한 데이터가 없습니다.");
 			                // 원하는 동작에 따라 반복을 종료하거나 계속 둘 수 있습니다.
-			                
-							System.out.println("--------------------------------------------------------");
-			                System.out.println("계속 검색 하시겠습니까? (계속: 아무키나 누르세요, 종료: n) >");
-			                if (scan.next().equals("n")) {
-			                	searchFlag = false;
-			                }
+			                searchFlag = false;
 			            }
 			        }
 			    }
@@ -180,12 +175,6 @@ public class JAVA0606ScoreV03 {
 						
 						if(modiIdx == -1) { // 데이터가 없을 경우
 							System.out.println("수정할 데이터가 존재하지 않습니다. 다시 입력해주세요.");
-			                
-							System.out.println("--------------------------------------------------------");
-			                System.out.println("계속 수정 하시겠습니까? (계속: 아무키나 누르세요, 종료: n) >");
-			                if (scan.next().equals("n")) {
-			                	modiFlag = false;
-			                }
 						} else { // 데이터가 있을 경우
 							System.out.print("국어 > ");
 							korList[modiIdx] = scan.nextInt();
@@ -229,21 +218,6 @@ public class JAVA0606ScoreV03 {
 				if(count != 0) {
 					boolean deleteFlag = true;
 					while (deleteFlag) {
-						// 삭제 전 현재 학생 목록 출력
-						System.out.println("-----------------------------------------------");
-						System.out.println("\t현재 학생 목록");
-						System.out.println("-----------------------------------------------");
-						System.out.println("학생명\t국어\t영어\t수학\t총합\t평균");
-						System.out.println("-----------------------------------------------");
-						for (int j = 0; j < count; j++) {
-							System.out.print(nameList[j]  + "\t");
-							System.out.print(korList[j]   + "\t");
-							System.out.print(engList[j]   + "\t");
-							System.out.print(mathList[j]  + "\t");
-							System.out.print(totList[j]   + "\t");
-							System.out.print(avgList[j]   + "\n");
-						}
-						System.out.println("-----------------------------------------------");
 						System.out.println("[삭제] 학생명 검색 > ");
 						String deleteName = scan.next();
 						int deleteIdx = -1;
@@ -270,14 +244,12 @@ public class JAVA0606ScoreV03 {
 			                System.out.println("-----------------------------------------------");
 			                System.out.println("학생명\t국어\t영어\t수학\t총합\t평균");
 			                System.out.println("-----------------------------------------------");
-			                for (int i = 0; i < count; i++) {
-			                	System.out.print(nameList[i] + "\t");
-			                	System.out.print(korList[i] + "\t");
-			                	System.out.print(engList[i] + "\t");
-			                	System.out.print(mathList[i] + "\t");
-			                	System.out.print(totList[i] + "\t");
-			                	System.out.print(avgList[i] + "\n");
-			                }
+			                System.out.print(nameList[deleteIdx] + "\t");
+			                System.out.print(korList[deleteIdx] + "\t");
+			                System.out.print(engList[deleteIdx] + "\t");
+			                System.out.print(mathList[deleteIdx] + "\t");
+			                System.out.print(totList[deleteIdx] + "\t");
+			                System.out.print(avgList[deleteIdx] + "\n");
 			                
 							System.out.println("--------------------------------------------------------");
 			                System.out.println("계속 삭제 하시겠습니까? (계속: 아무키나 누르세요, 종료: n) >");
@@ -286,12 +258,6 @@ public class JAVA0606ScoreV03 {
 			                }
 						} else {
 							System.out.println("삭제할 데이터가 존재하지 않습니다. 다시 입력해주세요.");
-			                
-							System.out.println("--------------------------------------------------------");
-			                System.out.println("계속 삭제 하시겠습니까? (계속: 아무키나 누르세요, 종료: n) >");
-			                if (scan.next().equals("n")) {
-			                	deleteFlag = false;
-			                }
 						}
 					}
 				}
