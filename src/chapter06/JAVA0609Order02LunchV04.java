@@ -456,12 +456,12 @@ public class JAVA0609Order02LunchV04 {
 							if (1 <= menuNo && menuNo <= 4) {
 								orderMenuList[orderCount] = menuList[menuNo-1];
 								orderPriceList[orderCount] = priceList[menuNo-1];
-								
+
+								orderCount++;
 								System.out.println("=> " + menuList[menuNo-1] + "주문 완료");
 							} else {
 								System.out.println("=> 메뉴가 준비중입니다. 표시된 메뉴의 번호를 입력해주세요.");
 							}
-							orderCount++;
 							if(orderCount == MAX_SIZE) {
 								System.out.println("=> 주문은 최대 " + MAX_SIZE + "개까지 가능합니다."); // >
 								orderFlag = false;
@@ -587,14 +587,5 @@ public class JAVA0609Order02LunchV04 {
 		
 	} // main
 }
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
+
