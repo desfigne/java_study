@@ -8,8 +8,6 @@ public class JAVA0707ScoreMgmSystem03Main {
 		
 		tjsms.showMenu();
 		
-		System.out.println("-- 메인 종료 --");
-		
 	}
 
 }
