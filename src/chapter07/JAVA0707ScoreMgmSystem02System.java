@@ -38,7 +38,8 @@ public class JAVA0707ScoreMgmSystem02System {
 		
         System.out.print("메뉴선택 (숫자) > ");
 //        int menu = scan.nextInt();
-//        choiceMenu(menu);
+//        menuCheck(menu);
+        
         menuCheck(scan.nextInt());
 	}
 	/*
@@ -46,7 +47,7 @@ public class JAVA0707ScoreMgmSystem02System {
 	 */
 	
 	public void menuCheck(int menu) {
-        switch (menu) {
+        switch (menu) { // 컨트롤 누르고 마우스 올리면 해당 메소드로 이동됨
 	        case 1: insert(); showMenu(); break; // 케이스 순서와 퍼블릭 객체들의 순서와는 상관없음
 	        case 2: showList(); showMenu(); break;
 	        case 3: search(); showMenu(); break;
@@ -179,25 +180,25 @@ public class JAVA0707ScoreMgmSystem02System {
 				
 				System.out.print("수학> ");
 				sList[modiIdx].math = scan.nextInt();
-								
+				
 				System.out.println("=> 수정 완료!!");
 				System.out.println("-----------------------------------------");
 				System.out.println("\t\t 수정 결과");
 				System.out.println("-----------------------------------------");
-				System.out.println("학생명\t국어\t영어\t수학\t총점\t평균");		
+				System.out.println("학생명\t국어\t영어\t수학\t총점\t평균");
 				System.out.println("-----------------------------------------");
-				System.out.print(sList[modiIdx].name +"\t");							
-				System.out.print(sList[modiIdx].kor +"\t");							
-				System.out.print(sList[modiIdx].eng +"\t");							
-				System.out.print(sList[modiIdx].math +"\t");							
-				System.out.print(sList[modiIdx].getTot() +"\t");							
-				System.out.print(sList[modiIdx].getAvg() +"\n");		
+				System.out.print(sList[modiIdx].name +"\t");
+				System.out.print(sList[modiIdx].kor +"\t");
+				System.out.print(sList[modiIdx].eng +"\t");
+				System.out.print(sList[modiIdx].math +"\t");
+				System.out.print(sList[modiIdx].getTot() +"\t");
+				System.out.print(sList[modiIdx].getAvg() +"\n");
 				System.out.println("-----------------------------------------");
 				
 				System.out.print("계속 수정?(계속:아무키, 종료:n)> ");
 				if(scan.next().equals("n")) showMenu();  					
 				else update();
-			}				
+			}
 				
 		} else {
 			System.out.println("=> 등록된 데이터가 없습니다. 등록을 진행해 주세요.");
