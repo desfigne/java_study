@@ -21,7 +21,7 @@ public class V01User {
 		if(coin == 100 || coin == 500) {
 			result = true;
 		}
-		return false;
+		return result;
 	}
 	
 	// Method
