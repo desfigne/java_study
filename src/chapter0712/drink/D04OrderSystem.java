@@ -103,7 +103,7 @@ public class D04OrderSystem {
 	
 	public void showMenu() { // 03.
 		System.out.println("===============================");
-		System.out.println("음료 " + title + " 메뉴판");
+		System.out.println("☕🍵🥤 " + title + " 메뉴판");
 		System.out.println("===============================");
 		for(D01Menu menu : menuList) {
 			System.out.print(menu.no + "\t");

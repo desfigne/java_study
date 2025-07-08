@@ -1,0 +1,19 @@
+package chapter0713.vending_machine_v01;
+
+public class V03Menu {
+	
+	int no;
+	int price;
+	String name;
+	
+	public V03Menu() {}
+	public V03Menu(int no, String name, int price) {
+		this.no = no;
+		this.name = name;
+		this.price = price;
+	}
+	
+	public int getNo() { return no; }
+	public String getName() { return name; }
+	public int getPrice() { return price; }
+}
