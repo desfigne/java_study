@@ -28,7 +28,7 @@ public class JAVA0701Animal02Run {
 		System.out.println("tiger.name = " + tiger.name);
 		System.out.println("tiger.age = " + tiger.age);
 
-		// 메소든는 항상 객체 생성 뒤에 선언
+		// 메소드는 항상 객체 생성 뒤에 선언
 		lion.sleep();
 		tiger.sleep();
 		// 현재 누가 자는지 표시 안됨, 0701에서 지정 필요
