@@ -5,11 +5,11 @@ package chapter07;
  * 재사용성을 높이도록 빼는걸 추천
  */
 
-public class JAVA0707ScoreMgmSystem03Main {
+public class JAVA0706ScoreMgmSystem03Main {
 
 	public static void main(String[] args) {
 		
-		JAVA0707ScoreMgmSystem02System tjsms = new JAVA0707ScoreMgmSystem02System();
+		JAVA0706ScoreMgmSystem02System tjsms = new JAVA0706ScoreMgmSystem02System();
 		
 		tjsms.showMenu();
 		

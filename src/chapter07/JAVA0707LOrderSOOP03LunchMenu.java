@@ -1,6 +1,6 @@
 package chapter07;
 
-public class JAVA0708LOrderSOOP03LunchMenu {
+public class JAVA0707LOrderSOOP03LunchMenu {
 	
 	// Field
 	int no;

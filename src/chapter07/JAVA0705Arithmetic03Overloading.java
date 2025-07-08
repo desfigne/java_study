@@ -1,6 +1,6 @@
 package chapter07;
 
-public class JAVA0706Arithmetic03Overloading {
+public class JAVA0705Arithmetic03Overloading {
 	
 	// Field
 	

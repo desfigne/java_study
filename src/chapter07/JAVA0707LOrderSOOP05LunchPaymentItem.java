@@ -1,6 +1,6 @@
 package chapter07;
 
-public class JAVA0708LOrderSOOP05LunchPaymentItem {
+public class JAVA0707LOrderSOOP05LunchPaymentItem {
 	
 	// Field
 	String name;      // 첫번째 주문메뉴명 + 등..

@@ -7,7 +7,7 @@ import java.util.Scanner;
  * 한 명 입력 후 계속 입력 여부를 메시지로 출력 후 입력 받는다.
  */
 
-public class JAVA0707ScoreMgmSystem02System {
+public class JAVA0706ScoreMgmSystem02System {
 
 	// Field : 맴버변수, 전역변수
 	String admin;

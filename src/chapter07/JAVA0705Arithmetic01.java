@@ -5,7 +5,7 @@ package chapter07;
  * + sub 메소드 기능은 첫번째 숫자가 큰 경우에만 빼기, 작은 경우 또는 같은 경우에는 0일 리턴
  */
 
-public class JAVA0706Arithmetic01 {
+public class JAVA0705Arithmetic01 {
 	// Field
 	
 	

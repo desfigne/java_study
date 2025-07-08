@@ -1,6 +1,6 @@
 package chapter07;
 
-public class JAVA0705MethodCase {
+public class JAVA0704MethodCase {
 	// Field
 	
 	
@@ -38,7 +38,7 @@ public class JAVA0705MethodCase {
 	
 	// Main Method
 	public static void main(String[] args) {
-		JAVA0705MethodCase mc = new JAVA0705MethodCase();
+		JAVA0704MethodCase mc = new JAVA0704MethodCase();
 		mc.method1();
 		int sum = mc.method2();
 		mc.method2(); // 단순이 30이라는 버퍼값으로 유지 후 종료됨

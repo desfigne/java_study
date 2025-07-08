@@ -1,6 +1,6 @@
 package chapter07;
 
-public class JAVA0707ScoreMgmSystem01Student {
+public class JAVA0706ScoreMgmSystem01Student {
 
 	// Field : 맴버변수, 전역변수
 	String name;
@@ -10,7 +10,7 @@ public class JAVA0707ScoreMgmSystem01Student {
 	// 여러 값을 받을 수 있도록 일반화 필요;
 	
 	// Constructor
-	public JAVA0707ScoreMgmSystem01Student() {}
+	public JAVA0706ScoreMgmSystem01Student() {}
 	
 	// Method
 	public int getTot() {

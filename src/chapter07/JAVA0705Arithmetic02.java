@@ -1,11 +1,11 @@
 package chapter07;
 
-public class JAVA0706Arithmetic02 {
+public class JAVA0705Arithmetic02 {
 
 	public static void main(String[] args) {
 
-		JAVA0706Arithmetic01 arithmetic = new JAVA0706Arithmetic01();
-		JAVA0706Arithmetic03Overloading arithmetic_ol = new JAVA0706Arithmetic03Overloading();
+		JAVA0705Arithmetic01 arithmetic = new JAVA0705Arithmetic01();
+		JAVA0705Arithmetic03Overloading arithmetic_ol = new JAVA0705Arithmetic03Overloading();
 
 		System.out.println("arithmetic_ol.add = " + arithmetic_ol.add(10, 20));
 		System.out.println("arithmetic_ol.add = " + arithmetic_ol.add(3.14, 10));
