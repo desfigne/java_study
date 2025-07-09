@@ -1,4 +1,4 @@
-package chapter0711.lunch;
+package com.chapter07.JAVA0711.lunch;
 
 public class L05LunchPaymentItem {
 	
