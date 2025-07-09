@@ -1,5 +1,7 @@
 package chapter07.JAVA0714vending_machine_v02;
 
+import chapter07.JAVA0713commons.Menu;
+
 public class VendingMachine {
 	
     // Field
@@ -50,6 +52,7 @@ public class VendingMachine {
 
 	// 메뉴 리스트 생성
 	public void createMenuList() {
+		
 	    // 1. 메뉴 정보를 저장할 배열 menuList를 nameList의 길이만큼 생성
 	    menuList = new Menu[nameList.length];
 
@@ -75,6 +78,7 @@ public class VendingMachine {
 
 	// 주문 가능한 메뉴 리스트 생성
 	public void createOrderMenuList(int totalCoin) {
+		
 	    // 1. 주문 가능한 메뉴를 저장할 배열 orderMenuList를 menuList의 길이만큼 생성
 		orderMenuList = new Menu[menuList.length];
 		
@@ -115,26 +119,31 @@ public class VendingMachine {
 
 	// 주문 가능한 메뉴 출력
 	public void showMenuList(String msg) {
+		
 	    // 1. 자판기 이름, msg 등 안내 메시지 출력
         System.out.println("==============================================");
 		System.out.println("☕🍋🥛" + title + "Coffee Vending Machine");
         System.out.println("==============================================");
 		System.out.println("\t 주문이 가능한 메뉴 리스트입니다.");
         System.out.println("==============================================");
+        
 	    // 2. 주문 가능한 메뉴(orderMenuList) 개수만큼 반복
         for(int i = 0; i < orderMenuCount; i++) {
         	Menu menu = orderMenuList[i];
+        	
     		// 3. 각 메뉴의 번호, 이름, 가격을 예쁘게 출력
 			System.out.print(menu.getNo() + "\t");
 			System.out.print(menu.getName() + "\t");
 			System.out.print(String.format("%d", menu.getPrice()) + "원\n");
         }
+        
 	    // 4. 구분선 출력
         System.out.println("==============================================");
 	}
 
 	// 동전 입력 및 체크
 	public void checkInsertCoin() {
+		
 	    // 1. 동전 투입 안내 메시지 출력
 		System.out.print("=> 투입할 동전을 입력해주세요.");
 
@@ -160,6 +169,7 @@ public class VendingMachine {
 				checkInsertCoin();
 				
 			} else {
+				
 	            // 9. 메뉴 선택 또는 동전 추가 입력 여부 안내
 				System.out.print("=> 메뉴 선택 (n) / 동전 추가 투입 (아무키)");
 
@@ -176,12 +186,14 @@ public class VendingMachine {
 					selectMenu();
 					
 				} else {
+					
 					// 14. "n"이 아니면 다시 동전 입력받기
 					checkInsertCoin();
 				}
 			}
 			
 		} else {
+			
 	        // 15. 사용 불가 동전 안내 메시지 출력
 			System.out.println("100원 또는 500원만 투입이 가능합니다.");
 
@@ -194,69 +206,96 @@ public class VendingMachine {
 	// 메뉴 선택
 	public void selectMenu() {
 	    // 1. 메뉴 선택 안내 메시지 출력
-
+		System.out.println("=> 메뉴를 선택해 주세요.");
+		
 	    // 2. 취소 방법 안내 메시지 출력 (EXIT 번호 안내)
-
+		System.out.println("=> 취소는 [" + VendingMachine.EXIT + "] 번을 입력해주세요.");
+		
 	    // 3. 사용자로부터 메뉴 번호 입력받기
-
+		int menuNo = user.selectMenu();
+		
 	    // 4. 입력한 값이 EXIT(취소)가 아닌지 확인
-
+		if(menuNo != VendingMachine.EXIT) {
+			
 	        // 5. 입력 번호가 주문 가능한 메뉴인지 확인
-		
+			if(menuCheck(menuNo)) {
+				
 	            // 6. 주문 가능한 메뉴라면 주문 처리 단계로 이동
-		
-	            // 7. 주문 불가(없는 번호)라면 안내 없이 다시 메뉴 선택 단계로 이동
-		
+				placeOrder(menuNo);
+				
+			// 7. 주문 불가(없는 번호)라면 안내 없이 다시 메뉴 선택 단계로 이동
+			} else selectMenu();
+			
+		} else {
+			
 	        // 8. EXIT(취소) 입력 시 동전 반환 안내 메시지 출력
-
+			System.out.println("************************************************");
+			System.out.println("=> 동전을 반환하고, 프로그램을 종료합니다.");
+			
 	        // 9. 반환 동전 금액 안내 메시지 출력
-
+			System.out.println("=> 반환 동전 : " + totalCoin);
+			
 	        // 10. 프로그램 종료
-		
+			System.exit(0);
+		}
 	}
 
 	// 주문(선택한 메뉴 저장)
 	public void placeOrder(int menuNo) {
+		
 	    // 1. 주문 가능한 메뉴 리스트(orderMenuList)에서 선택한 메뉴 번호(menuNo)와 같은 메뉴를 찾기 위해 반복
-
+		for(Menu menu : orderMenuList) {
+			
 	        // 2. 배열에 저장된 메뉴가 null이 아닌지 확인 (null이면 더 이상 유효한 메뉴가 없음)
-
-	            // 3. 메뉴 번호가 사용자가 선택한 번호와 같은지 비교
+			if(menu != null) {
+				
+	            // 3. 메뉴 번호가 사용자가 선택한 번호와 같은지 비교 + 4. 같으면 orderMenu에 해당 메뉴 객체를 저장
+				if(menu.getNo() == menuNo) orderMenu = menu;
 		
-	                // 4. 같으면 orderMenu에 해당 메뉴 객체를 저장
-		
-	            // 5. null을 만나면 반복문 종료(더 이상 유효한 메뉴 없음)
+			// 5. null을 만나면 반복문 종료(더 이상 유효한 메뉴 없음)
+			} else break;
 
 	    // 6. 주문 완료 안내 메시지 출력
-
-	    // 7. 결제 처리 단계로 이동
+		System.out.println("=> 주문 완료");
 		
+	    // 7. 결제 처리 단계로 이동
+		processPayment();
+		}
 	}
 
 
 	// 결제 진행
 	public void processPayment() {
-	    // 1. 주문한 메뉴(orderMenu)가 null이 아닌지 확인
-
-	        // 2. 주문한 메뉴의 가격을 가져옴
-
-	        // 3. 주문한 메뉴 가격이 총 투입 금액 이하인지 확인
-
-	            // 4. 결제 진행: 잔돈(change) 계산
-
-	        // 5. 결제 완료 안내 메시지 출력
-
-	        // 6. (주석) 사용한 객체 초기화: orderMenuList, orderMenu, orderMenuCount 등
-
-	    // 7. 결제 후 최종 처리(잔돈, 추가 주문 등) 단계로 이동
-
-	    // 8. 필드값 등 객체 초기화
 		
+	    // 1. 주문한 메뉴(orderMenu)가 null이 아닌지 확인
+		if(orderMenu != null) {
+			
+	        // 2. 주문한 메뉴의 가격을 가져옴
+			int price = orderMenu.getPrice();
+			
+	        // 3. 주문한 메뉴 가격이 총 투입 금액 이하인지 확인
+			if(price <= totalCoin) {
+				
+	            // 4. 결제 진행: 잔돈(change) 계산
+				change = totalCoin - price;
+				
+				// 5. 결제 완료 안내 메시지 출력
+				System.out.println("=> 결제 완료");
+				System.out.println("=> 음료 제조중 ...");
+				
+				// 6. (주석) 사용한 객체 초기화: orderMenuList, orderMenu, orderMenuCount 등
+				reset();
+			}
+		}
+		
+	    // 7. 결제 후 최종 처리(잔돈, 추가 주문 등) 단계로 이동
+		finalCheck();
 	}
 
 
 	// 종료 후 객체 초기화
 	public void reset() {
+		
 	    // 1. 총 투입 금액을 0으로 초기화
 		totalCoin = 0;
 
@@ -274,42 +313,55 @@ public class VendingMachine {
 	// 종료(파이널 체크)
 	public void finalCheck() {
 	    // 1. 메뉴 리스트에서 가장 저렴한 메뉴의 가격을 구함 (예: 마지막 메뉴의 가격 사용)
-
-	    // 2. 잔돈이 최소 메뉴 가격 이상인지 확인
+		int price = menuList[menuList.length-1].getPrice();
 		
+	    // 2. 잔돈이 최소 메뉴 가격 이상인지 확인
+		if(change >= price) {
+			
 	        // 3. 잔돈을 총 투입 금액으로 다시 설정
+			totalCoin = change;
 
 	        // 4. 잔돈 안내 메시지 출력
+			System.out.println("=> 잔돈 : " + change);
 
 	        // 5. 주문 가능한 메뉴 리스트를 다시 생성
+			createOrderMenuList(totalCoin);
 
 	        // 6. 주문 가능한 메뉴 리스트 출력
+			showMenuList("주문 가능 메뉴 리스트");
 
 	        // 7. 추가 주문을 위해 메뉴 선택 단계로 이동
+			selectMenu();
 		
+		} else {
+			
 	        // 8. 결제 내역(메뉴명, 가격, 잔돈) 출력
+			System.out.println("=> 잔돈 : " + change);
 
 	        // 9. 이용해주셔서 감사합니다 메시지 출력
-		
+			System.out.println("=> 이용해주셔서 감사합니다.");
+		}
 	}
 
 
 	// 주문 가능한 메뉴인지 체크
 	public boolean menuCheck(int menuNo) {
-		boolean result = false;
+		
 	    // 1. 결과를 저장할 변수 result를 false로 초기화 (기본값: 메뉴 없음)
+		boolean result = false;
 
 	    // 2. 주문 가능한 메뉴 리스트(orderMenuList)를 orderMenuCount만큼 반복
+		for(int i = 0; i < orderMenuCount; i++) {
 		
 	        // 3. 현재 인덱스의 메뉴 객체를 꺼냄
+			Menu menu = orderMenuList[i];
 
-	        // 4. 메뉴 번호가 입력받은 menuNo와 같은지 비교
-		
-	            // 5. 같으면 result를 true로 변경 (메뉴 있음)
+	        // 4. 메뉴 번호가 입력받은 menuNo와 같은지 비교 = 5. 같으면 result를 true로 변경 (메뉴 있음)
+			if(menu.getNo() == menuNo) result = true;
+		}
 
 	    // 6. 최종 결과 반환 (true: 있음, false: 없음)
 	    return result;
 	}
-
 
 }
