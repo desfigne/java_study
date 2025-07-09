@@ -52,7 +52,8 @@ public class V01User {
 		} else {
 			System.out.println("올바르지 않은 값, 다시 입력해주세요.");
 			scan.next();
-			insertCoin();
+            selectMenu();
+//			insertCoin(); // 복사 붙여넣기 하면서 기존 다른 메소드의 코드가 들어간 상태라 개인적으로 수정해서 윗줄로 교체함
 		}
 		
 		return menu;

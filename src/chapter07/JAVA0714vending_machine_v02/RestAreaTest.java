@@ -4,7 +4,7 @@ public class RestAreaTest {
 
 	public static void main(String[] args) {
 
-		new RestArea("더조은");
+		new RestArea("아카데미");
 
 	}
 

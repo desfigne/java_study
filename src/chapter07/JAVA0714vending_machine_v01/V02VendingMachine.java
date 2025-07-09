@@ -67,7 +67,6 @@ public class V02VendingMachine {
 	/*
 	 * 전체 메뉴 출력
 	 */
-
 	public void showMenuList() {
 		System.out.println("======================================");
 		System.out.println("☕🍵🥤 " + title + " Coffee Machine");
