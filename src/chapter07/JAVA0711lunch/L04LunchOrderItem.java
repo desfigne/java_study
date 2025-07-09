@@ -1,15 +1,15 @@
-package com.chapter07.JAVA0711.lunch;
+package chapter07.JAVA0711lunch;
 
-public class L03LunchMenu {
+public class L04LunchOrderItem {
 	
 	// Field
 	int no;
 	String name;
 	int price;
+	int qty;
 	
 	// Constructor
 	
 	// Method
-	
 
 }

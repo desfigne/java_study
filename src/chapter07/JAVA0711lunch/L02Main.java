@@ -1,4 +1,4 @@
-package com.chapter07.JAVA0711.lunch;
+package chapter07.JAVA0711lunch;
 
 public class L02Main {
 

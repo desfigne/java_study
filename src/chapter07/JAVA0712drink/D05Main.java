@@ -1,4 +1,4 @@
-package chapter0712.drink;
+package chapter07.JAVA0712drink;
 
 public class D05Main {
 	

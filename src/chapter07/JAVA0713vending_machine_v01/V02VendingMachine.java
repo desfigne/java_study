@@ -1,6 +1,6 @@
-package chapter0713.vending_machine_v01;
+package chapter07.JAVA0713vending_machine_v01;
 
-import commons.Menu;
+import chapter07.JAVA0714commons.Menu;
 
 public class V02VendingMachine {
 	

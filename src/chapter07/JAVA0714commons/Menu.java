@@ -1,4 +1,4 @@
-package commons;
+package chapter07.JAVA0714commons;
 
 public class Menu {
 	
