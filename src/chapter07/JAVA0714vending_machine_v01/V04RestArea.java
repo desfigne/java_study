@@ -1,4 +1,4 @@
-package chapter07.JAVA0713vending_machine_v01;
+package chapter07.JAVA0714vending_machine_v01;
 
 public class V04RestArea {
 	String name;

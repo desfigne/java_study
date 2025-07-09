@@ -21,8 +21,8 @@ public class JAVA0710Animal03Run03 {
 		JAVA0708Animal02 tiger2 = new JAVA0708Animal02("호돌이");
 		JAVA0708Animal02 elephant2 = new JAVA0708Animal02();
 		
-		JAVA0710Animal03 lion3 = new JAVA0710Animal03();
-		
+		JAVA0710Animal03 lion3 = new JAVA0710Animal03("심바");
+		lion3.info();
 		
 		lion.name = "심바";
 		lion.age = 5;
