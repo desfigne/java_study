@@ -6,14 +6,14 @@ public class V04RestArea {
 	V02VendingMachine machine;
 	
 	public V04RestArea() {
-		this("만남의 광장");
+		this("만남의 광장"); // 호출
 	}
 	
 	public V04RestArea(String name) {
-		this.name = name;
+		this.name = name;  // 맴버변수 초기화 작업
 		user = new V01User("정국");
 		welcome();
-		machine = new V02VendingMachine();
+		machine = new V02VendingMachine(user);
 	}
 	
 	public void welcome() {

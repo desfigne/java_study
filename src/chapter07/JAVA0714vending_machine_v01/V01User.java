@@ -16,14 +16,6 @@ public class V01User {
 		scan = new Scanner(System.in);
 	}
 	
-	public boolean coinCheck(int coin) {
-		boolean result = false;
-		if(coin == 100 || coin == 500) {
-			result = true;
-		}
-		return result;
-	}
-	
 	// Method
 	
 	/*
@@ -31,7 +23,7 @@ public class V01User {
 	 */
 	public int insertCoin() {
 		int resultCoin = 0;
-		System.out.println("[" + name + "] 동전입력 > ");
+		System.out.print("[" + name + "] 동전입력 > ");
 		if(scan.hasNextInt()) {
 			
 			// 동전 체크 : 100원, 500원만 입력 가능
@@ -52,9 +44,9 @@ public class V01User {
 	/* 
 	 * 메뉴 선택
 	 */
-	public int selectMenu() {
+	public int selectMenu() { // 호출되는 객체가 다르니 명칭은 중복되도 상관없음
 		int menu = 0;
-		System.out.println("[" + name + "] 메뉴선택 > ");
+		System.out.print("[" + name + "] 메뉴선택 > ");
 		if(scan.hasNextInt()) {
 			menu = scan.nextInt();
 		} else {
