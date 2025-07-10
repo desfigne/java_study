@@ -10,7 +10,7 @@ import java.util.Scanner;
  * - 메뉴 관리를 위해서 각 배열의 주소를 통일시킨다
  */
 
-public class JAVA0607MenuVer01 {
+public class JAVA0607MenuV01 {
 
 	public static void main(String[] args) {
 
