@@ -11,6 +11,7 @@ public class BankMan {
 	String name;
 	AccountPaperVo accountPaper;
 	AccountVo[] accountList;     // 은행 고객 리스트
+	Customer customer;
 	
 	public BankMan() {
 		this("변우석");
