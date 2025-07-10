@@ -61,5 +61,30 @@ public class BankMan {
 		}
 		return list;
 	}
+	
+	/**
+	 * 은행직원이 입출금 용지의 내용 확인
+	 */
+	public void checkPaper(AccountPaperVo accountPaper, Customer customer) {
+	    this.customer = customer;
+	    
+		System.out.println("[은행직원: " + name + "] 출금 용지 정보를 확인하는 중입니다..");
+		if(accountPaper.getName() == null) {
+			System.out.println("[은행직원: " + name + "] 이름을 입력해주세요.");
+			System.out.print("[고객: " + customer.getName() + "] 이름을 입력 > ");
+			String name = customer.getScan().next();
+			accountPaper.setName(name);
+			
+			System.out.print("[고객명 ===> " + customer.getName());
+		} else if(accountPaper.getAccountNumber() == null) {
+			System.out.println("[은행직원: " + name + "] 계좌번호를 입력해주세요.");
+		} else if(accountPaper.getPassword() == null) {
+			System.out.println("[은행직원: " + name + "] 패스워드를 입력해주세요.");
+		} else if(accountPaper.getMoney() == 0) {
+			System.out.println("[은행직원: " + name + "] 금액을 입력해주세요.");
+		} else {
+			System.out.println("[은행직원: " + name + "] 정보 확인이 완료되었습니다.");
+		}
+	}
 
 }

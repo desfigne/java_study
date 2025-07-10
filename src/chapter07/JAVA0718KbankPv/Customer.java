@@ -53,4 +53,17 @@ public class Customer {
 		System.out.println("   - 출금 금액: 1,000,000원");
 		System.out.println();
 	}
+
+    // 게터 메서드 3개
+    public String getName() {
+        return name;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public int getPassword() {
+        return password;
+    }
 }
