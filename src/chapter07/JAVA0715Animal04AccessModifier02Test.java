@@ -1,7 +1,8 @@
 package chapter07;
 
-import chapter07.JAVA0713commons.JAVA0715Animal;
 import java.util.Calendar;
+
+import chapter07.java0713commons.JAVA0715Animal;
 
 public class JAVA0715Animal04AccessModifier02Test {
 
