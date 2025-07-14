@@ -1,6 +1,6 @@
 package chapter08.java0806Interface;
 
-public class I05Inheritance {
+public class I06Inheritance {
 
 	public static void main(String[] args) {
 		
@@ -10,11 +10,11 @@ public class I05Inheritance {
 //		I03Rectangle greenR = new I03Rectangle("초록색");
 //		I04Triangle orangeT = new I04Triangle("주황색");
 		
-		I02Circle redC = new I02Circle("빨강색", 12);
-		I02Circle blueC = new I02Circle("파랑색", 11);
-		I03Rectangle yellowR = new I03Rectangle("노랑색", 10, 12);
-		I03Rectangle greenR = new I03Rectangle("초록색", 11, 13);
-		I04Triangle orangeT = new I04Triangle("주황색");
+		I03Circle redC = new I03Circle("빨강색", 12);
+		I03Circle blueC = new I03Circle("파랑색", 11);
+		I04Rectangle yellowR = new I04Rectangle("노랑색", 10, 12);
+		I04Rectangle greenR = new I04Rectangle("초록색", 11, 13);
+		I05Triangle orangeT = new I05Triangle("주황색");
 		
 		redC.draw();
 		System.out.println("redC.getArea : " + redC.getArea());

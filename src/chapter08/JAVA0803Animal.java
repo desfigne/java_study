@@ -45,7 +45,8 @@ public class JAVA0803Animal extends JAVA0801Client{
 		System.out.print(name + ", ");
 		System.out.print(age + ", ");
 		System.out.print(owner.name + ", ");
-		System.out.print(owner.age + "\n");
+		System.out.print(owner.address + ", ");
+		System.out.print(owner.phone + "\n");
 	}
 	
 }

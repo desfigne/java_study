@@ -1,12 +1,12 @@
 package chapter08.java0806Interface;
 
-public class I02Circle extends I01Shape implements I06Interface { // 상속은 단일만 가능하며 클래스만 가능
+public class I03Circle extends I01Shape implements I02Interface { // 상속은 단일만 가능하며 클래스만 가능
 	
 //	String color;
 	int radius;
 	public static final double PI = 3.14;
 	
-	public I02Circle(String color, int radius) {
+	public I03Circle(String color, int radius) {
 		super(color);
 //		this.color = color;
 		this.radius = radius;
