@@ -4,7 +4,7 @@ public class JAVA0804Inheritance {
 
 	public static void main(String[] args) {
 
-//		JAVA0801Client c1 = new JAVA0801Client(); // abstract 클래스이므로 객체 생성 불가, 근데 왜 난 오류 안뜨냐
+//		JAVA0801Client c1 = new JAVA0801Client(); // abstract 클래스이므로 객체 생성 불가
 //		JAVA0802Person p1 = new JAVA0802Person();
 		JAVA0802Person lee = new JAVA0802Person();
 //		JAVA0803Animal a1 = new JAVA0803Animal(); // ()은 기본 생성자이므로 각 자바 파일에 기본 생성자를 생성해야 함
