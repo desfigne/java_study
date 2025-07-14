@@ -1,4 +1,4 @@
-package chapter08.java080502Interface;
+package chapter08.java0806Interface;
 
 public class I02Circle extends I01Shape implements I06Interface { // 상속은 단일만 가능하며 클래스만 가능
 	

@@ -1,4 +1,4 @@
-package chapter08.java080502Interface;
+package chapter08.java0806Interface;
 
 public class I04Triangle extends I01Shape implements I06Interface {
 	
