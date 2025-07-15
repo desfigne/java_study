@@ -1,12 +1,12 @@
-package chapter08.java0806Interface;
+package chapter09;
 
-public class I03Rectangle extends I01Shape implements I02Interface {
+public class JAVA0903Rectangle extends JAVA0901Shape implements JAVA0902Interface {
 	
 //	String color;
 	int width;
 	int height;
 	
-	public I03Rectangle(String color, int width, int height) {
+	public JAVA0903Rectangle(String color, int width, int height) {
 		super(color);
 //		this.color = color;
 		this.width = width;

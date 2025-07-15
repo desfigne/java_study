@@ -1,4 +1,4 @@
-package chapter08.java0806Interface;
+package chapter09;
 
 import java.util.List;
 import java.util.Vector;
@@ -8,7 +8,7 @@ import java.util.Vector;
  * 인터페이스 기반으로 객체 생성하는 것을 권장함
  */
 
-public class I06Collection {
+public class JAVA0906Collection {
 
 	public static void main(String[] args) {
 

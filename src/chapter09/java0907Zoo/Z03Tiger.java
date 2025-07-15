@@ -1,4 +1,4 @@
-package chapter08.java0807Zoo;
+package chapter09.java0907Zoo;
 
 public class Z03Tiger extends Z01Animal {
 	

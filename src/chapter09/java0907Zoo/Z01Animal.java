@@ -1,4 +1,4 @@
-package chapter08.java0807Zoo;
+package chapter09.java0907Zoo;
 
 /**
  * 동물의 공통적인 속성
