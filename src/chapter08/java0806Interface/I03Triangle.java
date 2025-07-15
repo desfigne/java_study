@@ -1,10 +1,10 @@
 package chapter08.java0806Interface;
 
-public class I05Triangle extends I01Shape implements I02Interface {
+public class I03Triangle extends I01Shape implements I02Interface {
 	
 //	String color;
 	
-	public I05Triangle(String color) {
+	public I03Triangle(String color) {
 		super(color);
 //		this.color = color;
 	};

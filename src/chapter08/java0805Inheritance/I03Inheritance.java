@@ -1,6 +1,6 @@
 package chapter08.java0805Inheritance;
 
-public class I05Inheritance {
+public class I03Inheritance {
 
 	public static void main(String[] args) {
 		
@@ -12,9 +12,9 @@ public class I05Inheritance {
 		
 		I02Circle redC = new I02Circle("빨강색", 12);
 		I02Circle blueC = new I02Circle("파랑색", 11);
-		I03Rectangle yellowR = new I03Rectangle("노랑색", 10, 12);
-		I03Rectangle greenR = new I03Rectangle("초록색", 11, 13);
-		I04Triangle orangeT = new I04Triangle("주황색");
+		I02Rectangle yellowR = new I02Rectangle("노랑색", 10, 12);
+		I02Rectangle greenR = new I02Rectangle("초록색", 11, 13);
+		I02Triangle orangeT = new I02Triangle("주황색");
 		
 		redC.draw();
 		System.out.println("redC.getArea : " + redC.getArea());

@@ -1,12 +1,12 @@
 package chapter08.java0805Inheritance;
 
-public class I03Rectangle extends I01Shape {
+public class I02Rectangle extends I01Shape {
 	
 	String color;
 	int width;
 	int height;
 	
-	public I03Rectangle(String color, int width, int height) {
+	public I02Rectangle(String color, int width, int height) {
 		this.color = color;
 		this.width = width;
 		this.height = height;

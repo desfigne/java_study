@@ -1,10 +1,10 @@
 package chapter08.java0805Inheritance;
 
-public class I04Triangle extends I01Shape {
+public class I02Triangle extends I01Shape {
 	
 	String color;
 	
-	public I04Triangle(String color) {
+	public I02Triangle(String color) {
 		this.color = color;
 	};
 
