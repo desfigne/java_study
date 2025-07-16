@@ -2,7 +2,7 @@ package chapter05_controlstatements; // 패키지명 선언
 
 import java.util.Scanner; // Scanner 클래스 import
 
-public class C0507_Order01_Drink_V01 { // 클래스 선언
+public class C0507_OrderDrink_V01 { // 클래스 선언
 
 	public static void main(String[] args) { // main 메서드 시작
 		// Step 0 : main 안의 지역 변수 선언

@@ -1,6 +1,6 @@
 package chapter07_class;
 
-public class C0707_LunchOrderSystemOOP_V0104_LunchOrderItem {
+public class C0709_OLS_V0204_LunchOrderItem {
 	
 	// Field
 	int no;

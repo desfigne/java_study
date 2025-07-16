@@ -1,6 +1,6 @@
 package chapter07_class;
 
-public class C0710_Animal_V0302Run {
+public class C0710_Animal_V0302_Run {
 	
 	public static void main(String[] args) {
 

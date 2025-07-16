@@ -2,41 +2,41 @@ package chapter07_class;
 
 import java.util.Scanner;
 
-public class C0709_LOSOOP_V0201_System {
+public class C0709_OLS_V0201_System {
 	
 	// Field
 	Scanner scan;
-	C0709_LOSOOP_V0206_LunchOrderMenuManager menuManager;
+	C0709_OLS_V0206_LunchOrderMenuManager menuManager;
 	
 	String[] lunchMenuNames = {"햄버거(🍔)", "피자요(🍕) ", "라멘요(🍜)", "샐러드(🥗)"}; // < 05. 02. 데이터 정립
 	int[] lunchMenuPrices = {100, 200, 300, 400}; // 05. 02. >
-	C0709_LOSOOP_V0203_LunchMenu[] lunchMenuList;
-	C0709_LOSOOP_V0204_LunchOrderItem[] orderItemList;
-	C0709_LOSOOP_V0205_LunchPaymentItem paymentItem;
+	C0709_OLS_V0203_LunchMenu[] lunchMenuList;
+	C0709_OLS_V0204_LunchOrderItem[] orderItemList;
+	C0709_OLS_V0205_LunchPaymentItem paymentItem;
 	int orderCount = 0;
 	int amount = 0; // 결제금액 - 사용자 입력
 	int change = 0; // 잔돈
 	String title;
 	
 	// Constructor
-	public C0709_LOSOOP_V0201_System() {
+	public C0709_OLS_V0201_System() {
 		scan = new Scanner(System.in);
 //		menuManager = new JAVA0709LOrderSOOP06LunchOrderMenuManager(lunchMenuNames, lunchMenuPrices);
-		menuManager = new C0709_LOSOOP_V0206_LunchOrderMenuManager(this);
-		lunchMenuList = new C0709_LOSOOP_V0203_LunchMenu[4];
-		orderItemList = new C0709_LOSOOP_V0204_LunchOrderItem[4];
+		menuManager = new C0709_OLS_V0206_LunchOrderMenuManager(this);
+		lunchMenuList = new C0709_OLS_V0203_LunchMenu[4];
+		orderItemList = new C0709_OLS_V0204_LunchOrderItem[4];
 		
 		menuManager.createLunchMenu(); // 런치 메뉴 생성 메소드 호출
 //		showMainMenu();
 	}
 	
-	public C0709_LOSOOP_V0201_System(String title) {
+	public C0709_OLS_V0201_System(String title) {
 		this.title = title;
 		scan = new Scanner(System.in);
 //		menuManager = new JAVA0709LOrderSOOP06LunchOrderMenuManager(lunchMenuNames, lunchMenuPrices);
-		menuManager = new C0709_LOSOOP_V0206_LunchOrderMenuManager(this);
-		lunchMenuList = new C0709_LOSOOP_V0203_LunchMenu[4];
-		orderItemList = new C0709_LOSOOP_V0204_LunchOrderItem[4];
+		menuManager = new C0709_OLS_V0206_LunchOrderMenuManager(this);
+		lunchMenuList = new C0709_OLS_V0203_LunchMenu[4];
+		orderItemList = new C0709_OLS_V0204_LunchOrderItem[4];
 		
 		menuManager.createLunchMenu(); // 런치 메뉴 생성 메소드 호출
 		menuManager.showMainMenu();
@@ -50,7 +50,7 @@ public class C0709_LOSOOP_V0201_System {
 	public int searchOrderItemIdx(int lunchMenu) {
 		int idx = -1;
 		for (int i = 0; i < orderCount; i++ ) {
-			C0709_LOSOOP_V0204_LunchOrderItem orderItem = orderItemList[i];
+			C0709_OLS_V0204_LunchOrderItem orderItem = orderItemList[i];
 			if(orderItem.no == lunchMenu) idx = i;
 		}
 		
@@ -66,7 +66,7 @@ public class C0709_LOSOOP_V0201_System {
 //		for(int i = 0; i < orderCount; i++) {
 //			orderItemList[i] = null;
 //		}
-		for(C0709_LOSOOP_V0204_LunchOrderItem orderItem : orderItemList) {
+		for(C0709_OLS_V0204_LunchOrderItem orderItem : orderItemList) {
 			if(orderItem != null) orderItem = null;
 		}
 	    orderCount = 0;
@@ -77,11 +77,11 @@ public class C0709_LOSOOP_V0201_System {
 	 */
 	public void order(int lunchMenu) {
 		// lunchMenuList의 메뉴 번호 확인
-		for(C0709_LOSOOP_V0203_LunchMenu menu : lunchMenuList) {
+		for(C0709_OLS_V0203_LunchMenu menu : lunchMenuList) {
 			if(menu.no == lunchMenu) {
 				int idx = searchOrderItemIdx(lunchMenu);
 				if(idx == -1) {
-					orderItemList[orderCount] = new C0709_LOSOOP_V0204_LunchOrderItem();
+					orderItemList[orderCount] = new C0709_OLS_V0204_LunchOrderItem();
 					
 					orderItemList[orderCount].no = menu.no;
 					orderItemList[orderCount].name = menu.name;
@@ -112,7 +112,7 @@ public class C0709_LOSOOP_V0201_System {
             System.out.println("-----------------------------------------");
             System.out.println("번호\t메뉴명\t\t가격\t수량");
             System.out.println("-----------------------------------------");
-            for (C0709_LOSOOP_V0204_LunchOrderItem orderItem : orderItemList) {
+            for (C0709_OLS_V0204_LunchOrderItem orderItem : orderItemList) {
             	if(orderItem != null) {
             		System.out.print(orderItem.no + "\t");
             		System.out.print(orderItem.name + "\t");
@@ -132,7 +132,7 @@ public class C0709_LOSOOP_V0201_System {
 	 */
 	public int totalPayment() {
 		int sum = 0;
-		for(C0709_LOSOOP_V0204_LunchOrderItem orderItem : orderItemList) {
+		for(C0709_OLS_V0204_LunchOrderItem orderItem : orderItemList) {
 			if(orderItem != null) {
 				sum += orderItem.price * orderItem.qty;
 			}
@@ -158,7 +158,7 @@ public class C0709_LOSOOP_V0201_System {
                 if (amount >= total) {
                     change = amount - total;
                     System.out.println("=> 결제가 정상적으로 완료되었습니다.");
-                    paymentItem = new C0709_LOSOOP_V0205_LunchPaymentItem();
+                    paymentItem = new C0709_OLS_V0205_LunchPaymentItem();
                     paymentItem.name = orderItemList[0].name + "등..";
                     paymentItem.totalPayment = total;
                     paymentItem.amount = amount;

@@ -2,16 +2,16 @@ package chapter07_class;
 
 import java.util.Scanner;
 
-public class C0707_LunchOrderSystemOOP_V0101_System {
+public class C0707_OrderLunchSystem_V0101_System {
 	
 	// Field
 	Scanner scan = new Scanner(System.in);
 	
 	String[] lunchMenuNames = {"햄버거(🍔)", "피자요(🍕) ", "라멘요(🍜)", "샐러드(🥗)"}; // < 05. 02. 데이터 정립
 	int[] lunchMenuPrices = {100, 200, 300, 400}; // 05. 02. >
-	C0707_LunchOrderSystemOOP_V0103_LunchMenu[] lunchMenuList = new C0707_LunchOrderSystemOOP_V0103_LunchMenu[4]; // 주문할 메뉴 : LunchMenu
-	C0707_LunchOrderSystemOOP_V0104_LunchOrderItem[] orderItemList = new C0707_LunchOrderSystemOOP_V0104_LunchOrderItem[4];
-	C0707_LunchOrderSystemOOP_V0105_LunchPaymentItem paymentItem;
+	C0707_OrderLunchSystem_V0103_LunchMenu[] lunchMenuList = new C0707_OrderLunchSystem_V0103_LunchMenu[4]; // 주문할 메뉴 : LunchMenu
+	C0707_OrderLunchSystem_V0104_LunchOrderItem[] orderItemList = new C0707_OrderLunchSystem_V0104_LunchOrderItem[4];
+	C0707_OrderLunchSystem_V0105_LunchPaymentItem paymentItem;
 	int orderCount = 0;
 	int amount = 0; // 결제금액 - 사용자 입력
 	int change = 0; // 잔돈
@@ -28,7 +28,7 @@ public class C0707_LunchOrderSystemOOP_V0101_System {
 	    	// 아래 코드가 for문 안에 있을 경우에는 정상 출력, for문 밖에 있을 경우 중복 내용으로 처리됨
 	    	// for문 바깥에 놓게 되면 객체를 하나를 그대로(주소값 동일) 사용하게 되고, for문 안에 배치하면 객체를 1개씩 새로 생성(주소값 다름)해서 사용
 	    	// 생성은 안에서 진행해야 함 예) for문 밖에 선언은 > LunchMenu menu = null; for문 안에 선언은 > menu = new LunchMenu();
-	    	C0707_LunchOrderSystemOOP_V0103_LunchMenu menu = new C0707_LunchOrderSystemOOP_V0103_LunchMenu();
+	    	C0707_OrderLunchSystem_V0103_LunchMenu menu = new C0707_OrderLunchSystem_V0103_LunchMenu();
 	    	//
 	    	menu.no = i + 1;
 	    	menu.name = lunchMenuNames[i];
@@ -55,7 +55,7 @@ public class C0707_LunchOrderSystemOOP_V0101_System {
 //    }
     public void showLunchMenu() {
     	System.out.println("******************************************");
-	    for (C0707_LunchOrderSystemOOP_V0103_LunchMenu menu : lunchMenuList) {
+	    for (C0707_OrderLunchSystem_V0103_LunchMenu menu : lunchMenuList) {
 	    	System.out.print(menu.no + ".");
 	    	System.out.print(menu.name + "\t");
 	    	System.out.print(menu.price + "\n");
@@ -155,7 +155,7 @@ public class C0707_LunchOrderSystemOOP_V0101_System {
 	public int searchOrderItemIdx(int lunchMenu) {
 		int idx = -1;
 		for (int i = 0; i < orderCount; i++ ) {
-			C0707_LunchOrderSystemOOP_V0104_LunchOrderItem orderItem = orderItemList[i];
+			C0707_OrderLunchSystem_V0104_LunchOrderItem orderItem = orderItemList[i];
 			if(orderItem.no == lunchMenu) idx = i;
 		}
 		
@@ -171,7 +171,7 @@ public class C0707_LunchOrderSystemOOP_V0101_System {
 //		for(int i = 0; i < orderCount; i++) {
 //			orderItemList[i] = null;
 //		}
-		for(C0707_LunchOrderSystemOOP_V0104_LunchOrderItem orderItem : orderItemList) {
+		for(C0707_OrderLunchSystem_V0104_LunchOrderItem orderItem : orderItemList) {
 			if(orderItem != null) orderItem = null;
 		}
 	    orderCount = 0;
@@ -182,11 +182,11 @@ public class C0707_LunchOrderSystemOOP_V0101_System {
 	 */
 	public void order(int lunchMenu) {
 		// lunchMenuList의 메뉴 번호 확인
-		for(C0707_LunchOrderSystemOOP_V0103_LunchMenu menu : lunchMenuList) {
+		for(C0707_OrderLunchSystem_V0103_LunchMenu menu : lunchMenuList) {
 			if(menu.no == lunchMenu) {
 				int idx = searchOrderItemIdx(lunchMenu);
 				if(idx == -1) {
-					orderItemList[orderCount] = new C0707_LunchOrderSystemOOP_V0104_LunchOrderItem();
+					orderItemList[orderCount] = new C0707_OrderLunchSystem_V0104_LunchOrderItem();
 					
 					orderItemList[orderCount].no = menu.no;
 					orderItemList[orderCount].name = menu.name;
@@ -217,7 +217,7 @@ public class C0707_LunchOrderSystemOOP_V0101_System {
             System.out.println("-----------------------------------------");
             System.out.println("번호\t메뉴명\t\t가격\t수량");
             System.out.println("-----------------------------------------");
-            for (C0707_LunchOrderSystemOOP_V0104_LunchOrderItem orderItem : orderItemList) {
+            for (C0707_OrderLunchSystem_V0104_LunchOrderItem orderItem : orderItemList) {
             	if(orderItem != null) {
             		System.out.print(orderItem.no + "\t");
             		System.out.print(orderItem.name + "\t");
@@ -237,7 +237,7 @@ public class C0707_LunchOrderSystemOOP_V0101_System {
 	 */
 	public int totalPayment() {
 		int sum = 0;
-		for(C0707_LunchOrderSystemOOP_V0104_LunchOrderItem orderItem : orderItemList) {
+		for(C0707_OrderLunchSystem_V0104_LunchOrderItem orderItem : orderItemList) {
 			if(orderItem != null) {
 				sum += orderItem.price * orderItem.qty;
 			}
@@ -263,7 +263,7 @@ public class C0707_LunchOrderSystemOOP_V0101_System {
                 if (amount >= total) {
                     change = amount - total;
                     System.out.println("=> 결제가 정상적으로 완료되었습니다.");
-                    paymentItem = new C0707_LunchOrderSystemOOP_V0105_LunchPaymentItem();
+                    paymentItem = new C0707_OrderLunchSystem_V0105_LunchPaymentItem();
                     paymentItem.name = orderItemList[0].name + "등..";
                     paymentItem.totalPayment = total;
                     paymentItem.amount = amount;

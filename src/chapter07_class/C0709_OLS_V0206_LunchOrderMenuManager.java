@@ -1,6 +1,6 @@
 package chapter07_class;
 
-public class C0709_LOSOOP_V0206_LunchOrderMenuManager {
+public class C0709_OLS_V0206_LunchOrderMenuManager {
 	
 	// Field
 //	String[] lunchMenuNames;
@@ -14,11 +14,11 @@ public class C0709_LOSOOP_V0206_LunchOrderMenuManager {
 //	}
 	
 	// Field
-	C0709_LOSOOP_V0201_System mgmsystem;
+	C0709_OLS_V0201_System mgmsystem;
 	
 	// Constructor
-	public C0709_LOSOOP_V0206_LunchOrderMenuManager() {}
-	public C0709_LOSOOP_V0206_LunchOrderMenuManager(C0709_LOSOOP_V0201_System system) {
+	public C0709_OLS_V0206_LunchOrderMenuManager() {}
+	public C0709_OLS_V0206_LunchOrderMenuManager(C0709_OLS_V0201_System system) {
 		this.mgmsystem = system;
 	}
 	
@@ -31,7 +31,7 @@ public class C0709_LOSOOP_V0206_LunchOrderMenuManager {
 	    	// 아래 코드가 for문 안에 있을 경우에는 정상 출력, for문 밖에 있을 경우 중복 내용으로 처리됨
 	    	// for문 바깥에 놓게 되면 객체를 하나를 그대로(주소값 동일) 사용하게 되고, for문 안에 배치하면 객체를 1개씩 새로 생성(주소값 다름)해서 사용
 	    	// 생성은 안에서 진행해야 함 예) for문 밖에 선언은 > LunchMenu menu = null; for문 안에 선언은 > menu = new LunchMenu();
-	    	C0709_LOSOOP_V0203_LunchMenu menu = new C0709_LOSOOP_V0203_LunchMenu();
+	    	C0709_OLS_V0203_LunchMenu menu = new C0709_OLS_V0203_LunchMenu();
 	    	//
 	    	menu.no = i + 1;
 	    	menu.name = mgmsystem.lunchMenuNames[i];
@@ -58,7 +58,7 @@ public class C0709_LOSOOP_V0206_LunchOrderMenuManager {
 //    }
     public void showLunchMenu() {
     	System.out.println("******************************************");
-	    for (C0709_LOSOOP_V0203_LunchMenu menu : mgmsystem.lunchMenuList) {
+	    for (C0709_OLS_V0203_LunchMenu menu : mgmsystem.lunchMenuList) {
 	    	System.out.print(menu.no + ".");
 	    	System.out.print(menu.name + "\t");
 	    	System.out.print(menu.price + "\n");

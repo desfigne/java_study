@@ -8,8 +8,8 @@ public class C1103_01 {
 		
 		String name1 = "홍길동";
 		String name2 = null;
-		C1103_02Object eo = null;
-		eo = new C1103_02Object();
+		C1103_02_Object eo = null;
+		eo = new C1103_02_Object();
 		eo.name = "홍길동";
 
 //		if(name1.equals(name2)) {

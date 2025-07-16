@@ -1,6 +1,6 @@
 package chapter12_basicapi;
 
-public class C1202_String02Buffer {
+public class C1202_String02_Buffer {
 
 	public static void main(String[] args) {
 

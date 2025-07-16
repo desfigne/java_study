@@ -2,7 +2,7 @@ package chapter05_controlstatements;
 
 import java.util.Scanner;
 
-public class C0507_Order02_Lunch_V03 {
+public class C0508_OrderLunch_V03 {
 
 	public static void main(String[] args) {
 		// 메뉴판

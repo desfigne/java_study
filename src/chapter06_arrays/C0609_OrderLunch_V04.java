@@ -20,7 +20,7 @@ package chapter06_arrays;
 
 import java.util.Scanner;
 
-public class C0609_Order02_Lunch_V04 {
+public class C0609_OrderLunch_V04 {
 
 	public static void main(String[] args) {
 		// 01. 메인 메뉴 구성

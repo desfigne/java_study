@@ -4,14 +4,14 @@ package chapter09_interface.C0907_Zoo;
  * 동물의 공통적인 속성
  * name, age
  */
-public class I0701_Animal implements I0702_Interface {
+public class Z01_Animal implements Z02_Interface {
 	
 	String name;
 	int age;
 	
-	public I0701_Animal() {}
+	public Z01_Animal() {}
 	
-	public I0701_Animal(String name, int age) {
+	public Z01_Animal(String name, int age) {
 		this.name = name;
 		this.age = age;
 	}

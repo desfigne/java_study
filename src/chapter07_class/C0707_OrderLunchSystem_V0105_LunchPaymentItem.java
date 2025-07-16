@@ -1,6 +1,6 @@
 package chapter07_class;
 
-public class C0709_LOSOOP_V0205_LunchPaymentItem {
+public class C0707_OrderLunchSystem_V0105_LunchPaymentItem {
 	
 	// Field
 	String name;      // 첫번째 주문메뉴명 + 등..
