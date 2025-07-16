@@ -1,16 +1,16 @@
 package chapter07_class.C0712_drink;
 
-public class D02Order {
+public class D1202Order {
 	
 	// Field
-	D01Menu orderMenu;
+	D1201Menu orderMenu;
 	
 	// Constructor
-	public D02Order(D01Menu orderMenu) {
+	public D1202Order(D1201Menu orderMenu) {
 		this.orderMenu = orderMenu;
 	}
 	
-	public D02Order() {}
+	public D1202Order() {}
 	
 	// Method
 	public String getName() {

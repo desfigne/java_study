@@ -1,13 +1,13 @@
 package chapter07_class.C0714_vendingmachine_v01;
 
-public class V03Menu {
+public class V1403Menu {
 	
 	int no;
 	int price;
 	String name;
 	
-	public V03Menu() {}
-	public V03Menu(int no, String name, int price) {
+	public V1403Menu() {}
+	public V1403Menu(int no, String name, int price) {
 		this.no = no;
 		this.name = name;
 		this.price = price;

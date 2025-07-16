@@ -1,6 +1,6 @@
 package chapter07_class.C0711_lunch;
 
-public class L02Main {
+public class L1102_Main {
 
 	public static void main(String[] args) {
 //		JAVA0709LOrderSOOP01System system = new JAVA0709LOrderSOOP01System();
@@ -11,7 +11,7 @@ public class L02Main {
 //		system.showMainMenu();
 		
 		// 생성자를 객체 초기화 후 실행 메소드를 호출하는 경우
-		new L01System("HAPPY");
+		new L1101_System("HAPPY");
 	}
 	
 }

@@ -1,6 +1,6 @@
 package chapter07_class.C0712_drink;
 
-public class D01Menu {
+public class D1201Menu {
 	
 	// Field
 	int no;
@@ -9,8 +9,8 @@ public class D01Menu {
 	
 	// Constructor
 	
-	public D01Menu() {}
-	public D01Menu(int no, String name, int price) {
+	public D1201Menu() {}
+	public D1201Menu(int no, String name, int price) {
 		this.no = no;
 		this.name = name;
 		this.price = price;		
