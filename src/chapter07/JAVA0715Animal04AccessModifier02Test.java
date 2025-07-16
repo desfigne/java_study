@@ -2,7 +2,7 @@ package chapter07;
 
 import java.util.Calendar;
 
-import chapter07.java0713commons.JAVA0715Animal;
+import chapter07.java0713commons.Animal;
 
 public class JAVA0715Animal04AccessModifier02Test {
 
@@ -19,7 +19,7 @@ public class JAVA0715Animal04AccessModifier02Test {
 		JAVA0715Animal04AccessModifier.getInfo3();
 
 		JAVA0715Animal04AccessModifier aam =  new JAVA0715Animal04AccessModifier("호순이", 5);
-		JAVA0715Animal comDog =  new JAVA0715Animal();
+		Animal comDog =  new Animal();
 
 		// 1. static 변수, static 메소드 호출 방법 2 - 객체명.이름
 		// < 잘 사용하지 않는 방법
