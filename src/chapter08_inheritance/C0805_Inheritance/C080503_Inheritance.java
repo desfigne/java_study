@@ -1,6 +1,6 @@
 package chapter08_inheritance.C0805_Inheritance;
 
-public class I0503_Inheritance {
+public class C080503_Inheritance {
 
 	public static void main(String[] args) {
 		
@@ -10,11 +10,11 @@ public class I0503_Inheritance {
 //		I03Rectangle greenR = new I03Rectangle("초록색");
 //		I04Triangle orangeT = new I04Triangle("주황색");
 		
-		I0502_Circle redC = new I0502_Circle("빨강색", 12);
-		I0502_Circle blueC = new I0502_Circle("파랑색", 11);
-		I0502_Rectangle yellowR = new I0502_Rectangle("노랑색", 10, 12);
-		I0502_Rectangle greenR = new I0502_Rectangle("초록색", 11, 13);
-		I0502_Triangle orangeT = new I0502_Triangle("주황색");
+		C080502_Circle redC = new C080502_Circle("빨강색", 12);
+		C080502_Circle blueC = new C080502_Circle("파랑색", 11);
+		C080502_Rectangle yellowR = new C080502_Rectangle("노랑색", 10, 12);
+		C080502_Rectangle greenR = new C080502_Rectangle("초록색", 11, 13);
+		C080502_Triangle orangeT = new C080502_Triangle("주황색");
 		
 		redC.draw();
 		System.out.println("redC.getArea : " + redC.getArea());

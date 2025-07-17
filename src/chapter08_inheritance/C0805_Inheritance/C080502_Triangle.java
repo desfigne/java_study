@@ -1,10 +1,10 @@
 package chapter08_inheritance.C0805_Inheritance;
 
-public class I0502_Triangle extends I0501_Shape {
+public class C080502_Triangle extends C080501_Shape {
 	
 	String color;
 	
-	public I0502_Triangle(String color) {
+	public C080502_Triangle(String color) {
 		this.color = color;
 	};
 

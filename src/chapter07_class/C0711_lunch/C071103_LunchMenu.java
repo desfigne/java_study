@@ -1,6 +1,6 @@
 package chapter07_class.C0711_lunch;
 
-public class L1103_LunchMenu {
+public class C071103_LunchMenu {
 	
 	// Field
 	int no;

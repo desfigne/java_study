@@ -2,30 +2,30 @@ package chapter07_class.C0712_drink;
 
 import java.util.Scanner;
 
-public class D1204OrderSystem {
+public class C071204_OrderSystem {
 	
 	// Field
 	String title;
 	Scanner scan = new Scanner(System.in);
 	String[] names = {"☕ 아메리카노", "🍵 바닐라 라떼", "🥤 딸기 쉐이크"};
 	int[] price = {2800, 3500, 4000};
-	D1201Menu[] menuList = new D1201Menu[names.length];
-	D1202Order order;
-	D1203Payment payment;
+	C071201_Menu[] menuList = new C071201_Menu[names.length];
+	C071202_Order order;
+	C071203_Payment payment;
 	
 	// Constructor
-	public D1204OrderSystem() {
+	public C071204_OrderSystem() {
 		this("Mega");
 	}
 	
-	public D1204OrderSystem(String title) {
+	public C071204_OrderSystem(String title) {
 		this.title = title;
 		init();
 	}
 	
 	// Method
 	public void init() { // 02.
-		payment = new D1203Payment();
+		payment = new C071203_Payment();
 		createMenuList();
 		showMenu();
 		selectMenu();
@@ -56,7 +56,7 @@ public class D1204OrderSystem {
 	 */
 	public void placeOrder(int menu) { // 06.
 		// 번호에 맞는 메뉴를 메뉴리스트에서 검색한다. 검색한 메뉴를 Order 생성자에 매개변수로 입력
-		order = new D1202Order(searchMenu(menu));
+		order = new C071202_Order(searchMenu(menu));
 		if(order.orderMenu != null) order.getInfo();
 		System.out.println("=> 주문 완료");
 		
@@ -88,10 +88,10 @@ public class D1204OrderSystem {
 		}
 	}
 	
-	public D1201Menu searchMenu(int menuNo) {  // 04.
-		D1201Menu menu = null;
+	public C071201_Menu searchMenu(int menuNo) {  // 04.
+		C071201_Menu menu = null;
 		
-		for(D1201Menu m : menuList) { // menuList[0] --> m --> menu(아메리카노);
+		for(C071201_Menu m : menuList) { // menuList[0] --> m --> menu(아메리카노);
 			if(m.no == menuNo) { // String일 경우 이퀄스 사용
 				menu = m;
 				break;
@@ -105,7 +105,7 @@ public class D1204OrderSystem {
 		System.out.println("===============================");
 		System.out.println("☕🍵🥤 " + title + " 메뉴판");
 		System.out.println("===============================");
-		for(D1201Menu menu : menuList) {
+		for(C071201_Menu menu : menuList) {
 			System.out.print(menu.no + "\t");
 			System.out.print(menu.name + "\t");
 			System.out.print(String.format("%,d",  menu.price) + "원\n");
@@ -115,7 +115,7 @@ public class D1204OrderSystem {
 
 	public void createMenuList() { // 01.
 		for(int i=0; i<names.length; i++) {
-			D1201Menu menu = new D1201Menu((i+1), names[i], price[i]);
+			C071201_Menu menu = new C071201_Menu((i+1), names[i], price[i]);
 			menuList[i] = menu; // 이 줄 안넣을 경우 menu에 null 값이 표시됨
 		}
 	}

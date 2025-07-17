@@ -1,19 +1,19 @@
 package chapter07_class.C0714_vendingmachine_v01;
 
-public class V1404RestArea {
+public class C071404_RestArea {
 	String name;
-	V1401User user;
-	V1402VendingMachine machine;
+	C071401_User user;
+	C071402_VendingMachine machine;
 	
-	public V1404RestArea() {
+	public C071404_RestArea() {
 		this("만남의 광장"); // 호출
 	}
 	
-	public V1404RestArea(String name) {
+	public C071404_RestArea(String name) {
 		this.name = name;  // 맴버변수 초기화 작업
-		user = new V1401User("정국");
+		user = new C071401_User("정국");
 		welcome();
-		machine = new V1402VendingMachine(user);
+		machine = new C071402_VendingMachine(user);
 	}
 	
 	public void welcome() {

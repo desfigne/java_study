@@ -1,4 +1,4 @@
-package chapter10_innerclass;
+package chapter10_innerclasses;
 
 public class C1001_Outer01 {
 	

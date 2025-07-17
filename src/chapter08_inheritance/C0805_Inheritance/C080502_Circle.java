@@ -1,12 +1,12 @@
 package chapter08_inheritance.C0805_Inheritance;
 
-public class I0502_Circle extends I0501_Shape {
+public class C080502_Circle extends C080501_Shape {
 	
 	String color;
 	int radius;
 	public static final double PI = 3.14;
 	
-	public I0502_Circle(String color, int radius) {
+	public C080502_Circle(String color, int radius) {
 		this.color = color;
 		this.radius = radius;
 	};

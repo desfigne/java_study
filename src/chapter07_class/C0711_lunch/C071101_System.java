@@ -2,41 +2,41 @@ package chapter07_class.C0711_lunch;
 
 import java.util.Scanner;
 
-public class L1101_System {
+public class C071101_System {
 	
 	// Field
 	Scanner scan;
-	L1106_LunchOrderMenuManager menuManager;
+	C071106_LunchOrderMenuManager menuManager;
 	
 	String[] lunchMenuNames = {"햄버거(🍔)", "피자요(🍕) ", "라멘요(🍜)", "샐러드(🥗)"}; // < 05. 02. 데이터 정립
 	int[] lunchMenuPrices = {100, 200, 300, 400}; // 05. 02. >
-	L1103_LunchMenu[] lunchMenuList;
-	L1104_LunchOrderItem[] orderItemList;
-	L1105_LunchPaymentItem paymentItem;
+	C071103_LunchMenu[] lunchMenuList;
+	C071104_LunchOrderItem[] orderItemList;
+	C071105_LunchPaymentItem paymentItem;
 	int orderCount = 0;
 	int amount = 0; // 결제금액 - 사용자 입력
 	int change = 0; // 잔돈
 	String title;
 	
 	// Constructor
-	public L1101_System() {
+	public C071101_System() {
 		scan = new Scanner(System.in);
 //		menuManager = new JAVA0709LOrderSOOP06LunchOrderMenuManager(lunchMenuNames, lunchMenuPrices);
-		menuManager = new L1106_LunchOrderMenuManager(this);
-		lunchMenuList = new L1103_LunchMenu[4];
-		orderItemList = new L1104_LunchOrderItem[4];
+		menuManager = new C071106_LunchOrderMenuManager(this);
+		lunchMenuList = new C071103_LunchMenu[4];
+		orderItemList = new C071104_LunchOrderItem[4];
 		
 		menuManager.createLunchMenu(); // 런치 메뉴 생성 메소드 호출
 //		showMainMenu();
 	}
 	
-	public L1101_System(String title) {
+	public C071101_System(String title) {
 		this.title = title;
 		scan = new Scanner(System.in);
 //		menuManager = new JAVA0709LOrderSOOP06LunchOrderMenuManager(lunchMenuNames, lunchMenuPrices);
-		menuManager = new L1106_LunchOrderMenuManager(this);
-		lunchMenuList = new L1103_LunchMenu[4];
-		orderItemList = new L1104_LunchOrderItem[4];
+		menuManager = new C071106_LunchOrderMenuManager(this);
+		lunchMenuList = new C071103_LunchMenu[4];
+		orderItemList = new C071104_LunchOrderItem[4];
 		
 		menuManager.createLunchMenu(); // 런치 메뉴 생성 메소드 호출
 		menuManager.showMainMenu();
@@ -50,7 +50,7 @@ public class L1101_System {
 	public int searchOrderItemIdx(int lunchMenu) {
 		int idx = -1;
 		for (int i = 0; i < orderCount; i++ ) {
-			L1104_LunchOrderItem orderItem = orderItemList[i];
+			C071104_LunchOrderItem orderItem = orderItemList[i];
 			if(orderItem.no == lunchMenu) idx = i;
 		}
 		
@@ -66,7 +66,7 @@ public class L1101_System {
 //		for(int i = 0; i < orderCount; i++) {
 //			orderItemList[i] = null;
 //		}
-		for(L1104_LunchOrderItem orderItem : orderItemList) {
+		for(C071104_LunchOrderItem orderItem : orderItemList) {
 			if(orderItem != null) orderItem = null;
 		}
 	    orderCount = 0;
@@ -77,11 +77,11 @@ public class L1101_System {
 	 */
 	public void order(int lunchMenu) {
 		// lunchMenuList의 메뉴 번호 확인
-		for(L1103_LunchMenu menu : lunchMenuList) {
+		for(C071103_LunchMenu menu : lunchMenuList) {
 			if(menu.no == lunchMenu) {
 				int idx = searchOrderItemIdx(lunchMenu);
 				if(idx == -1) {
-					orderItemList[orderCount] = new L1104_LunchOrderItem();
+					orderItemList[orderCount] = new C071104_LunchOrderItem();
 					
 					orderItemList[orderCount].no = menu.no;
 					orderItemList[orderCount].name = menu.name;
@@ -112,7 +112,7 @@ public class L1101_System {
             System.out.println("-----------------------------------------");
             System.out.println("번호\t메뉴명\t\t가격\t수량");
             System.out.println("-----------------------------------------");
-            for (L1104_LunchOrderItem orderItem : orderItemList) {
+            for (C071104_LunchOrderItem orderItem : orderItemList) {
             	if(orderItem != null) {
             		System.out.print(orderItem.no + "\t");
             		System.out.print(orderItem.name + "\t");
@@ -132,7 +132,7 @@ public class L1101_System {
 	 */
 	public int totalPayment() {
 		int sum = 0;
-		for(L1104_LunchOrderItem orderItem : orderItemList) {
+		for(C071104_LunchOrderItem orderItem : orderItemList) {
 			if(orderItem != null) {
 				sum += orderItem.price * orderItem.qty;
 			}
@@ -158,7 +158,7 @@ public class L1101_System {
                 if (amount >= total) {
                     change = amount - total;
                     System.out.println("=> 결제가 정상적으로 완료되었습니다.");
-                    paymentItem = new L1105_LunchPaymentItem();
+                    paymentItem = new C071105_LunchPaymentItem();
                     paymentItem.name = orderItemList[0].name + "등..";
                     paymentItem.totalPayment = total;
                     paymentItem.amount = amount;

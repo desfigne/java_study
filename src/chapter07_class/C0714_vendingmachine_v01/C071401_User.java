@@ -2,7 +2,7 @@ package chapter07_class.C0714_vendingmachine_v01;
 
 import java.util.Scanner;
 
-public class V1401User {
+public class C071401_User {
 	
 	// Field
 	String name;
@@ -10,8 +10,8 @@ public class V1401User {
 	
 	// Constructor
 //	public V01User() {this.name = "아무개";}
-	public V1401User() {this("아무개");}
-	public V1401User(String name) {
+	public C071401_User() {this("아무개");}
+	public C071401_User(String name) {
 		this.name = name;
 		scan = new Scanner(System.in);
 	}

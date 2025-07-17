@@ -5,7 +5,7 @@ package chapter07_class.C0717_javadoc;
  * 이클립스 최상단 메뉴 (Project) > (Generate Javadoc..)으로 진입
  */
 
-public class JavaDoc01 {
+public class C071701_JavaDoc01 {
 	
 	private String name;
 	private int age;
@@ -13,13 +13,13 @@ public class JavaDoc01 {
 	/**
 	 * 기본 생성자입니다.
 	 */
-	public JavaDoc01() {}
+	public C071701_JavaDoc01() {}
 	
 	/**
 	 * 문자열 타입의 name 파라미터를 받아 객체를 생성합니다.
 	 * @param name 이름
 	 */
-	public JavaDoc01(String name) {
+	public C071701_JavaDoc01(String name) {
 		this.name = name;
 	}
 	
@@ -28,7 +28,7 @@ public class JavaDoc01 {
 	 * @param name 이름
 	 * @param age  나이
 	 */
-	public JavaDoc01(String name, int age) {
+	public C071701_JavaDoc01(String name, int age) {
 		this.name = name;
 		this.age = age;
 	}

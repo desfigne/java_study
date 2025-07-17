@@ -1,13 +1,13 @@
 package chapter07_class.C0712_drink;
 
-public class D1203Payment {
+public class C071203_Payment {
 	
 	// Field
 	int amount;
 	int change;
 	
 	// Constructor
-	public D1203Payment() {
+	public C071203_Payment() {
 		
 	}
 	

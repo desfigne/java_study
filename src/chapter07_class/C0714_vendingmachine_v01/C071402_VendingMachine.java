@@ -2,7 +2,7 @@ package chapter07_class.C0714_vendingmachine_v01;
 
 import chapter07_class.C0713_commons.Menu;
 
-public class V1402VendingMachine {
+public class C071402_VendingMachine {
 	
 	String[] nameList = {"☕ 밀크커피", "☕ 아메리카노", "🍋 유자차 ", "🥛 초코우유"};
 	int[] priceList = {300, 400, 300, 200};
@@ -11,18 +11,18 @@ public class V1402VendingMachine {
 	int orderMenuCount = 0;
 	
 	String title; // 자판기 회사명
-	V1401User user; // 자판기 사용자 등으로 주석으로 표시
+	C071401_User user; // 자판기 사용자 등으로 주석으로 표시
 	int totalCoin;
 	Menu orderMenu;
 	int change;
 	
 	static final int EXIT = 9; // 클래스명.상수명
 	
-	public V1402VendingMachine(V1401User user) {
+	public C071402_VendingMachine(C071401_User user) {
 		this("막심", user);
 	}
 	
-	public V1402VendingMachine(String title, V1401User user) { // 오버로딩될 경우 동작
+	public C071402_VendingMachine(String title, C071401_User user) { // 오버로딩될 경우 동작
 		this.title = title;
 		this.user = user;
 		createMenuList();
@@ -178,9 +178,9 @@ public class V1402VendingMachine {
 	 */
 	public void selectMenu() { // 정확한 메뉴 선택
 		System.out.println("메뉴를 선택해주세요.");
-		System.out.println("=> 취소는 [" + V1402VendingMachine.EXIT + "]번을 입력해주세요.");
+		System.out.println("=> 취소는 [" + C071402_VendingMachine.EXIT + "]번을 입력해주세요.");
 		int menuNo = user.selectMenu();
-		if(menuNo != V1402VendingMachine.EXIT) {
+		if(menuNo != C071402_VendingMachine.EXIT) {
 			if(menuCheck(menuNo)) {
 				placeOrder(menuNo);
 			} else {

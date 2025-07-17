@@ -1,12 +1,12 @@
 package chapter08_inheritance.C0805_Inheritance;
 
-public class I0502_Rectangle extends I0501_Shape {
+public class C080502_Rectangle extends C080501_Shape {
 	
 	String color;
 	int width;
 	int height;
 	
-	public I0502_Rectangle(String color, int width, int height) {
+	public C080502_Rectangle(String color, int width, int height) {
 		this.color = color;
 		this.width = width;
 		this.height = height;

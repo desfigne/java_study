@@ -1,6 +1,6 @@
 package chapter07_class.C0711_lunch;
 
-public class L1105_LunchPaymentItem {
+public class C071105_LunchPaymentItem {
 	
 	// Field
 	String name;      // 첫번째 주문메뉴명 + 등..
