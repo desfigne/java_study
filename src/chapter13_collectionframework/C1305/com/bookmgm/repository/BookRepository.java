@@ -1,7 +1,8 @@
-package com.bookmgm.repository;
+package chapter13_collectionframework.C1305.com.bookmgm.repository;
 
 import java.util.List;
-import com.bookmgm.model.Book;
+
+import chapter13_collectionframework.C1305.com.bookmgm.model.Book;
 
 public interface BookRepository {
 	boolean insert(Book book); // 모델부터 만듬

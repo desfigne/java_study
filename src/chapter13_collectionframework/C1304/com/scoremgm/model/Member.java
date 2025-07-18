@@ -1,4 +1,4 @@
-package com.scoremgm.model;
+package chapter13_collectionframework.C1304.com.scoremgm.model;
 
 public class Member {
 	

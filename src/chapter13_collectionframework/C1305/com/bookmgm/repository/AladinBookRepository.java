@@ -1,10 +1,10 @@
-package com.bookmgm.repository;
+package chapter13_collectionframework.C1305.com.bookmgm.repository;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.bookmgm.model.Book;
+import chapter13_collectionframework.C1305.com.bookmgm.model.Book;
 
 public class AladinBookRepository implements BookRepository{
 	List<Book> library = new ArrayList<Book>();

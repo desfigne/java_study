@@ -1,14 +1,14 @@
-package com.bookmgm.service;
+package chapter13_collectionframework.C1305.com.bookmgm.service;
 
 import java.util.List;
 import java.util.Random;
 
-import com.bookmgm.application.BookManagementApplication;
-import com.bookmgm.model.Book;
-import com.bookmgm.repository.AladinBookRepository;
-import com.bookmgm.repository.BookRepository;
-import com.bookmgm.repository.InMemoryBookRepository;
-import com.bookmgm.repository.Yes24BookRepository;
+import chapter13_collectionframework.C1305.com.bookmgm.application.BookManagementApplication;
+import chapter13_collectionframework.C1305.com.bookmgm.model.Book;
+import chapter13_collectionframework.C1305.com.bookmgm.repository.AladinBookRepository;
+import chapter13_collectionframework.C1305.com.bookmgm.repository.BookRepository;
+import chapter13_collectionframework.C1305.com.bookmgm.repository.InMemoryBookRepository;
+import chapter13_collectionframework.C1305.com.bookmgm.repository.Yes24BookRepository;
 
 public class DefaultBookService implements BookService{
 	BookManagementApplication bma;

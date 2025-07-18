@@ -1,4 +1,4 @@
-package com.bookmgm.model;
+package chapter13_collectionframework.C1305.com.bookmgm.model;
 
 public class Book {
 	private String id;

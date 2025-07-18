@@ -1,4 +1,4 @@
-package com.bookmgm.service;
+package chapter13_collectionframework.C1305.com.bookmgm.service;
 
 public interface BookService {
 	void register();

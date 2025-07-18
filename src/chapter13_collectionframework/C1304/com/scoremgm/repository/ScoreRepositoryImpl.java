@@ -1,10 +1,10 @@
-package com.scoremgm.repository;
+package chapter13_collectionframework.C1304.com.scoremgm.repository;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.scoremgm.model.Member;
+import chapter13_collectionframework.C1304.com.scoremgm.model.Member;
 
 public class ScoreRepositoryImpl implements ScoreRepository { // 추상 메소드 오버라이드
 	

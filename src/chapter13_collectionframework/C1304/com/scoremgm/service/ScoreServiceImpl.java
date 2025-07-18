@@ -1,14 +1,14 @@
-package com.scoremgm.service;
+package chapter13_collectionframework.C1304.com.scoremgm.service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import com.scoremgm.app.ScoreMgmSystem;
-import com.scoremgm.model.Member;
-import com.scoremgm.repository.ScoreRepository;
-import com.scoremgm.repository.ScoreRepositoryImpl;
+import chapter13_collectionframework.C1304.com.scoremgm.app.ScoreMgmSystem;
+import chapter13_collectionframework.C1304.com.scoremgm.model.Member;
+import chapter13_collectionframework.C1304.com.scoremgm.repository.ScoreRepository;
+import chapter13_collectionframework.C1304.com.scoremgm.repository.ScoreRepositoryImpl;
 
 public class ScoreServiceImpl implements ScoreService {
 	
