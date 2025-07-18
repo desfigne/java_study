@@ -1,9 +1,9 @@
-package chapter13.com.scoremgm.app;
+package com.scoremgm.app;
 
 import java.util.Scanner;
 
-import chapter13.com.scoremgm.service.ScoreService;
-import chapter13.com.scoremgm.service.ScoreServiceImpl;
+import com.scoremgm.service.ScoreService;
+import com.scoremgm.service.ScoreServiceImpl;
 
 /**
  * 메뉴 생성 및 출력

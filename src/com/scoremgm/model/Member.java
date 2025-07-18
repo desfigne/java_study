@@ -1,4 +1,4 @@
-package chapter13.com.scoremgm.model;
+package com.scoremgm.model;
 
 public class Member {
 	
@@ -9,7 +9,7 @@ public class Member {
 	private int eng;
 	private int math;
 	
-	// 퍼플빅 게터 세터 생성
+	// 퍼플릭 게터 세터 생성
 	
 	public Member() {}
 	

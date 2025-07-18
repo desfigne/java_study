@@ -1,4 +1,4 @@
-package chapter13.com.scoremgm.app;
+package com.scoremgm.app;
 
 public class ScoreMgmSystemTest {
 

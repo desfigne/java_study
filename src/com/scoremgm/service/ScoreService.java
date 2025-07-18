@@ -1,4 +1,4 @@
-package chapter13.com.scoremgm.service;
+package com.scoremgm.service;
 
 public interface ScoreService {
 	

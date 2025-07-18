@@ -3,7 +3,7 @@ package chapter13_collectionframework;
 import java.util.HashMap;
 import java.util.Map;
 
-public class C1303_InterfaceMap {
+public class C1303_InterfaceMap__2 {
 
 	public static void main(String[] args) {
 		
@@ -33,6 +33,7 @@ public class C1303_InterfaceMap {
 		subjects.forEach((key, value) -> System.out.println(key + ", " + value));
 		
 		System.out.println("------------------------------");
+		
 		
 		// 4. 데이터 삭제 : D(Delete)
 		// 이터레이터는 안해도 됨, 리스트할때 사용
