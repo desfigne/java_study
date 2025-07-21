@@ -21,7 +21,6 @@ public class User {
     }
 
     // Method(메소드)
-    
     // 동전 입력 메소드
     public int insertCoin() {
     	// 1. 반환할 변수 선언 및 0으로 초기화
@@ -55,8 +54,6 @@ public class User {
         return resultCoin; 
     }
 
-
-
 	// 메뉴 선택 메소드
 	public int selectMenu() {
 		// 1. 반환할 변수 선언 및 0으로 초기화
@@ -87,7 +84,6 @@ public class User {
 		// 6. 입력값 반환
 		return menu;
 	    }
-
 
     // getter 메소드
     public String getName() { return name; }

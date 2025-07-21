@@ -8,7 +8,6 @@ public class MenuItem implements Menu {
 	String name;
 	
 	// Constructor
-	
 	public MenuItem() {}
 	public MenuItem(int no, String name, int price) {
 		this.no = no;

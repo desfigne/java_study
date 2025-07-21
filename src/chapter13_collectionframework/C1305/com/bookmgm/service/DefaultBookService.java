@@ -132,7 +132,7 @@ public class DefaultBookService implements BookService{
 			System.out.println("🚫 등록된 도서가 존재하지 않습니다.");
 		}
 		bma.showMenu();
-	}; // 이거 코드 맞나? 라이브러리 포이치 안에 왜 코드가 없지?
+	};
 
 	/**
 	 * 도서 검색

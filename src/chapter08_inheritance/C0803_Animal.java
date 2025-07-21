@@ -2,7 +2,7 @@ package chapter08_inheritance;
 
 public class C0803_Animal extends C0801_Client{
 	
-////	String name;
+//	String name;
 //	int age;
 
 	C0802_Person owner;
@@ -38,7 +38,6 @@ public class C0803_Animal extends C0801_Client{
 	public void payment() {}
 	
 	// 고객 정보 출력시 owner 정보 포함하고 싶은 경우
-	
 	@Override
 	public void printInfo() { // 부모가 가진 메소드를 똑같은 모습으로 가져옴 - 오버라이딩(Overriding)
 		System.out.print("고객(Animal)정보 --> ");

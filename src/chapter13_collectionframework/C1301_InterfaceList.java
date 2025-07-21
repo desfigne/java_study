@@ -32,7 +32,6 @@ public class C1301_InterfaceList {
 		list3.add(1.23);		list3.add(3.456);
 		
 		// 2. 데이터 출력 : R(Read)
-		
 		// 일반 for문 > 메소드 타입이 아닌 제어문으로 의존적이지 않음
 		for(int i=0; i<list1.size(); i++) { // size는 전체 값이 아닌 들어가있는 만큼 가져옴
 			System.out.println(list1.get(i));

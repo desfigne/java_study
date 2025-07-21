@@ -5,7 +5,6 @@ import chapter07_class.C0713_commons.Menu;
 public class VendingMachine {
 	
     // Field
-	
     // 1. 자판기 이름(title), 메뉴명 배열(nameList), 가격 배열(priceList)
 	String title;
 	String[] nameList = {"☕ 밀크커피", "☕ 아메리카노", "🍋 유자차 ", "🥛 초코우유"};
@@ -23,11 +22,8 @@ public class VendingMachine {
 	int change;
 	
 	static final int EXIT = 9;
-
-	
 	
     // Constructor
-	
     // 1. 사용자(user)만 받는 생성자
     //    - this("기본이름", user)로 넘기기
 	public VendingMachine(User user) {
@@ -45,11 +41,8 @@ public class VendingMachine {
 		showMenuList();
 		checkInsertCoin();
 	}
-
-	
 	
     // Method
-
 	// 메뉴 리스트 생성
 	public void createMenuList() {
 		
@@ -202,7 +195,6 @@ public class VendingMachine {
 		}
 	}
 
-
 	// 메뉴 선택
 	public void selectMenu() {
 	    // 1. 메뉴 선택 안내 메시지 출력
@@ -263,7 +255,6 @@ public class VendingMachine {
 		}
 	}
 
-
 	// 결제 진행
 	public void processPayment() {
 		
@@ -292,7 +283,6 @@ public class VendingMachine {
 		finalCheck();
 	}
 
-
 	// 종료 후 객체 초기화
 	public void reset() {
 		
@@ -308,7 +298,6 @@ public class VendingMachine {
 		// 4. 주문한 메뉴 객체를 null로 초기화
 		orderMenu = null;
 	}
-
 
 	// 종료(파이널 체크)
 	public void finalCheck() {
@@ -342,7 +331,6 @@ public class VendingMachine {
 			System.out.println("=> 이용해주셔서 감사합니다.");
 		}
 	}
-
 
 	// 주문 가능한 메뉴인지 체크
 	public boolean menuCheck(int menuNo) {

@@ -10,7 +10,6 @@ public class Member {
 	private int math;
 	
 	// 퍼플릭 게터 세터 생성
-	
 	public Member() {}
 	
 	public String getNo() {

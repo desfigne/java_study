@@ -56,6 +56,7 @@ public class C0709_OLS_V0206_LunchOrderMenuManager {
 //	    	System.out.println("******************************************");
 //	    }
 //    }
+	
     public void showLunchMenu() {
     	System.out.println("******************************************");
 	    for (C0709_OLS_V0203_LunchMenu menu : mgmsystem.lunchMenuList) {

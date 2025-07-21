@@ -8,7 +8,6 @@ public class C071201_Menu {
 	String name;
 	
 	// Constructor
-	
 	public C071201_Menu() {}
 	public C071201_Menu(int no, String name, int price) {
 		this.no = no;

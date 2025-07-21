@@ -10,6 +10,7 @@ public class C0707_OrderLunchSystem_V0104_LunchOrderItem {
 	
 	// Constructor
 	
+	
 	// Method
 
 }

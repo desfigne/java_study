@@ -11,6 +11,7 @@ public class C0705_Arithmetic01 {
 	
 	// Constructor
 	
+	
 	// Method
 //	public int add(int x, int y) { return x + y; }
 //	public int sub(int x, int y) { return x - y; }

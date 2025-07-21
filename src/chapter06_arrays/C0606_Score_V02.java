@@ -94,6 +94,7 @@ public class C0606_Score_V02 {
 		boolean searchFlag = true; // 23. 디폴트는 무조건 돌도록 true
 		
 		while(searchFlag) { // 22. 검색 결과 이후 프로그램 종료됨, while, 검색플래그, 데이터 조회 구간이 반복되어야 함, 24. 검색플래그 대신 true 값을 넣으면 무한루프에 빠짐
+			
 			// Step 04 : 데이터 조회 / 데이터 등록이 완료된 이후 조회 가능
 
 			// 12. 조회할 학생명 입력

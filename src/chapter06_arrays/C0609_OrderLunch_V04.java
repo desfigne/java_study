@@ -76,7 +76,6 @@ public class C0609_OrderLunch_V04 {
 //		int[] orderPriceList = new int [MAX_SIZE]; // > // < 02. 15. 3 수치를 MAX_SIZE로 전환
 //		
 //		int count = 0;
-//
 //		
 //		while(menuFlag) {
 //			System.out.println("********************************************");
@@ -194,12 +193,8 @@ public class C0609_OrderLunch_V04 {
 //			} // switch
 //
 //		} // while-menuFlag // 에러 체크 후에 다음 단위 구성, 에러 체크 후 다음 단위 구성으로 반복 진행
-
-		
-		
-		
-		
-		
+//		
+//		
 //		// 02. 1. 음식 주문 메뉴 구성
 //		Scanner scan = new Scanner(System.in);
 //		boolean menuFlag = true;
@@ -395,14 +390,10 @@ public class C0609_OrderLunch_V04 {
 //			} // switch
 //
 //		} // while-menuFlag // 에러 체크 후에 다음 단위 구성, 에러 체크 후 다음 단위 구성으로 반복 진행
-
-		
-		
-		
-		
-		
+//
+//		
 		// 트래킹 놓친 전체 코드
-		
+//		
 //		// 02. 1. 음식 주문 메뉴 구성
 //		Scanner scan = new Scanner(System.in);
 //		boolean menuFlag = true;
@@ -586,12 +577,8 @@ public class C0609_OrderLunch_V04 {
 //			} // switch
 //
 //		} // while-menuFlag // 에러 체크 후에 다음 단위 구성, 에러 체크 후 다음 단위 구성으로 반복 진행
-		
-		
-		
-		
-		
-		
+//
+//		
 		// 내 작성 내용과 강사님이 알려주신 방법으로 재구성한 코드
 		
 		// 02. 1. 음식 주문 메뉴 구성

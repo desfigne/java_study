@@ -5,8 +5,6 @@ public class RestArea {
     String name;                            // 휴게소 이름
     User user;                              // 사용자 객체
     VendingMachine machine;                 // 자판기 객체
-
-    
     
     // Constructor(생성자)
     public RestArea() {
@@ -19,8 +17,6 @@ public class RestArea {
         welcome();                          // 환영 메시지 출력
         machine = new VendingMachine(user); // 자판기 생성 (필요시)
     }
-
-    
     
     // Method(메소드)
     public void welcome() {

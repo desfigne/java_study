@@ -3,12 +3,15 @@ package chapter07_class;
 public class C0701_Animal_V0101 {
 	// Field
 	
+	
 	// Constructor
+	
 	
 	// Method
 	
-	// 위 순서대로 미리 정하고 채워나가기
 	
+	// 위 순서대로 미리 정하고 채워나가기
+
 	
 	
 	// Field : 전역변수

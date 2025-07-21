@@ -17,7 +17,6 @@ public class Animal {
 	
 	
 	// Method
-
 	public String getName() {
 		return name;
 	}

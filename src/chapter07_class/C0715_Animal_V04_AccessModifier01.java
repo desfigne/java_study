@@ -35,7 +35,6 @@ public class C0715_Animal_V04_AccessModifier01 {
 	}
 	
 	// Method
-	
 	// static method
 	void getInfo() { System.out.println(pname + "," + page); } //
 	public void getInfo2() { System.out.println(pname + "," + page); } // 모든 클래스에서 접근 가능

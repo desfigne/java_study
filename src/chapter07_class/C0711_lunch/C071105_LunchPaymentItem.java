@@ -10,6 +10,7 @@ public class C071105_LunchPaymentItem {
 	
 	// Constructor
 	
+	
 	// Method
 	
 	

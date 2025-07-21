@@ -33,7 +33,6 @@ public class C071402_VendingMachine {
 	/*
 	 * 총 투입 금액에 맞춘 메뉴 출력
 	 */
-
 	public void showMenuList(String msg) {
 		System.out.println("======================================");
 		System.out.println("☕🍵🥤 " + title + " Coffee Machine");

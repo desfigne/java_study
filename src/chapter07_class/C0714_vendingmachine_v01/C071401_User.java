@@ -17,7 +17,6 @@ public class C071401_User {
 	}
 	
 	// Method
-	
 	/*
 	 * 동전 입력
 	 */

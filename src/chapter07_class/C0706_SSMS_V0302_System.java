@@ -19,11 +19,11 @@ public class C0706_SSMS_V0302_System {
 	
 	// Constructor
 	
+	
 	// Method
 	/*
 	 * 메뉴 선택
 	 */
-	
 	public void showMenu() {
 		System.out.println("=============================================");
 		System.out.println("====--- 더조은 고등학교 1-1 성적관리 프로그램 ---====");
@@ -45,7 +45,6 @@ public class C0706_SSMS_V0302_System {
 	/*
 	 * 선택한 메뉴에 따라 기능별 메소드 호출
 	 */
-	
 	public void menuCheck(int menu) {
         switch (menu) { // 컨트롤 누르고 마우스 올리면 해당 메소드로 이동됨
 	        case 1: insert(); showMenu(); break; // 케이스 순서와 퍼블릭 객체들의 순서와는 상관없음

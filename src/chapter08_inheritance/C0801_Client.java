@@ -25,7 +25,6 @@ abstract public class C0801_Client {
 //	}
 	
 	// Method
-	
 //	public void printInfo() { // 부모가 가진 printInfo() 메소드를 강제적으로 상속함, 아래에 내용이 채워지면 동일하지 않음
 //		System.out.println("고객(Client)정보 --> " + name + ", " + age);
 //	}

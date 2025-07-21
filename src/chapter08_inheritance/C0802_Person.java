@@ -2,10 +2,10 @@ package chapter08_inheritance;
 
 public class C0802_Person extends C0801_Client{
 	
-////	String name;
+//	String name;
 //	String address;
 //	String phone;
-////	int age;
+//	int age;
 //	
 //	public JAVA0802Person() {
 //		this("이순신", "강남구", "010-1234-1234", 20);
