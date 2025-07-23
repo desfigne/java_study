@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>Java Variable 학습 - 토큰별 인터랙티브</title>
+<style>
+/*──────────── 기본 레이아웃 ────────────*/
+body{margin:0;font-family:"Pretendard",sans-serif;background:#1e1e1e;color:#eee;overflow-x:hidden}
+header,footer{position:fixed;left:0;right:0;z-index:999}
+header{top:0;padding:10px 20px;background:#111;display:flex;gap:10px}
+footer{bottom:0;background:#111;padding:8px 20px;display:flex;align-items:center}
+main{padding:70px 20px 70px 20px;max-width:960px;margin:0 auto;line-height:1.8;font-size:15px}
+
+/*──────────── 코드 영역 ────────────*/
+pre{background:#2d2d2d;border-radius:6px;padding:20px;overflow:auto;font-family:"Fira Code",monospace}
+code{counter-reset:linenumber;display:block}
+.code-line{display:block;counter-increment:linenumber;min-height:1.8em;position:relative}
+.code-line::before{content:counter(linenumber);color:#555;width:2.4em;display:inline-block;margin-right:12px;text-align:right;user-select:none}
+
+/*──────────── 개별 토큰 스타일 ────────────*/
+.code-token{
+    display:inline;
+    padding:1px 2px;
+    border-radius:3px;
+    transition:all 0.2s ease;
+    cursor:pointer;
+    position:relative;
+}
+
+/* 호버 시 시각적 강조 */
+.code-token:hover{
+    background:#3d4a5c;
+    border:1px solid #86aef2;
+    box-shadow:0 0 8px rgba(134,174,242,0.3);
+    transform:scale(1.02);
+}
+
+/* 토큰 타입별 색상 */
+.token-keyword{color:#ff6b6b}
+.token-type{color:#4ecdc4}
+.token-variable{color:#ffe66d}
+.token-value{color:#a8e6cf}
+.token-string{color:#ffd93d}
+.token-comment{color:#95a5a6;font-style:italic}
+
+/*──────────── 팝업 정보창 ────────────*/
+.tooltip{
+    position:absolute;
+    max-width:320px;
+    background:#262626;
+    border:1px solid #444;
+    border-radius:8px;
+    padding:16px;
+    font-size:13px;
+    line-height:1.5;
+    box-shadow:0 12px 28px rgba(0,0,0,.6);
+    display:none;
+    z-index:1000;
+    color:#eee;
+}
+.tooltip h4{margin:0 0 8px;font-size:15px;color:#86aef2;border-bottom:1px solid #444;padding-bottom:4px}
+.tooltip section{margin-bottom:8px;padding:4px 0}
+.tooltip section:last-child{margin-bottom:0}
+.tooltip b{color:#fff;font-weight:600}
+.tooltip .close{position:absolute;top:8px;right:10px;background:none;border:none;color:#777;font-size:18px;cursor:pointer;padding:0;width:20px;height:20px}
+.tooltip .close:hover{color:#fff}
+
+/*──────────── 상단 버전 버튼 ────────────*/
+.btn{border:none;padding:8px 16px;border-radius:6px;background:#444;color:#eee;font-size:13px;cursor:pointer;transition:background 0.2s}
+.btn:hover{background:#555}
+.btn.active{background:#86aef2;color:#111}
+
+/*──────────── 검색바 ────────────*/
+#search{flex:1 1 auto;background:#2d2d2d;border:1px solid #555;border-radius:4px;padding:8px 12px;color:#eee;font-size:14px}
+#search:focus{outline:none;border-color:#86aef2}
+
+/*──────────── 사이드 퀴즈 버튼 ────────────*/
+#quizBtn{position:fixed;right:20px;top:50%;transform:translateY(-50%);background:#ffb74d;border:none;border-radius:50%;width:60px;height:60px;font-weight:bold;font-size:12px;color:#111;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.4);transition:transform 0.2s}
+#quizBtn:hover{transform:translateY(-50%) scale(1.05)}
+
+/*──────────── 퀴즈 팝업 ────────────*/
+#quizModal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:1200}
+#quizModal > div{background:#1f1f1f;padding:28px 34px;border-radius:10px;max-width:450px;width:90%;color:#eee;border:1px solid #333}
+#quizModal h3{margin-top:0;color:#86aef2}
+#quizModal button{margin:8px 6px 0 0}
+
+/* 검색 하이라이트 */
+.search-highlight{background:#504300 !important;border:1px solid #ffb74d !important}
+
+/* 모바일 최적화 */
+@media(max-width:599px){
+    .tooltip{max-width:280px;font-size:12px}
+    .tooltip::after{content:"스크롤 가능";display:block;text-align:right;color:#666;font-size:10px;margin-top:6px}
+}
+</style>
+</head>
+<body>
+
+<!-- ▧▧▧ 상단 버전 선택 ▧▧▧ -->
+<header>
+  <button class="btn active" data-level="1">레벨 1 (기본+주석)</button>
+  <button class="btn" data-level="2">레벨 2 (실무)</button>
+  <button class="btn" data-level="3">레벨 3 (최적화)</button>
+</header>
+
+<!-- ▧▧▧ 코드 표시 영역 ▧▧▧ -->
+<main>
+  <pre><code id="codeBlock"></code></pre>
+</main>
+
+<!-- ▧▧▧ 하단 검색바 ▧▧▧ -->
+<footer>
+  <input id="search" placeholder="코드 검색 (예: int, String, age) …">
+</footer>
+
+<!-- ▧▧▧ 사이드 퀴즈 버튼 ▧▧▧ -->
+<button id="quizBtn">QUIZ</button>
+
+<!-- ▧▧▧ 퀴즈 팝업 ▧▧▧ -->
+<div id="quizModal">
+  <div>
+    <h3>🎯 Step-by-Step 코드 퀴즈</h3>
+    <p>학습 방식을 선택하세요:</p>
+    <button class="btn" onclick="startQuiz(1)">📝 레벨 1 선택지 퀴즈</button>
+    <button class="btn" onclick="startQuiz(2)">✍️ 레벨 2 작성 퀴즈</button>
+    <br>
+    <button class="btn" style="margin-top:18px;background:#666" onclick="closeQuiz()">닫기</button>
+  </div>
+</div>
+
+<!-- ▧▧▧ 코드 요소별 상세 정보 팝업 ▧▧▧ -->
+<div id="tooltip" class="tooltip">
+  <button class="close" onclick="hideTip()">×</button>
+  <h4 id="tipTitle"></h4>
+  <section id="tipStructure"></section>
+  <section id="tipRole"></section>
+  <section id="tipLink"></section>
+  <section id="tipCase"></section>
+  <section id="tipWarn"></section>
+</div>
+
+<script>
+/*─────────────────────────────────────────────
+  📚 코드 데이터 (레벨별 전체 코드)
+─────────────────────────────────────────────*/
+const CODE_DATA = {
+  1: `package part01_teach.chapter03;
+
+public class Variable {
+    public static void main(String[] args) {
+        // 기본 자료형 변수 정의
+        int age = 10;          // 정수형 나이 저장
+        double aged = 10.0;    // 실수형 나이 저장  
+        boolean flag = true;   // true(1), false(0)
+        char name = '홍';      // 한글 문자 1글자
+
+        // 참조 자료형 변수 정의
+        String sname = new String("홍길동");
+        
+        // ** String 클래스는 기본형과 참조형으로 모두 사용 가능!!
+        String sname2 = "홍길동 입니다";
+
+        // 출력
+        System.out.println(age);
+        System.out.println(aged);
+        System.out.println(flag);
+        System.out.println(name);
+        System.out.println(sname);
+        System.out.println(sname2);
+    }
+}
+
+package part02_follow.chapter03_variablesandtypes;
+// import java.lang.String; lang 패키지는 자주 사용하는 명령어를 모아두어 생략 가능
+
+public class C0301_Variable01 {
+    public static void main(String[] args) {
+        // 기본 자료형 변수 정의  
+        int age = 10;
+        double aged = 10.0;
+        boolean flag = true;   // true(1), false(0)
+        char name = '홍';
+        char name2 = '길';
+        char name3 = '동';
+        String sname = "홍길동";
+
+        // 참조 자료형 변수 정의
+        String sname2 = new String("홍길동");
+
+        // ** String 클래스는 기본형과 참조형으로 모두 사용 가능!!
+        String sname3 = ("홍길동 입니다");
+
+        // 출력
+        System.out.println(age);
+        System.out.println(aged);
+        System.out.println(flag);
+        System.out.println(name);
+        System.out.print(name);
+        System.out.print(name2);
+        System.out.print(name3);
+        System.out.println(sname);
+        System.out.println(sname2);
+    }
+}`,
+
+  2: `// 💼 현업 실무 수준: 명명규칙, 로깅, 예외처리 적용
+package com.company.chapter03;
+
+import java.util.logging.Logger;
+
+public class VariableManager {
+    private static final Logger LOGGER = Logger.getLogger(VariableManager.class.getName());
+    private static final String DEFAULT_NAME = "홍길동";
+    private static final int ADULT_AGE = 19;
+
+    public static void main(String[] args) {
+        try {
+            // 기본 자료형 - 명명규칙 적용
+            int userAge = 10;
+            double preciseAge = 10.0;
+            boolean isAdultUser = userAge >= ADULT_AGE;
+            char initialChar = '홍';
+
+            // 참조 자료형 - 최적화된 문자열 처리
+            String fullName = DEFAULT_NAME;
+            String userGreeting = String.format("%s 님, 환영합니다!", fullName);
+
+            // 구조화된 로깅
+            logUserInfo(userAge, preciseAge, isAdultUser, initialChar, fullName, userGreeting);
+            
+        } catch (Exception e) {
+            LOGGER.severe("변수 처리 중 오류 발생: " + e.getMessage());
+        }
+    }
+
+    private static void logUserInfo(int age, double ageDouble, boolean isAdult, 
+                                   char initial, String name, String greeting) {
+        LOGGER.info("=== 사용자 정보 ===");
+        LOGGER.info("나이(정수): " + age);
+        LOGGER.info("나이(실수): " + ageDouble);  
+        LOGGER.info("성인여부: " + isAdult);
+        LOGGER.info("이름 첫글자: " + initial);
+        LOGGER.info("전체 이름: " + name);
+        LOGGER.info("인사말: " + greeting);
+    }
+}`,
+
+  3: `// 🚀 AI 최적화 버전: 불변성, 함수형, 성능 최적화
+package ai.optimization.chapter03;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
+import java.util.function.Consumer;
+import java.time.LocalDateTime;
+import java.text.MessageFormat;
+
+public final class OptimalVariableDemo {
+    private OptimalVariableDemo() { /* 인스턴스 생성 방지 */ }
+    
+    // 불변 상수 - 컴파일 타임 최적화
+    private static final int BASE_AGE = 10;
+    private static final double PRECISE_AGE = 10.0;
+    private static final boolean FLAG_STATUS = true;
+    private static final char KOREAN_CHAR = '홍';
+    private static final String OPTIMIZED_NAME = "홍길동";
+    
+    // 메시지 템플릿 - 국제화 대응
+    private static final String GREETING_TEMPLATE = "{0}님의 정보가 처리되었습니다. [{1}]";
+
+    public static void main(String[] args) {
+        // 🔥 비동기 병렬 처리로 성능 최적화
+        CompletableFuture<Void> dataProcessing = CompletableFuture.runAsync(() -> {
+            
+            // 함수형 스타일 데이터 파이프라인
+            Stream.of(
+                createDataEntry("AGE_INT", BASE_AGE),
+                createDataEntry("AGE_DOUBLE", PRECISE_AGE), 
+                createDataEntry("BOOLEAN_FLAG", FLAG_STATUS),
+                createDataEntry("CHAR_DATA", KOREAN_CHAR),
+                createDataEntry("NAME_STRING", OPTIMIZED_NAME),
+                createDataEntry("GREETING", formatGreeting(OPTIMIZED_NAME))
+            )
+            .parallel()  // 병렬 스트림으로 처리 성능 향상
+            .forEach(optimizedLogger());
+        });
+        
+        // 비동기 완료 대기
+        dataProcessing.join();
+    }
+    
+    // 🎯 데이터 엔트리 생성 - 제네릭 활용
+    private static <T> DataEntry<T> createDataEntry(String key, T value) {
+        return new DataEntry<>(key, value, LocalDateTime.now());
+    }
+    
+    // 📝 최적화된 로거 함수
+    private static <T> Consumer<DataEntry<T>> optimizedLogger() {
+        return entry -> System.out.printf("[%s] %s: %s%n", 
+            entry.timestamp().toString().substring(11, 19),
+            entry.key(), 
+            entry.value()
+        );
+    }
+    
+    // 💬 메시지 포맷팅 - 성능 최적화된 문자열 처리
+    private static String formatGreeting(String name) {
+        return MessageFormat.format(GREETING_TEMPLATE, name, LocalDateTime.now());
+    }
+    
+    // 📦 불변 데이터 레코드 - Java 14+ 스타일
+    private record DataEntry<T>(String key, T value, LocalDateTime timestamp) {}
+}`
+};
+
+/*─────────────────────────────────────────────
+  🔍 토큰별 상세 메타데이터 - 학습용 코멘트 포함
+─────────────────────────────────────────────*/
+const TOKEN_METADATA = {
+  // 기본 자료형
+  'int': {
+    title: 'int (정수형)',
+    structure: '🏗️ <b>구조:</b> 32비트 부호있는 정수 자료형',
+    role: '🎯 <b>역할:</b> -2,147,483,648 ~ 2,147,483,647 범위의 정수 저장',
+    link: '🔗 <b>연계:</b> byte(8bit) → short(16bit) → int(32bit) → long(64bit) 순서로 크기 증가',
+    case: '📝 <b>활용 사례:</b> 카운터, 배열 인덱스, 반복문 제어변수, 사용자 ID, 점수 등',
+    warn: '⚠️ <b>주의사항:</b> 범위 초과 시 오버플로우 발생 (-2,147,483,649 → 2,147,483,647)'
+  },
+  
+  'double': {
+    title: 'double (실수형)',
+    structure: '🏗️ <b>구조:</b> IEEE 754 표준 64비트 부동소수점',
+    role: '🎯 <b>역할:</b> 소수점을 포함한 실수 값 저장 (약 15자리 정밀도)',
+    link: '🔗 <b>연계:</b> float(32bit) → double(64bit), int와 연산 시 자동 형변환',
+    case: '📝 <b>활용 사례:</b> 평균 계산, 금융 계산, 과학 계산, 좌표 값, 확률',
+    warn: '⚠️ <b>주의사항:</b> 부동소수점 오차 (0.1 + 0.2 ≠ 0.3), 정확한 금융계산 시 BigDecimal 사용'
+  },
+
+  'boolean': {
+    title: 'boolean (논리형)', 
+    structure: '🏗️ <b>구조:</b> true 또는 false 값만 저장하는 논리 자료형',
+    role: '🎯 <b>역할:</b> 조건문, 반복문에서 참/거짓 판단',
+    link: '🔗 <b>연계:</b> if문, while문, for문 조건식, 논리연산자(&&, ||, !) 활용',
+    case: '📝 <b>활용 사례:</b> 로그인 상태, 게임 승패, 권한 체크, 토글 스위치',
+    warn: '⚠️ <b>주의사항:</b> C/C++과 달리 0과 1로 변환 불가, Boolean 래퍼 클래스와 구분'
+  },
+
+  'char': {
+    title: 'char (문자형)',
+    structure: '🏗️ <b>구조:</b> 16비트 유니코드 문자 하나를 저장',
+    role: '🎯 <b>역할:</b> 단일 문자 또는 유니코드 값 저장',
+    link: '🔗 <b>연계:</b> String은 char 배열로 구성, ASCII/유니코드와 연관',
+    case: '📝 <b>활용 사례:</b> 등급 표시(A,B,C), 성별(M,F), 구분자, 암호화 키',
+    warn: '⚠️ <b>주의사항:</b> 작은따옴표(\') 사용, 문자열("")과 구분, 이스케이프 시퀀스 활용'
+  },
+
+  'String': {
+    title: 'String (문자열)',
+    structure: '🏗️ <b>구조:</b> 참조 자료형, 불변(immutable) 객체',
+    role: '🎯 <b>역할:</b> 문자열 데이터 저장 및 조작',
+    link: '🔗 <b>연계:</b> char 배열 기반, StringBuilder/StringBuffer와 연관',
+    case: '📝 <b>활용 사례:</b> 이름, 주소, 메시지, 파일 경로, URL, JSON 데이터',
+    warn: '⚠️ <b>주의사항:</b> 문자열 연결 시 새 객체 생성, 대량 연산 시 StringBuilder 권장'
+  },
+
+  'new': {
+    title: 'new (객체 생성 연산자)',
+    structure: '🏗️ <b>구조:</b> 힙 메모리에 새로운 객체 인스턴스 생성',
+    role: '🎯 <b>역할:</b> 클래스의 생성자를 호출하여 객체 생성',
+    link: '🔗 <b>연계:</b> 생성자, 가비지 컬렉션, 메모리 관리와 연관',
+    case: '📝 <b>활용 사례:</b> 객체 생성, 배열 생성, 컬렉션 인스턴스 생성',
+    warn: '⚠️ <b>주의사항:</b> String의 경우 리터럴("")이 더 효율적, 메모리 사용량 증가'
+  },
+
+  'System.out.println': {
+    title: 'System.out.println (출력)',
+    structure: '🏗️ <b>구조:</b> System 클래스의 정적 필드 out의 println 메서드',
+    role: '🎯 <b>역할:</b> 콘솔에 문자열 출력 후 줄바꿈',
+    link: '🔗 <b>연계:</b> System.out.print(), System.out.printf()와 유사',
+    case: '📝 <b>활용 사례:</b> 디버깅, 결과 확인, 로그 출력, 사용자 안내 메시지',
+    warn: '⚠️ <b>주의사항:</b> 성능이 느림, 실제 프로젝트에서는 Logger 사용 권장'
+  },
+
+  'age': {
+    title: 'age (나이 변수)',
+    structure: '🏗️ <b>구조:</b> int 타입의 지역 변수',
+    role: '🎯 <b>역할:</b> 사용자의 나이 정보를 저장',
+    link: '🔗 <b>연계:</b> aged(double 타입)와 비교 학습용',
+    case: '📝 <b>활용 사례:</b> 연령 제한 체크, 통계 처리, 그룹 분류',
+    warn: '⚠️ <b>주의사항:</b> 음수 값 검증, 상한선 설정 필요'
+  },
+
+  'aged': {
+    title: 'aged (실수형 나이)',
+    structure: '🏗️ <b>구조:</b> double 타입의 지역 변수',
+    role: '🎯 <b>역할:</b> 정밀한 나이 계산 (예: 10.5세)',
+    link: '🔗 <b>연계:</b> age(int 타입)와 자료형 차이 비교',
+    case: '📝 <b>활용 사례:</b> 개월 수 포함 나이, 의료 기록, 성장 추적',
+    warn: '⚠️ <b>주의사항:</b> 부동소수점 정밀도 한계, 반올림 오차'
+  },
+
+  'flag': {
+    title: 'flag (플래그 변수)',
+    structure: '🏗️ <b>구조:</b> boolean 타입의 상태 표시 변수',
+    role: '🎯 <b>역할:</b> 특정 상태나 조건을 true/false로 표현',
+    case: '📝 <b>활용 사례:</b> 반복문 제어, 상태 관리, 조건 체크',
+    warn: '⚠️ <b>주의사항:</b> 의미있는 변수명 사용 (isValid, hasPermission 등)'
+  },
+
+  'name': {
+    title: 'name (이름 변수)',
+    structure: '🏗️ <b>구조:</b> char 타입의 단일 문자 저장',
+    role: '🎯 <b>역할:</b> 이름의 첫 글자만 저장',
+    link: '🔗 <b>연계:</b> name2, name3과 함께 전체 이름 구성',
+    case: '📝 <b>활용 사례:</b> 이니셜, 약어, 구분자',
+    warn: '⚠️ <b>주의사항:</b> 한글은 2바이트이지만 char는 유니코드로 처리'
+  }
+};
+
+/*─────────────────────────────────────────────
+  🎨 렌더링 및 상호작용 핵심 로직
+─────────────────────────────────────────────*/
+const codeBlock = document.getElementById('codeBlock');
+const tooltip = document.getElementById('tooltip');
+let currentLevel = 1;
+
+// 초기 렌더링
+renderCodeWithTokens(1);
+
+/*─────────────────────────────────────────────
+  📝 레벨 버튼 이벤트 핸들러
+─────────────────────────────────────────────*/
+document.querySelectorAll('header .btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        // 기존 활성 버튼 해제
+        document.querySelector('.btn.active')?.classList.remove('active');
+        btn.classList.add('active');
+        
+        // 새 레벨로 코드 렌더링
+        currentLevel = parseInt(btn.dataset.level);
+        renderCodeWithTokens(currentLevel);
+    });
+});
+
+/*─────────────────────────────────────────────
+  🔧 코드를 개별 토큰으로 파싱하여 렌더링
+─────────────────────────────────────────────*/
+function renderCodeWithTokens(level) {
+    codeBlock.innerHTML = '';
+    const code = CODE_DATA[level];
+    const lines = code.split('\n');
+    
+    lines.forEach((line, index) => {
+        const lineElement = document.createElement('div');
+        lineElement.className = 'code-line';
+        
+        // 빈 줄 처리
+        if (line.trim() === '') {
+            lineElement.innerHTML = '&nbsp;';
+            codeBlock.appendChild(lineElement);
+            return;
+        }
+        
+        // 줄을 토큰별로 분해하여 처리
+        const tokens = tokenizeLine(line);
+        tokens.forEach(token => {
+            lineElement.appendChild(token);
+        });
+        
+        codeBlock.appendChild(lineElement);
+    });
+}
+
+/*─────────────────────────────────────────────
+  ✂️ 한 줄을 의미있는 토큰들로 분해
+─────────────────────────────────────────────*/
+function tokenizeLine(line) {
+    const tokens = [];
+    const patterns = [
+        // Java 키워드
+        { regex: /\b(package|import|public|private|static|void|class|new|final|if|else|for|while|try|catch)\b/g, type: 'keyword' },
+        // 자료형
+        { regex: /\b(int|double|boolean|char|String|byte|short|long|float)\b/g, type: 'type' },
+        // 문자열 리터럴
+        { regex: /"[^"]*"/g, type: 'string' },
+        { regex: /'[^']*'/g, type: 'string' },
+        // 숫자
+        { regex: /\b\d+\.?\d*\b/g, type: 'value' },
+        // 불린값
+        { regex: /\b(true|false)\b/g, type: 'value' },
+        // 변수명 (영문자로 시작)
+        { regex: /\b[a-zA-Z_][a-zA-Z0-9_]*\b/g, type: 'variable' },
+        // 주석
+        { regex: /\/\/.*$/g, type: 'comment' }
+    ];
+    
+    let processedLine = line;
+    const tokenData = [];
+    
+    // 각 패턴별로 토큰 추출
+    patterns.forEach(pattern => {
+        let match;
+        while ((match = pattern.regex.exec(line)) !== null) {
+            tokenData.push({
+                text: match[0],
+                start: match.index,
+                end: match.index + match[0].length,
+                type: pattern.type
+            });
+        }
+        pattern.regex.lastIndex = 0; // 정규식 상태 리셋
+    });
+    
+    // 위치순으로 정렬
+    tokenData.sort((a, b) => a.start - b.start);
+    
+    let lastIndex = 0;
+    tokenData.forEach(token => {
+        // 토큰 이전의 공백/기호 처리
+        if (token.start > lastIndex) {
+            const beforeText = line.substring(lastIndex, token.start);
+            if (beforeText) {
+                tokens.push(createTextNode(beforeText));
+            }
+        }
+        
+        // 실제 토큰 생성
+        tokens.push(createToken(token.text, token.type));
+        lastIndex = token.end;
+    });
+    
+    // 줄 끝 남은 텍스트 처리
+    if (lastIndex < line.length) {
+        const remainingText = line.substring(lastIndex);
+        tokens.push(createTextNode(remainingText));
+    }
+    
+    return tokens;
+}
+
+/*─────────────────────────────────────────────
+  🏷️ 토큰 요소 생성 (호버/클릭 이벤트 포함)
+─────────────────────────────────────────────*/
+function createToken(text, type) {
+    const span = document.createElement('span');
+    span.textContent = text;
+    span.className = `code-token token-${type}`;
+    
+    // 메타데이터가 있는 토큰만 상호작용 가능
+    const hasMetadata = TOKEN_METADATA[text] || TOKEN_METADATA[text.toLowerCase()];
+    
+    if (hasMetadata) {
+        // 🎯 마우스 오버 시 시각적 강조만
+        span.addEventListener('mouseenter', () => {
+            span.style.background = '#3d4a5c';
+            span.style.border = '1px solid #86aef2';
+            span.style.boxShadow = '0 0 8px rgba(134,174,242,0.3)';
+            span.style.transform = 'scale(1.02)';
+        });
+        
+        span.addEventListener('mouseleave', () => {
+            span.style.background = '';
+            span.style.border = '';
+            span.style.boxShadow = '';
+            span.style.transform = '';
+        });
+        
+        // 🖱️ 클릭/터치 시 팝업 표시
+        span.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            showDetailPopup(e.pageX, e.pageY, text);
+        });
+        
+        // 터치 이벤트 (모바일)
+        span.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            showDetailPopup(touch.pageX, touch.pageY, text);
+        });
+    }
+    
+    return span;
+}
+
+/*─────────────────────────────────────────────
+  📄 일반 텍스트 노드 생성 (공백, 기호 등)
+─────────────────────────────────────────────*/
+function createTextNode(text) {
+    const span = document.createElement('span');
+    span.textContent = text;
+    return span;
+}
+
+/*─────────────────────────────────────────────
+  💬 상세 정보 팝업 표시
+─────────────────────────────────────────────*/
+function showDetailPopup(x, y, tokenText) {
+    const metadata = TOKEN_METADATA[tokenText] || TOKEN_METADATA[tokenText.toLowerCase()];
+    
+    if (!metadata) return;
+    
+    // 팝업 위치 조정 (화면 경계 고려)
+    const maxX = window.innerWidth - 340;
+    const maxY = window.innerHeight - 300;
+    
+    tooltip.style.left = Math.min(x + 15, maxX) + 'px';
+    tooltip.style.top = Math.min(y + 15, maxY) + 'px';
+    
+    // 내용 설정
+    tooltip.querySelector('#tipTitle').textContent = metadata.title;
+    tooltip.querySelector('#tipStructure').innerHTML = metadata.structure;
+    tooltip.querySelector('#tipRole').innerHTML = metadata.role;
+    tooltip.querySelector('#tipLink').innerHTML = metadata.link;
+    tooltip.querySelector('#tipCase').innerHTML = metadata.case;
+    tooltip.querySelector('#tipWarn').innerHTML = metadata.warn;
+    
+    // 팝업 표시
+    tooltip.style.display = 'block';
+}
+
+/*─────────────────────────────────────────────
+  ❌ 팝업 닫기
+─────────────────────────────────────────────*/
+function hideTip() {
+    tooltip.style.display = 'none';
+}
+
+// 배경 클릭 시 팝업 닫기
+document.addEventListener('click', (e) => {
+    if (!tooltip.contains(e.target) && !e.target.classList.contains('code-token')) {
+        hideTip();
+    }
+});
+
+/*─────────────────────────────────────────────
+  🔍 실시간 검색 기능
+─────────────────────────────────────────────*/
+document.getElementById('search').addEventListener('input', (e) => {
+    const query = e.target.value.trim().toLowerCase();
+    
+    // 기존 하이라이트 제거
+    document.querySelectorAll('.search-highlight').forEach(el => {
+        el.classList.remove('search-highlight');
+    });
+    
+    if (query === '') return;
+    
+    // 검색어와 일치하는 토큰 찾기 및 하이라이트
+    const tokens = document.querySelectorAll('.code-token');
+    let firstMatch = null;
+    
+    tokens.forEach(token => {
+        if (token.textContent.toLowerCase().includes(query)) {
+            token.classList.add('search-highlight');
+            if (!firstMatch) firstMatch = token;
+        }
+    });
+    
+    // 첫 번째 결과로 스크롤
+    if (firstMatch) {
+        firstMatch.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+        });
+    }
+});
+
+/*─────────────────────────────────────────────
+  🎯 퀴즈 관련 기능
+─────────────────────────────────────────────*/
+const quizModal = document.getElementById('quizModal');
+
+document.getElementById('quizBtn').addEventListener('click', () => {
+    quizModal.style.display = 'flex';
+});
+
+function closeQuiz() {
+    quizModal.style.display = 'none';
+}
+
+function startQuiz(level) {
+    const quizType = level === 1 ? '선택지' : '작성';
+    alert(`🎯 ${quizType} 퀴즈를 시작합니다!\n\n단계별로 코드를 완성해보세요.\n(현재는 데모 버전입니다)`);
+    closeQuiz();
+}
+
+// 퀴즈 모달 배경 클릭 시 닫기
+quizModal.addEventListener('click', (e) => {
+    if (e.target === quizModal) {
+        closeQuiz();
+    }
+});
+
+/*─────────────────────────────────────────────
+  📱 터치 디바이스 최적화
+─────────────────────────────────────────────*/
+// 터치 디바이스에서 더블탭 줌 방지
+document.addEventListener('touchstart', (e) => {
+    if (e.target.classList.contains('code-token')) {
+        e.preventDefault();
+    }
+}, { passive: false });
+
+// 스와이프로 팝업 스크롤 (모바일)
+let startY = 0;
+tooltip.addEventListener('touchstart', (e) => {
+    startY = e.touches[0].clientY;
+});
+
+tooltip.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    const currentY = e.touches[0].clientY;
+    const diff = startY - currentY;
+    tooltip.scrollTop += diff;
+    startY = currentY;
+}, { passive: false });
+
+console.log('🚀 Java 학습 페이지 로드 완료!');
+console.log('💡 코드 요소를 클릭하여 상세 정보를 확인하세요.');
+</script>
+</body>
+</html>

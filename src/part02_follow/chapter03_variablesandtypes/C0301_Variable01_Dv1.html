@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java 변수 학습 도구</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #3498db;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a3a, #2c3e50);
+            color: var(--light);
+            min-height: 100vh;
+            padding-top: 80px;
+            padding-bottom: 60px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 버전 선택기 */
+        .version-selector {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--primary);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+        
+        .version-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .version-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .version-btn.active {
+            background: var(--secondary);
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.5);
+        }
+        
+        /* 코드 영역 */
+        .code-container {
+            background: #1e2b38;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .code-header {
+            background: #253341;
+            padding: 15px 20px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #34495e;
+        }
+        
+        .code-content {
+            padding: 25px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .code-line {
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin: 2px 0;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        .code-line:hover {
+            background: rgba(52, 152, 219, 0.15);
+            cursor: pointer;
+        }
+        
+        .code-line.highlighted {
+            background: rgba(243, 156, 18, 0.3);
+            animation: pulse 1.5s infinite;
+        }
+        
+        .keyword {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .datatype {
+            color: #3498db;
+        }
+        
+        .string {
+            color: #2ecc71;
+        }
+        
+        .comment {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        /* 팝업 */
+        .annotation-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            background: #253341;
+            border-radius: 10px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            z-index: 1000;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+        }
+        
+        .popup-header {
+            background: #2c3e50;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .close-btn:hover {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+        
+        .popup-content {
+            padding: 25px;
+            overflow-y: auto;
+        }
+        
+        .annotation-section {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #34495e;
+        }
+        
+        .annotation-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .annotation-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--secondary);
+            display: inline-block;
+        }
+        
+        .annotation-desc {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .structure { color: #3498db; }
+        .role { color: #2ecc71; font-weight: bold; }
+        .connection { color: #9b59b6; }
+        .examples ul { margin-left: 20px; }
+        .examples li { margin-bottom: 8px; }
+        .warning { color: #e74c3c; }
+        
+        /* 검색바 */
+        .search-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--primary);
+            padding: 15px;
+            display: flex;
+            z-index: 100;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .search-input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+        
+        /* 퀴즈 버튼 */
+        .quiz-btn {
+            position: fixed;
+            right: 30px;
+            bottom: 90px;
+            background: var(--success);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+        
+        .quiz-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+        
+        /* 퀴즈 팝업 */
+        .quiz-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 600px;
+            background: #253341;
+            border-radius: 10px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            z-index: 1000;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+        }
+        
+        .quiz-content {
+            padding: 30px;
+        }
+        
+        .quiz-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--info);
+        }
+        
+        .quiz-question {
+            margin-bottom: 25px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .quiz-option {
+            padding: 15px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .quiz-option:hover {
+            background: rgba(52, 152, 219, 0.2);
+        }
+        
+        .quiz-option.selected {
+            background: rgba(46, 204, 113, 0.3);
+            border: 2px solid var(--success);
+        }
+        
+        .quiz-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .quiz-btn-nav {
+            padding: 10px 25px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .quiz-btn-nav:disabled {
+            background: #7f8c8d;
+            cursor: not-allowed;
+        }
+        
+        /* 오버레이 */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 999;
+            display: none;
+        }
+        
+        /* 애니메이션 */
+        @keyframes pulse {
+            0% { background-color: rgba(243, 156, 18, 0.3); }
+            50% { background-color: rgba(243, 156, 18, 0.5); }
+            100% { background-color: rgba(243, 156, 18, 0.3); }
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .code-content {
+                padding: 15px;
+                font-size: 14px;
+            }
+            
+            .version-btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-btn {
+                right: 20px;
+                bottom: 80px;
+                width: 50px;
+                height: 50px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 버전 선택기 -->
+    <div class="version-selector">
+        <button class="version-btn active" data-version="level1">레벨 1: 기본 + 학습</button>
+        <button class="version-btn" data-version="level2">레벨 2: 업계 실무</button>
+        <button class="version-btn" data-version="level3">레벨 3: AI 최적화</button>
+    </div>
+    
+    <div class="container">
+        <!-- 코드 컨테이너 -->
+        <div class="code-container">
+            <div class="code-header">
+                <div>Java 변수 학습</div>
+                <div>C0301_Variable01.java</div>
+            </div>
+            <div class="code-content" id="code-display">
+                <!-- 코드 내용이 여기에 동적으로 로드됩니다 -->
+            </div>
+        </div>
+        
+        <!-- 추가 설명 섹션 -->
+        <div class="info-section">
+            <h2>Java 변수 핵심 개념</h2>
+            <p>Java에서 변수는 데이터를 저장하는 메모리 공간입니다. 변수를 사용하기 위해서는 먼저 선언하고 초기화해야 합니다.</p>
+            
+            <h3>기본 자료형 (Primitive Types)</h3>
+            <ul>
+                <li><span class="keyword">int</span>: 정수형 (4바이트)</li>
+                <li><span class="keyword">double</span>: 실수형 (8바이트)</li>
+                <li><span class="keyword">boolean</span>: 논리형 (true/false)</li>
+                <li><span class="keyword">char</span>: 문자형 (2바이트, 유니코드)</li>
+            </ul>
+            
+            <h3>참조 자료형 (Reference Types)</h3>
+            <ul>
+                <li><span class="keyword">String</span>: 문자열 객체</li>
+                <li>배열, 클래스, 인터페이스 등</li>
+            </ul>
+            
+            <h3>변수 명명 규칙</h3>
+            <ul>
+                <li>대소문자 구분</li>
+                <li>숫자로 시작 불가</li>
+                <li>예약어 사용 불가</li>
+                <li>특수문자는 $,_ 만 허용</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 검색바 -->
+    <div class="search-bar">
+        <input type="text" class="search-input" id="search-input" placeholder="검색할 코드 요소를 입력하세요...">
+    </div>
+    
+    <!-- 퀴즈 버튼 -->
+    <button class="quiz-btn" id="quiz-toggle">퀴즈</button>
+    
+    <!-- 주석 팝업 -->
+    <div class="annotation-popup" id="annotation-popup">
+        <div class="popup-header">
+            <span id="popup-title">코드 설명</span>
+            <button class="close-btn" id="close-popup">&times;</button>
+        </div>
+        <div class="popup-content" id="popup-content">
+            <!-- 팝업 내용이 여기에 동적으로 로드됩니다 -->
+        </div>
+    </div>
+    
+    <!-- 퀴즈 팝업 -->
+    <div class="quiz-popup" id="quiz-popup">
+        <div class="popup-header">
+            <span>Java 변수 퀴즈</span>
+            <button class="close-btn" id="close-quiz">&times;</button>
+        </div>
+        <div class="quiz-content">
+            <div class="quiz-title">레벨 1: 선택형 퀴즈</div>
+            <div class="quiz-question" id="quiz-question">질문이 여기에 표시됩니다</div>
+            
+            <div class="quiz-options" id="quiz-options">
+                <!-- 퀴즈 옵션이 여기에 동적으로 로드됩니다 -->
+            </div>
+            
+            <div class="quiz-navigation">
+                <button class="quiz-btn-nav" id="quiz-prev" disabled>이전</button>
+                <button class="quiz-btn-nav" id="quiz-next">다음</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 오버레이 -->
+    <div class="overlay" id="overlay"></div>
+    
+    <script>
+        // 코드 데이터
+        const codeData = {
+            level1: {
+                code: `package part02_follow.chapter03_variablesandtypes;
+
+// import java.lang.String; lang 패키지는 자주 사용하는 명령어를 모와두어 생략 가능
+
+public class C0301_Variable01 {
+    public static void main(String[] args) {
+        // 기본 자료형 변수 정의
+        <span class="datatype">int</span> age = 10;
+        <span class="datatype">double</span> aged = 10.0;
+        <span class="datatype">boolean</span> flag = true; //true(1), false(0)
+        <span class="datatype">char</span> name = '홍';
+        <span class="datatype">char</span> name2 = '길';
+        <span class="datatype">char</span> name3 = '동';
+        <span class="datatype">String</span> sname = "홍길동";
+
+        // 참조 자료형 변수 정의
+        <span class="datatype">String</span> sname2 = new String("홍길동");
+
+        // ** String 클래스는 기본형과 참조형으로 모두 사용 가능!!
+        <span class="datatype">String</span> sname3 = ("홍길동 입니다");
+
+        // 출력
+        System.out.println(age);
+        System.out.println(aged);
+        System.out.println(flag);
+        System.out.println(name);
+        System.out.print(name);
+        System.out.print(name2);
+        System.out.print(name3);
+        System.out.println(sname);
+        System.out.println(sname2);
+    }
+}`,
+                annotations: {
+                    7: {
+                        구조: "변수 선언 및 초기화",
+                        역할: "정수형 변수 age를 선언하고 10으로 초기화",
+                        연계: "System.out.println(age)에서 출력에 사용됨",
+                        "활용 예": ["프로그램에서 나이 저장", "카운터 변수", "반복문 인덱스"],
+                        주의점: "정수 범위(-2147483648 ~ 2147483647)를 넘지 않도록 주의"
+                    },
+                    8: {
+                        구조: "변수 선언 및 초기화",
+                        역할: "실수형 변수 aged를 선언하고 10.0으로 초기화",
+                        연계: "System.out.println(aged)에서 출력에 사용됨",
+                        "활용 예": ["소수점이 필요한 계산", "금융 계산", "과학적 계산"],
+                        주의점: "정밀도 문제로 금융 계산에는 BigDecimal 사용 권장"
+                    },
+                    9: {
+                        구조: "변수 선언 및 초기화",
+                        역할: "논리형 변수 flag를 선언하고 true로 초기화",
+                        연계: "System.out.println(flag)에서 출력에 사용됨",
+                        "활용 예": ["조건문 제어", "상태 플래그", "토글 기능"],
+                        주의점: "boolean은 true/false만 가능, 0/1 사용 불가"
+                    },
+                    10: {
+                        구조: "변수 선언 및 초기화",
+                        역할: "문자형 변수 name을 선언하고 '홍'으로 초기화",
+                        연계: "System.out.println(name)과 System.out.print(name)에서 출력에 사용됨",
+                        "활용 예": ["단일 문자 처리", "문자열 조합", "유니코드 문자 표현"],
+                        주의점: "작은따옴표(') 사용, 문자열과 혼동 주의"
+                    },
+                    15: {
+                        구조: "객체 생성 및 변수 초기화",
+                        역할: "String 객체를 생성하고 sname2 변수에 할당",
+                        연계: "System.out.println(sname2)에서 출력에 사용됨",
+                        "활용 예": ["동적 문자열 생성", "문자열 조작", "외부 입력 처리"],
+                        주의점: "불필요한 객체 생성으로 인한 메모리 낭비 가능성"
+                    },
+                    18: {
+                        구조: "변수 선언 및 초기화",
+                        역할: "문자열 변수 sname3을 선언하고 초기화",
+                        연계: "문자열 리터럴로 직접 초기화",
+                        "활용 예": ["고정 문자열 저장", "메시지 출력", "상수 값 정의"],
+                        주의점: "문자열 풀(String pool)을 사용하므로 같은 리터럴은 재사용됨"
+                    }
+                }
+            },
+            level2: {
+                code: `package com.company.project;
+
+import java.text.DecimalFormat;
+
+public class AdvancedVariableDemo {
+    public static void main(String[] args) {
+        // 상수 정의 (final 키워드)
+        final int MAX_AGE = 100;
+        
+        // 타입 추론 (Java 10+)
+        var username = "홍길동";
+        var userAge = 30;
+        var isActive = true;
+        
+        // 숫자 포맷팅
+        double salary = 5000000.0;
+        DecimalFormat df = new DecimalFormat("#,###");
+        String formattedSalary = df.format(salary);
+        
+        // 문자열 빌더 사용
+        StringBuilder fullName = new StringBuilder();
+        fullName.append("홍").append("길").append("동");
+        
+        // 출력
+        System.out.println("사용자 이름: " + username);
+        System.out.println("사용자 나이: " + userAge);
+        System.out.println("활성 상태: " + isActive);
+        System.out.println("포맷된 급여: " + formattedSalary + "원");
+        System.out.println("풀네임: " + fullName.toString());
+        System.out.println("최대 가능 나이: " + MAX_AGE);
+    }
+}`,
+                annotations: {
+                    5: {
+                        구조: "상수 선언",
+                        역할: "변경 불가능한 상수 값 정의",
+                        연계: "프로그램 전반에서 참조되는 고정 값",
+                        "활용 예": ["설정 값", "매직 넘버 대체", "환경 상수"],
+                        주의점: "선언 시 반드시 초기화해야 하며 대문자로 명명"
+                    },
+                    8: {
+                        구조: "타입 추론 변수",
+                        역할: "컴파일러가 변수 타입을 추론하도록 하는 선언",
+                        연계: "지역 변수에서만 사용 가능",
+                        "활용 예": ["복잡한 타입 단순화", "코드 가독성 향상", "제네릭과 조합"],
+                        주의점: "null로 초기화 불가, 멤버 변수로 사용 불가"
+                    },
+                    13: {
+                        구조: "숫자 포맷팅",
+                        역할: "숫자를 읽기 쉬운 형식으로 변환",
+                        연계: "DecimalFormat 클래스 사용",
+                        "활용 예": ["금액 표시", "통계 데이터", "대시보드 출력"],
+                        주의점: "포맷 패턴 오류 주의, 싱글톤 사용 시 스레드 안전 문제"
+                    },
+                    16: {
+                        구조: "StringBuilder 사용",
+                        역할: "효율적인 문자열 조작",
+                        연계: "append() 메서드로 문자열 조합",
+                        "활용 예": ["반복적인 문자열 조작", "대량 문자열 처리", "성능이 중요한 경우"],
+                        주의점: "StringBuffer는 스레드 안전, StringBuilder는 단일 스레드용"
+                    }
+                }
+            },
+            level3: {
+                code: `public class OptimizedVariableDemo {
+    public static void main(String[] args) {
+        // 최적화된 변수 선언 및 초기화
+        int age = 30;
+        double salary = 5_000_000.5;  // 숫자 가독성 향상
+        boolean isActive = true;
+        String username = "홍길동";
+        
+        // 문자열 템플릿 (Java 15+)
+        String userInfo = STR."이름: \{username}, 나이: \{age}, 급여: \{salary}";
+        
+        // 레코드 클래스 (Java 16+)
+        record User(String name, int age, double salary) {}
+        User user = new User(username, age, salary);
+        
+        // 출력 최적화
+        System.out.println(userInfo);
+        System.out.println(user);
+    }
+}`,
+                annotations: {
+                    4: {
+                        구조: "변수 선언 및 초기화",
+                        역할: "기본형 변수 선언과 동시에 초기화",
+                        연계: "한 줄에 하나의 변수로 가독성 향상",
+                        "활용 예": ["간결한 코드", "명시적 초기화", "리팩토링 용이성"],
+                        주의점: "사용 전 반드시 초기화해야 함"
+                    },
+                    5: {
+                        구조: "숫자 리터럴",
+                        역할: "밑줄을 사용한 숫자 가독성 향상",
+                        연계: "컴파일 시 밑줄 무시됨",
+                        "활용 예": ["큰 숫자 표현", "가독성 향상", "금액 표현"],
+                        주의점: "소수점 앞/뒤, 접두사/접미사 근처에는 사용 불가"
+                    },
+                    8: {
+                        구조: "문자열 템플릿",
+                        역할: "문자열 내에 변수 직접 삽입",
+                        연계: "Java 15+에서 도입된 기능",
+                        "활용 예": ["문자열 포맷팅", "동적 문자열 생성", "로깅 메시지"],
+                        주의점: "Java 15 이상 필요, 정식 기능 전에는 프리뷰로 제공"
+                    },
+                    11: {
+                        구조: "레코드 클래스",
+                        역할: "불변 데이터 클래스를 간결하게 정의",
+                        연계: "자동으로 equals(), hashCode(), toString() 생성",
+                        "활용 예": ["DTO 객체", "값 객체", "간단한 데이터 구조"],
+                        주의점: "불변 객체, 상속 불가, Java 16 이상 필요"
+                    }
+                }
+            }
+        };
+
+        // 퀴즈 데이터
+        const quizData = [
+            {
+                question: "정수형 변수를 선언할 때 사용하는 키워드는?",
+                options: ["int", "integer", "number", "num"],
+                answer: 0
+            },
+            {
+                question: "다음 중 실수형 변수로 올바른 것은?",
+                options: [
+                    "double price = 19.99;",
+                    "float price = 19.99;",
+                    "decimal price = 19.99;",
+                    "real price = 19.99;"
+                ],
+                answer: 0
+            },
+            {
+                question: "변수 이름을 지을 때 허용되지 않는 것은?",
+                options: [
+                    "숫자로 시작하는 이름 (예: 1stPlace)",
+                    "밑줄로 시작하는 이름 (예: _count)",
+                    "달러 기호를 포함한 이름 (예: $value)",
+                    "대문자로 시작하는 이름 (예: TotalCount)"
+                ],
+                answer: 0
+            },
+            {
+                question: "String 클래스에 대한 설명으로 옳은 것은?",
+                options: [
+                    "참조 자료형이지만 기본형처럼 사용할 수 있다",
+                    "기본 자료형이다",
+                    "new 키워드 없이 생성할 수 없다",
+                    "한 번 생성되면 내용을 변경할 수 있다"
+                ],
+                answer: 0
+            }
+        ];
+
+        // DOM 요소
+        const codeDisplay = document.getElementById('code-display');
+        const versionButtons = document.querySelectorAll('.version-btn');
+        const searchInput = document.getElementById('search-input');
+        const annotationPopup = document.getElementById('annotation-popup');
+        const popupTitle = document.getElementById('popup-title');
+        const popupContent = document.getElementById('popup-content');
+        const closePopup = document.getElementById('close-popup');
+        const quizToggle = document.getElementById('quiz-toggle');
+        const quizPopup = document.getElementById('quiz-popup');
+        const closeQuiz = document.getElementById('close-quiz');
+        const overlay = document.getElementById('overlay');
+        const quizQuestion = document.getElementById('quiz-question');
+        const quizOptions = document.getElementById('quiz-options');
+        const quizPrev = document.getElementById('quiz-prev');
+        const quizNext = document.getElementById('quiz-next');
+        
+        // 현재 상태
+        let currentVersion = 'level1';
+        let currentQuizIndex = 0;
+        let selectedOption = null;
+
+        // 초기화 함수
+        function init() {
+            loadCode(currentVersion);
+            setupEventListeners();
+        }
+        
+        // 코드 로드 함수
+        function loadCode(version) {
+            const data = codeData[version];
+            codeDisplay.innerHTML = data.code;
+            
+            // 코드 라인에 이벤트 리스너 추가
+            const codeLines = codeDisplay.querySelectorAll('.datatype');
+            codeLines.forEach(line => {
+                line.addEventListener('click', function() {
+                    const lineNumber = this.getAttribute('data-line');
+                    if (lineNumber) {
+                        showAnnotationPopup(version, parseInt(lineNumber));
+                    }
+                });
+            });
+        }
+        
+        // 주석 팝업 표시
+        function showAnnotationPopup(version, lineNumber) {
+            const annotation = codeData[version].annotations[lineNumber];
+            if (!annotation) return;
+            
+            popupTitle.textContent = `라인 ${lineNumber} 설명`;
+            
+            let contentHTML = `
+                <div class="annotation-section structure">
+                    <h3 class="annotation-title">구조</h3>
+                    <p class="annotation-desc">${annotation.구조}</p>
+                </div>
+                
+                <div class="annotation-section role">
+                    <h3 class="annotation-title">역할</h3>
+                    <p class="annotation-desc">${annotation.역할}</p>
+                </div>
+                
+                <div class="annotation-section connection">
+                    <h3 class="annotation-title">연계</h3>
+                    <p class="annotation-desc">${annotation.연계}</p>
+                </div>
+                
+                <div class="annotation-section examples">
+                    <h3 class="annotation-title">활용 예</h3>
+                    <ul>`;
+            
+            annotation["활용 예"].forEach(example => {
+                contentHTML += `<li>${example}</li>`;
+            });
+            
+            contentHTML += `
+                    </ul>
+                </div>
+                
+                <div class="annotation-section warning">
+                    <h3 class="annotation-title">주의점</h3>
+                    <p class="annotation-desc">${annotation.주의점}</p>
+                </div>
+            `;
+            
+            popupContent.innerHTML = contentHTML;
+            annotationPopup.style.display = 'flex';
+            overlay.style.display = 'block';
+        }
+        
+        // 검색 기능
+        function searchCode() {
+            const searchTerm = searchInput.value.toLowerCase();
+            if (!searchTerm) return;
+            
+            const codeText = codeDisplay.textContent.toLowerCase();
+            const index = codeText.indexOf(searchTerm);
+            
+            if (index !== -1) {
+                // 검색어 위치로 스크롤
+                codeDisplay.scrollTop = (index / codeText.length) * codeDisplay.scrollHeight;
+                
+                // 강조 표시 (단순화)
+                const regex = new RegExp(searchTerm, 'gi');
+                const highlightedCode = codeData[currentVersion].code.replace(regex, 
+                    match => `<span class="code-line highlighted">${match}</span>`);
+                
+                codeDisplay.innerHTML = highlightedCode;
+            }
+        }
+        
+        // 퀴즈 시작
+        function startQuiz() {
+            currentQuizIndex = 0;
+            selectedOption = null;
+            loadQuizQuestion(currentQuizIndex);
+            quizPopup.style.display = 'flex';
+            overlay.style.display = 'block';
+        }
+        
+        // 퀴즈 질문 로드
+        function loadQuizQuestion(index) {
+            const quiz = quizData[index];
+            quizQuestion.textContent = quiz.question;
+            
+            // 옵션 로드
+            quizOptions.innerHTML = '';
+            quiz.options.forEach((option, i) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                optionElement.textContent = option;
+                optionElement.addEventListener('click', () => selectOption(i, optionElement));
+                quizOptions.appendChild(optionElement);
+            });
+            
+            // 네비게이션 업데이트
+            quizPrev.disabled = index === 0;
+            quizNext.textContent = index === quizData.length - 1 ? '완료' : '다음';
+        }
+        
+        // 옵션 선택
+        function selectOption(index, element) {
+            // 기존 선택 해제
+            const options = quizOptions.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // 새 선택
+            element.classList.add('selected');
+            selectedOption = index;
+        }
+        
+        // 이벤트 리스너 설정
+        function setupEventListeners() {
+            // 버전 전환
+            versionButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    versionButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentVersion = btn.getAttribute('data-version');
+                    loadCode(currentVersion);
+                });
+            });
+            
+            // 검색
+            searchInput.addEventListener('input', searchCode);
+            
+            // 팝업 닫기
+            closePopup.addEventListener('click', () => {
+                annotationPopup.style.display = 'none';
+                overlay.style.display = 'none';
+            });
+            
+            // 퀴즈 열기
+            quizToggle.addEventListener('click', startQuiz);
+            
+            // 퀴즈 닫기
+            closeQuiz.addEventListener('click', () => {
+                quizPopup.style.display = 'none';
+                overlay.style.display = 'none';
+            });
+            
+            // 퀴즈 네비게이션
+            quizPrev.addEventListener('click', () => {
+                if (currentQuizIndex > 0) {
+                    currentQuizIndex--;
+                    loadQuizQuestion(currentQuizIndex);
+                }
+            });
+            
+            quizNext.addEventListener('click', () => {
+                if (currentQuizIndex < quizData.length - 1) {
+                    currentQuizIndex++;
+                    loadQuizQuestion(currentQuizIndex);
+                } else {
+                    alert('퀴즈를 완료했습니다!');
+                    quizPopup.style.display = 'none';
+                    overlay.style.display = 'none';
+                }
+            });
+            
+            // 오버레이 클릭 시 팝업 닫기
+            overlay.addEventListener('click', () => {
+                annotationPopup.style.display = 'none';
+                quizPopup.style.display = 'none';
+                overlay.style.display = 'none';
+            });
+        }
+        
+        // 초기화 실행
+        init();
+    </script>
+</body>
+</html>
