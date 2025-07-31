@@ -1,6 +1,7 @@
 package c20_JDBC;
 
-//깃헙에서 클론하고 나면 모듈-인포에 등록안했다고 에러가 뜨는데, 그냥 모듈 인포 파일을 삭제해주면 됨
+// 깃헙에서 클론하고 나면 모듈-인포에 등록안했다고 에러가 뜨는데
+// 동작하는데 전혀 상관없는 파일이라서 그냥 모듈 인포 파일을 삭제해주면 됨
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;

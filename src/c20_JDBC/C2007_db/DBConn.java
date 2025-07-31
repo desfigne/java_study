@@ -1,4 +1,4 @@
-package c20_JDBC.C2004_db;
+package c20_JDBC.C2007_db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
