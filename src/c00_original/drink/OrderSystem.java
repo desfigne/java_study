@@ -1,4 +1,4 @@
-package c00_original.drink;
+package drink;
 
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package c00_original.lunch;
+package lunch;
 
 import java.util.Scanner;
 

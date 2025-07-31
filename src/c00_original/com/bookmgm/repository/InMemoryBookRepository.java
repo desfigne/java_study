@@ -1,10 +1,10 @@
-package c00_original.com.bookmgm.repository;
+package com.bookmgm.repository;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import c00_original.com.bookmgm.model.Book;
+import com.bookmgm.model.Book;
 
 public class InMemoryBookRepository implements BookRepository{
 	

@@ -1,15 +1,15 @@
-package c00_original.com.bookmgm.service;
+package com.bookmgm.service;
 
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import c00_original.com.bookmgm.application.BookManagementApplication;
-import c00_original.com.bookmgm.model.Book;
-import c00_original.com.bookmgm.repository.AladinBookRepository;
-import c00_original.com.bookmgm.repository.BookRepository;
-import c00_original.com.bookmgm.repository.InMemoryBookRepository;
-import c00_original.com.bookmgm.repository.Yes24BookRepository;
+import com.bookmgm.application.BookManagementApplication;
+import com.bookmgm.model.Book;
+import com.bookmgm.repository.AladinBookRepository;
+import com.bookmgm.repository.BookRepository;
+import com.bookmgm.repository.InMemoryBookRepository;
+import com.bookmgm.repository.Yes24BookRepository;
 
 public class DefaultBookService implements BookService{
 	BookManagementApplication bma;

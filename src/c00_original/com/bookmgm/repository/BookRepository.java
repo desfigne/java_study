@@ -1,8 +1,7 @@
-package c00_original.com.bookmgm.repository;
+package com.bookmgm.repository;
 
 import java.util.List;
-
-import c00_original.com.bookmgm.model.Book;
+import com.bookmgm.model.Book;
 
 public interface BookRepository {
 	boolean insert(Book book);

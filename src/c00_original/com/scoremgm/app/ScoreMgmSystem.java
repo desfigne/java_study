@@ -1,10 +1,10 @@
-package c00_original.com.scoremgm.app;
+package com.scoremgm.app;
 
 import java.util.Random;
 import java.util.Scanner;
 
-import c00_original.com.scoremgm.service.ScoreService;
-import c00_original.com.scoremgm.service.ScoreServiceImpl;
+import com.scoremgm.service.ScoreService;
+import com.scoremgm.service.ScoreServiceImpl;
 
 /**
  * 메뉴 생성 및 출력
@@ -37,8 +37,8 @@ public class ScoreMgmSystem {
 				case REGISTER:	service.register();		break;
 				case LIST:		service.list();			break;
 				case SEARCH: 	service.search();		break;
-				case UPDATE:	service.update();		break;
-				case DELETE:	service.delete();		break;
+//				case UPDATE:	service.update();		break;
+//				case DELETE:	service.delete();		break;
 				case EXIT:		service.exit();			break;
 				default:	
 					System.out.println("=> 메뉴 준비중 입니다.");

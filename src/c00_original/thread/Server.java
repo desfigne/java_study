@@ -1,4 +1,4 @@
-package c00_original.thread;
+package thread;
 
 import java.io.*;
 import java.net.*;

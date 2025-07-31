@@ -1,4 +1,4 @@
-package c00_original.chapter10;
+package chapter10;
 
 public class Outer {
 	String name = "홍길동";

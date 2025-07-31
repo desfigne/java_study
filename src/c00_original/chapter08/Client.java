@@ -1,4 +1,4 @@
-package c00_original.chapter08;
+package chapter08;
 
 //abstract 메소드를 하나라도 가지고 있으면 그 클래스는 abstract 클래스가 된다.
 //abstract(추상) 클래스는 객체 생성이 불가능하다. 

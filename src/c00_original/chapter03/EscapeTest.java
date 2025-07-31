@@ -1,4 +1,4 @@
-package c00_original.chapter03;
+package chapter03;
 
 /*
  * 제어문자 실습

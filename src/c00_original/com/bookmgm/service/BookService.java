@@ -1,4 +1,4 @@
-package c00_original.com.bookmgm.service;
+package com.bookmgm.service;
 
 public interface BookService {
 	void register();

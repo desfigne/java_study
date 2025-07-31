@@ -1,4 +1,4 @@
-package c00_original.chapter05;
+package chapter05;
 
 /*
  [시작]

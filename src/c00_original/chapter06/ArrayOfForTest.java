@@ -1,4 +1,4 @@
-package c00_original.chapter06;
+package chapter06;
 
 /*
  * 향상된 for - 배열이나 컬렉션(List) 객체에 사용됨

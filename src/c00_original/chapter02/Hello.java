@@ -1,4 +1,4 @@
-package c00_original.chapter02;
+package chapter02;
 
 public class Hello {
 	//main method

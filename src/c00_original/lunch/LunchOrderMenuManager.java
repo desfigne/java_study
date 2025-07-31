@@ -1,4 +1,4 @@
-package c00_original.lunch;
+package lunch;
 
 public class LunchOrderMenuManager {
 	//Field

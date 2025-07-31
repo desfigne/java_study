@@ -1,4 +1,4 @@
-package c00_original.drink_interface;
+package drink_interface;
 
 //import commons.Menu;
 

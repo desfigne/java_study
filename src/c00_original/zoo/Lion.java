@@ -1,4 +1,4 @@
-package c00_original.zoo;
+package zoo;
 
 /**
  * Animal 클래스를 상속받은 자식 클래스 정의

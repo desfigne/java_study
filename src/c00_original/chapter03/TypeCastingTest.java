@@ -1,4 +1,4 @@
-package c00_original.chapter03;
+package chapter03;
 
 /*
  * 형변환 : 자동(묵시적) 형변환, 강제(명시적) 형변환

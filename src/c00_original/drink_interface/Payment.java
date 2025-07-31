@@ -1,4 +1,4 @@
-package c00_original.drink_interface;
+package drink_interface;
 
 public class Payment {
 	//Field

@@ -1,6 +1,6 @@
-package c00_original.vending_machine_ver1;
+package vending_machine_ver1;
 
-import c00_original.commons.Menu;
+import commons.Menu;
 
 public class VendingMachine {
 	String[] nameList = {"☕ 밀크커피","☕ 아메리카노","🍋 유자차","🥛 초코우유"};

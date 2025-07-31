@@ -1,4 +1,4 @@
-package c00_original.vending_machine_ver1;
+package vending_machine_ver1;
 
 public class RestArea {
 	String name;

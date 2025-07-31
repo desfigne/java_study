@@ -1,4 +1,4 @@
-package c00_original.chapter17;
+package chapter17;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

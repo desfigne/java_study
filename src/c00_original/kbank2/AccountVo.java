@@ -1,4 +1,4 @@
-package c00_original.kbank2;
+package kbank2;
 
 /**
  * 은행의 고객 정보를 담는 클래스이며, 은행직원을 통해 생성된다.

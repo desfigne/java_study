@@ -1,4 +1,4 @@
-package c00_original.chapter04;
+package chapter04;
 
 /*
  * 사칙 연산자 : +, -, *, /, % 

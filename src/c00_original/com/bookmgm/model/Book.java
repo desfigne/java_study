@@ -1,4 +1,4 @@
-package c00_original.com.bookmgm.model;
+package com.bookmgm.model;
 
 public class Book {
 	private String id;

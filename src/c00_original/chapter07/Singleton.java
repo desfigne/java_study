@@ -1,4 +1,4 @@
-package c00_original.chapter07;
+package chapter07;
 
 /*
  * 싱글톤 디자인 패턴 적용 

@@ -1,4 +1,4 @@
-package c00_original.chapter07;
+package chapter07;
 
 /*
  * 두 개의 숫자를 입력받아 사칙연산 결과를 리턴하는 메소드를 포함

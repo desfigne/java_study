@@ -1,4 +1,4 @@
-package c00_original.kbank;
+package kbank;
 
 public class KBBankTest {
 	

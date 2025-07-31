@@ -1,4 +1,4 @@
-package c00_original.chapter03;
+package chapter03;
 
 /*
  * 변수의 범위 설정 : Global(전역), Local(지역, 로컬)

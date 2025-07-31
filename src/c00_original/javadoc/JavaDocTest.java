@@ -1,4 +1,4 @@
-package c00_original.javadoc;
+package javadoc;
 
 public class JavaDocTest {
 

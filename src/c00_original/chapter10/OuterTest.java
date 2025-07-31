@@ -1,4 +1,4 @@
-package c00_original.chapter10;
+package chapter10;
 
 public class OuterTest {
 

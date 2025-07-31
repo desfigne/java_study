@@ -1,4 +1,4 @@
-package c00_original.kbank;
+package kbank;
 
 /**
  * 은행 직원 클래스

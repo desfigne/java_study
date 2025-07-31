@@ -1,9 +1,9 @@
-package c00_original.com.bookmgm.application;
+package com.bookmgm.application;
 
 import java.util.Scanner;
 
-import c00_original.com.bookmgm.service.BookService;
-import c00_original.com.bookmgm.service.DefaultBookService;
+import com.bookmgm.service.BookService;
+import com.bookmgm.service.DefaultBookService;
 
 public class BookManagementApplication {	
 	public static final int REGISTER = 1;

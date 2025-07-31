@@ -1,4 +1,4 @@
-package c00_original.chapter04;
+package chapter04;
 
 /**
  * 증감 연산자 : ++, --

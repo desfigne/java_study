@@ -1,4 +1,4 @@
-package c00_original.chapter08;
+package chapter08;
 
 public class InheritanceTest2 {
 

@@ -1,4 +1,4 @@
-package c00_original.chapter07;
+package chapter07;
 
 public class Animal2 {	
 	//Field : 전역변수

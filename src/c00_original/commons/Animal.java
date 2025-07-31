@@ -1,4 +1,4 @@
-package c00_original.commons;
+package commons;
 
 public class Animal {
 	//Field

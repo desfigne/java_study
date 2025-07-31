@@ -1,4 +1,4 @@
-package c00_original.zoo;
+package zoo;
 
 /**
  * 동물의 공통적인 속성 정의

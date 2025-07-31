@@ -1,8 +1,7 @@
-package c00_original.chapter07;
+package chapter07;
 
+import commons.Animal;
 import java.util.Calendar;
-
-import c00_original.commons.Animal;
 
 public class AnimalAccessModifierTest {
 

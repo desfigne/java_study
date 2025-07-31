@@ -1,4 +1,4 @@
-package c00_original.chapter04;
+package chapter04;
 
 /*
  * 논리연산자 : &&(AND), ||(OR), !(NOT)

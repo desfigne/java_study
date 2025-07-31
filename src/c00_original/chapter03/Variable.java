@@ -1,4 +1,4 @@
-package c00_original.chapter03;
+package chapter03;
 
 public class Variable {
 	public static void main(String[] args) {

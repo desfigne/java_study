@@ -1,4 +1,4 @@
-package c00_original.chapter07;
+package chapter07;
 
 /*
  * 생성자 오버로딩, this() 메소드

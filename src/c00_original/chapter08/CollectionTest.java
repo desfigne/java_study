@@ -1,4 +1,4 @@
-package c00_original.chapter08;
+package chapter08;
 
 import java.util.List;
 import java.util.Vector;

@@ -1,4 +1,4 @@
-package c00_original.chapter07;
+package chapter07;
 
 public class Car {
 	//Field = 필드변수, 멤버변수, 전역변수

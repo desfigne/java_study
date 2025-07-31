@@ -1,4 +1,4 @@
-package c00_original.chapter06;
+package chapter06;
 
 public class ArrayTest03 {
 

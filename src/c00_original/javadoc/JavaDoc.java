@@ -1,4 +1,4 @@
-package c00_original.javadoc;
+package javadoc;
 
 /**
  * JavaDoc 문서를 생성하는 클래스 입니다.

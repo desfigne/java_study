@@ -1,4 +1,4 @@
-package c00_original.zoo;
+package zoo;
 
 public class Tiger extends Animal{
 
