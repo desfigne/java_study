@@ -1,9 +1,12 @@
 package c20_JDBC.C2007_com.scoremgm.app;
 
+//+
+import java.util.Random;
+//+
 import java.util.Scanner;
 
-import c13_collectionframework.C1304_com.scoremgm.service.ScoreService;
-import c13_collectionframework.C1304_com.scoremgm.service.ScoreServiceImpl;
+import c20_JDBC.C2007_com.scoremgm.service.ScoreService;
+import c20_JDBC.C2007_com.scoremgm.service.ScoreServiceImpl;
 
 /**
  * 메뉴 생성 및 출력
@@ -11,7 +14,6 @@ import c13_collectionframework.C1304_com.scoremgm.service.ScoreServiceImpl;
 public class ScoreMgmSystem {
 	
 	public Scanner scan;
-	
 	ScoreService service;
 	
 	public static final int REGISTER	= 1;
@@ -21,7 +23,7 @@ public class ScoreMgmSystem {
 	public static final int DELETE		= 5;
 	public static final int EXIT		= 6;
 	
-	public ScoreMgmSystem () {
+	public ScoreMgmSystem() {
 		
 		scan = new Scanner(System.in);
 		service = new ScoreServiceImpl(this); // 앞은 인터페이스, 뒤는 임플리먼츠한 임플 클래스
@@ -53,14 +55,13 @@ public class ScoreMgmSystem {
 	public void selectMenu() {
 		System.out.print("메뉴(숫자)를 선택해주세요. > ");
 		if(scan.hasNextInt()) {
-//			int menu = scan.nextInt();
 
 			switch(scan.nextInt()) {
 			case REGISTER:	service.register();	break;
 			case LIST:		service.list();		break;
 			case SEARCH:	service.search();	break;
-			case UPDATE:	service.update();	break;
-			case DELETE:	service.delete();	break;
+//			case UPDATE:	service.update();	break;
+//			case DELETE:	service.delete();	break;
 			case EXIT:		service.exit();		break;
 			default : System.out.println("메뉴 준비중입니다, 다시 선택해주세요.");
 			}

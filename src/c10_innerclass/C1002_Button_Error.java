@@ -15,7 +15,7 @@ package c10_innerclass;
 //import java.awt.event.WindowEvent;
 //import java.awt.event.WindowListener;
 
-public class C1002_Button {
+public class C1002_Button_Error {
 
 //	public static void main(String[] args) {
 //		

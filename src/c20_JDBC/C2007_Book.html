@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 도서 관리 시스템 - 실시간 코드 빌드 시뮬레이터</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: auto;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            color: #00ff88;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 255, 136, 0.3); }
+            to { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 255, 136, 0.6); }
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(45deg, #00ff88, #00cc6a);
+            color: #000;
+            font-weight: bold;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.5);
+        }
+
+        .btn.active {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            animation: activeBtn 2s infinite;
+        }
+
+        @keyframes activeBtn {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr 400px;
+            gap: 20px;
+            height: 800px;
+        }
+
+        .sidebar {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-y: auto;
+        }
+
+        .sidebar h3 {
+            color: #00ff88;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            text-align: center;
+            border-bottom: 2px solid #00ff88;
+            padding-bottom: 10px;
+        }
+
+        .build-section {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .build-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .build-title {
+            color: #00ff88;
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .build-status {
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            border: 1px solid #00ff88;
+        }
+
+        .code-editor {
+            flex: 1;
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            overflow-y: auto;
+            border: 1px solid #333;
+            position: relative;
+        }
+
+        .code-line {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.3s ease;
+            margin-bottom: 2px;
+            padding: 2px 0;
+            position: relative;
+            white-space: pre-wrap;
+        }
+
+        .code-line.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .code-line.building {
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.2), transparent);
+            border-left: 3px solid #00ff88;
+            padding-left: 10px;
+            animation: buildLine 1s ease-in-out;
+        }
+
+        @keyframes buildLine {
+            0% { background-position: -100% 0; }
+            100% { background-position: 100% 0; }
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background: #00ff88;
+            animation: blink 1s infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .line-number {
+            color: #666;
+            margin-right: 15px;
+            user-select: none;
+            display: inline-block;
+            width: 30px;
+            text-align: right;
+        }
+
+        .keyword { color: #ff79c6; font-weight: bold; }
+        .string { color: #f1fa8c; }
+        .comment { color: #6272a4; font-style: italic; }
+        .class-name { color: #8be9fd; font-weight: bold; }
+        .method { color: #50fa7b; }
+        .number { color: #bd93f9; }
+        .annotation { color: #ffb86c; }
+        .operator { color: #ff5555; }
+
+        .build-log {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-y: auto;
+        }
+
+        .build-log h3 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #00ff88;
+            padding-bottom: 10px;
+        }
+
+        .log-entry {
+            margin-bottom: 8px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .log-entry.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .log-entry.info {
+            background: rgba(0, 123, 255, 0.1);
+            border-left: 3px solid #007bff;
+            color: #87ceeb;
+        }
+
+        .log-entry.success {
+            background: rgba(40, 167, 69, 0.1);
+            border-left: 3px solid #28a745;
+            color: #90ee90;
+        }
+
+        .log-entry.warning {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 3px solid #ffc107;
+            color: #ffd700;
+        }
+
+        .log-entry.error {
+            background: rgba(220, 53, 69, 0.1);
+            border-left: 3px solid #dc3545;
+            color: #ff6b6b;
+        }
+
+        .progress-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00cc6a, #00ff88);
+            width: 0%;
+            transition: width 0.6s ease;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: progressShine 2s infinite;
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #00ff88;
+            font-size: 14px;
+        }
+
+        .file-item {
+            padding: 8px 12px;
+            margin: 3px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .file-item:hover {
+            background: rgba(0, 255, 136, 0.1);
+            transform: translateX(5px);
+        }
+
+        .file-item.active {
+            background: rgba(0, 255, 136, 0.2);
+            border-left: 4px solid #00ff88;
+        }
+
+        .file-item.building {
+            background: rgba(255, 193, 7, 0.2);
+            border-left: 4px solid #ffc107;
+            animation: buildingFile 2s infinite;
+        }
+
+        .file-item.completed {
+            background: rgba(40, 167, 69, 0.2);
+            border-left: 4px solid #28a745;
+        }
+
+        @keyframes buildingFile {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .file-icon {
+            font-size: 16px;
+        }
+
+        .build-animation {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+
+        .build-animation.active {
+            display: block;
+        }
+
+        .gear {
+            width: 60px;
+            height: 60px;
+            border: 6px solid #00ff88;
+            border-radius: 50%;
+            border-top: 6px solid transparent;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .status-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 25px;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 25px;
+            color: #00ff88;
+            font-weight: bold;
+            z-index: 1000;
+            border: 2px solid #00ff88;
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+            animation: statusPulse 3s infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3); }
+            50% { box-shadow: 0 4px 25px rgba(0, 255, 136, 0.8); }
+        }
+
+        @media (max-width: 1400px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+                height: auto;
+            }
+            
+            .sidebar, .build-log {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="status-indicator" id="statusIndicator">🚀 빌드 시스템 준비</div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>📚 도서 관리 시스템</h1>
+            <h2>🔧 실시간 코드 빌드 & 학습 시뮬레이터</h2>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">빌드 시스템 준비 완료</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="startFullBuild()">🏗️ 전체 프로젝트 빌드</button>
+            <button class="btn" onclick="startStepByStepBuild()">📝 단계별 코드 작성</button>
+            <button class="btn" onclick="startInteractiveBuild()">🎯 대화형 빌드</button>
+            <button class="btn" onclick="resetBuild()">🔄 초기화</button>
+        </div>
+
+        <div class="main-layout">
+            <div class="sidebar">
+                <h3>📁 프로젝트 구조</h3>
+                <div id="fileStructure">
+                    <div class="file-item" data-file="GenericRepositoryInterface">
+                        <span class="file-icon">📄</span>
+                        <span>GenericRepositoryInterface.java</span>
+                    </div>
+                    <div class="file-item" data-file="DBConn">
+                        <span class="file-icon">📄</span>
+                        <span>DBConn.java</span>
+                    </div>
+                    <div class="file-item" data-file="Book">
+                        <span class="file-icon">📄</span>
+                        <span>Book.java</span>
+                    </div>
+                    <div class="file-item" data-file="InMemoryBookRepository">
+                        <span class="file-icon">📄</span>
+                        <span>InMemoryBookRepository.java</span>
+                    </div>
+                    <div class="file-item" data-file="DatabaseBookRepository">
+                        <span class="file-icon">📄</span>
+                        <span>DatabaseBookRepository.java</span>
+                    </div>
+                    <div class="file-item" data-file="BookService">
+                        <span class="file-icon">📄</span>
+                        <span>BookService.java</span>
+                    </div>
+                    <div class="file-item" data-file="BookServiceImpl">
+                        <span class="file-icon">📄</span>
+                        <span>BookServiceImpl.java</span>
+                    </div>
+                    <div class="file-item" data-file="BookManagementApplication">
+                        <span class="file-icon">📄</span>
+                        <span>BookManagementApplication.java</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="build-section">
+                <div class="build-header">
+                    <div class="build-title" id="buildTitle">💻 코드 에디터</div>
+                    <div class="build-status" id="buildStatus">대기 중</div>
+                </div>
+                <div class="code-editor" id="codeEditor">
+                    <div class="code-line visible">
+                        <span class="line-number">1</span>
+                        <span class="comment">// 📚 실시간 코드 빌드 시뮬레이터</span>
+                    </div>
+                    <div class="code-line visible">
+                        <span class="line-number">2</span>
+                        <span class="comment">// 버튼을 클릭하여 빌드 과정을 시작하세요!</span>
+                    </div>
+                    <div class="code-line visible">
+                        <span class="line-number">3</span>
+                        <span class="comment">// 코드가 실시간으로 작성되는 모습을 확인할 수 있습니다</span>
+                    </div>
+                </div>
+                <div class="build-animation" id="buildAnimation">
+                    <div class="gear"></div>
+                </div>
+            </div>
+
+            <div class="build-log">
+                <h3>📊 빌드 로그</h3>
+                <div id="logContainer">
+                    <div class="log-entry info visible">
+                        <strong>[INFO]</strong> 빌드 시스템이 준비되었습니다.
+                    </div>
+                    <div class="log-entry info visible">
+                        <strong>[INFO]</strong> Java 컴파일러 버전: OpenJDK 17
+                    </div>
+                    <div class="log-entry success visible">
+                        <strong>[READY]</strong> 빌드 시작을 기다리는 중...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const fileContents = {
+            'GenericRepositoryInterface': {
+                name: 'GenericRepositoryInterface.java',
+                description: '공통 저장소 인터페이스',
+                lines: [
+                    'package db;',
+                    '',
+                    'import java.util.List;',
+                    '',
+                    '/**',
+                    ' * 공통 저장소 인터페이스',
+                    ' * @param <T> 엔티티 타입',
+                    ' */',
+                    'public interface GenericRepositoryInterface<T> {',
+                    '    /**',
+                    '     * 데이터 삽입',
+                    '     */',
+                    '    int insert(T entity);',
+                    '    ',
+                    '    /**',
+                    '     * 전체 데이터 조회',
+                    '     */',
+                    '    List<T> findAll();',
+                    '    ',
+                    '    /**',
+                    '     * ID로 데이터 조회',
+                    '     */',
+                    '    T find(String id);',
+                    '    ',
+                    '    /**',
+                    '     * 데이터 수정',
+                    '     */',
+                    '    int update(T entity);',
+                    '    ',
+                    '    /**',
+                    '     * 데이터 삭제',
+                    '     */',
+                    '    int remove(String id);',
+                    '    ',
+                    '    /**',
+                    '     * 전체 데이터 개수 조회',
+                    '     */',
+                    '    int getCount();',
+                    '}'
+                ]
+            },
+            'DBConn': {
+                name: 'DBConn.java',
+                description: '데이터베이스 연결 클래스',
+                lines: [
+                    'package db;',
+                    '',
+                    'import java.sql.*;',
+                    '',
+                    '/**',
+                    ' * 데이터베이스 연결 공통 클래스',
+                    ' */',
+                    'public class DBConn {',
+                    '    private String url = "jdbc:mysql://127.0.0.1:3306/hrdb2019";',
+                    '    private String user = "root";',
+                    '    private String password = "mysql1234";',
+                    '    ',
+                    '    Connection connection;',
+                    '    protected Statement stmt;',
+                    '    protected PreparedStatement pstmt;',
+                    '    protected ResultSet rs;',
+                    '',
+                    '    protected DBConn() {',
+                    '        try {',
+                    '            connection = DriverManager.getConnection(url, user, password);',
+                    '            System.out.println("데이터베이스 연결 성공");',
+                    '        } catch(Exception e) {',
+                    '            e.printStackTrace();',
+                    '        }',
+                    '    }',
+                    '',
+                    '    public void getPreparedStatement(String sql) {',
+                    '        try {',
+                    '            pstmt = connection.prepareStatement(sql);',
+                    '        } catch (Exception e) {',
+                    '            e.printStackTrace();',
+                    '        }',
+                    '    }',
+                    '',
+                    '    public void close() {',
+                    '        try {',
+                    '            if(rs != null) rs.close();',
+                    '            if(pstmt != null) pstmt.close();',
+                    '            if(connection != null) connection.close();',
+                    '        } catch (Exception e) {',
+                    '            e.printStackTrace();',
+                    '        }',
+                    '    }',
+                    '}'
+                ]
+            },
+            'Book': {
+                name: 'Book.java',
+                description: '도서 모델 클래스',
+                lines: [
+                    'package com.bookmgm.model;',
+                    '',
+                    'import java.util.Date;',
+                    '',
+                    '/**',
+                    ' * 도서 정보를 담는 모델 클래스',
+                    ' */',
+                    'public class Book {',
+                    '    private int rno;',
+                    '    private String bid;',
+                    '    private String title;',
+                    '    private String author;',
+                    '    private int price;',
+                    '    private int isbn;',
+                    '    private Date bdate;',
+                    '',
+                    '    public Book() {}',
+                    '',
+                    '    public Book(String bid, String title, String author, int price, int isbn) {',
+                    '        this.bid = bid;',
+                    '        this.title = title;',
+                    '        this.author = author;',
+                    '        this.price = price;',
+                    '        this.isbn = isbn;',
+                    '        this.bdate = new Date();',
+                    '    }',
+                    '',
+                    '    // Getter and Setter methods',
+                    '    public String getBid() { return bid; }',
+                    '    public void setBid(String bid) { this.bid = bid; }',
+                    '    ',
+                    '    public String getTitle() { return title; }',
+                    '    public void setTitle(String title) { this.title = title; }',
+                    '    ',
+                    '    public String getAuthor() { return author; }',
+                    '    public void setAuthor(String author) { this.author = author; }',
+                    '    ',
+                    '    public int getPrice() { return price; }',
+                    '    public void setPrice(int price) { this.price = price; }',
+                    '    ',
+                    '    public int getIsbn() { return isbn; }',
+                    '    public void setIsbn(int isbn) { this.isbn = isbn; }',
+                    '    ',
+                    '    public Date getBdate() { return bdate; }',
+                    '    public void setBdate(Date bdate) { this.bdate = bdate; }',
+                    '    ',
+                    '    public String getId() { return bid; }',
+                    '',
+                    '    @Override',
+                    '    public String toString() {',
+                    '        return String.format("Book{bid=\'%s\', title=\'%s\', author=\'%s\', price=%d}",',
+                    '                bid, title, author, price);',
+                    '    }',
+                    '}'
+                ]
+            },
+            'InMemoryBookRepository': {
+                name: 'InMemoryBookRepository.java',
+                description: '메모리 기반 저장소',
+                lines: [
+                    'package com.bookmgm.repository;',
+                    '',
+                    'import java.util.*;',
+                    'import com.bookmgm.model.Book;',
+                    'import db.GenericRepositoryInterface;',
+                    '',
+                    '/**',
+                    ' * 메모리 기반 도서 저장소',
+                    ' */',
+                    'public class InMemoryBookRepository implements GenericRepositoryInterface<Book> {',
+                    '    private List<Book> library = new ArrayList<>();',
+                    '    private String libraryName;',
+                    '',
+                    '    public InMemoryBookRepository(String name) {',
+                    '        this.libraryName = name;',
+                    '        System.out.println("** " + name + " 메모리 도서관 생성 완료 **");',
+                    '    }',
+                    '',
+                    '    @Override',
+                    '    public int insert(Book book) {',
+                    '        if(book != null) {',
+                    '            if(book.getBdate() == null) {',
+                    '                book.setBdate(new Date());',
+                    '            }',
+                    '            if(library.add(book)) {',
+                    '                System.out.println("메모리에 도서 등록 완료: " + book.getTitle());',
+                    '                return 1;',
+                    '            }',
+                    '        }',
+                    '        return 0;',
+                    '    }',
+                    '',
+                    '    @Override',
+                    '    public List<Book> findAll() {',
+                    '        return new ArrayList<>(library);',
+                    '    }',
+                    '',
+                    '    @Override',
+                    '    public Book find(String id) {',
+                    '        if(id == null) return null;',
+                    '        for(Book book : library) {',
+                    '            if(book.getBid() != null && book.getBid().equals(id)) {',
+                    '                return book;',
+                    '            }',
+                    '        }',
+                    '        return null;',
+                    '    }',
+                    '',
+                    '    @Override',
+                    '    public int update(Book entity) {',
+                    '        if(entity == null || entity.getBid() == null) return 0;',
+                    '        for(int i = 0; i < library.size(); i++) {',
+                    '            if(library.get(i).getBid().equals(entity.getBid())) {',
+                    '                library.set(i, entity);',
+                    '                return 1;',
+                    '            }',
+                    '        }',
+                    '        return 0;',
+                    '    }',
+                    '',
+                    '    @Override',
+                    '    public int remove(String id) {',
+                    '        if(id == null) return 0;',
+                    '        for(int i = 0; i < library.size(); i++) {',
+                    '            if(library.get(i).getBid().equals(id)) {',
+                    '                library.remove(i);',
+                    '                return 1;',
+                    '            }',
+                    '        }',
+                    '        return 0;',
+                    '    }',
+                    '',
+                    '    @Override',
+                    '    public int getCount() {',
+                    '        return library.size();',
+                    '    }',
+                    '}'
+                ]
+            },
+            'DatabaseBookRepository': {
+                name: 'DatabaseBookRepository.java',
+                description: '데이터베이스 기반 저장소',
+                lines: [
+                    'package com.bookmgm.repository;',
+                    '',
+                    'import java.util.*;',
+                    'import com.bookmgm.model.Book;',
+                    'import db.*;',
+                    '',
+                    '/**',
+                    ' * 데이터베이스 기반 도서 저장소',
+                    ' */',
+                    'public class DatabaseBookRepository extends DBConn implements GenericRepositoryInterface<Book> {',
+                    '    private String tableName;',
+                    '    private String libraryName;',
+                    '',
+                    '    public DatabaseBookRepository(String libraryName, String tableName) {',
+                    '        super();',
+                    '        this.libraryName = libraryName;',
+                    '        this.tableName = tableName;',
+                    '        System.out.println("** " + libraryName + " 데이터베이스 도서관 생성 완료 **");',
+                    '    }',
+                    '',
+                    '    @Override',
+                    '    public int insert(Book book) {',
+                    '        if(book == null) return 0;',
+                    '        int rows = 0;',
+                    '        String sql = String.format(',
+                    '            "INSERT INTO %s(title, author, price, isbn, bdate) VALUES(?, ?, ?, ?, NOW())",',
+                    '            tableName);',
+                    '        try {',
+                    '            getPreparedStatement(sql);',
+                    '            pstmt.setString(1, book.getTitle());',
+                    '            pstmt.setString(2, book.getAuthor());',
+                    '            pstmt.setInt(3, book.getPrice());',
+                    '            pstmt.setInt(4, book.getIsbn());',
+                    '            rows = pstmt.executeUpdate();',
+                    '            if(rows > 0) {',
+                    '                System.out.println("데이터베이스에 도서 등록 완료: " + book.getTitle());',
+                    '            }',
+                    '        } catch (Exception e) {',
+                    '            e.printStackTrace();',
+                    '        }',
+                    '        return rows;',
+                    '    }',
+                    '',
+                    '    @Override',
+                    '    public List<Book> findAll() {',
+                    '        List<Book> list = new ArrayList<>();',
+                    '        String sql = "SELECT * FROM " + tableName;',
+                    '        try {',
+                    '            getPreparedStatement(sql);',
+                    '            rs = pstmt.executeQuery();',
+                    '            while(rs.next()) {',
+                    '                Book book = new Book();',
+                    '                book.setBid(rs.getString("bid"));',
+                    '                book.setTitle(rs.getString("title"));',
+                    '                book.setAuthor(rs.getString("author"));',
+                    '                book.setPrice(rs.getInt("price"));',
+                    '                book.setIsbn(rs.getInt("isbn"));',
+                    '                book.setBdate(rs.getTimestamp("bdate"));',
+                    '                list.add(book);',
+                    '            }',
+                    '        } catch(Exception e) {',
+                    '            e.printStackTrace();',
+                    '        }',
+                    '        return list;',
+                    '    }',
+                    '',
+                    '    // 기타 메서드들은 유사한 패턴으로 구현...',
+                    '    @Override',
+                    '    public Book find(String id) { /* 구현 */ return null; }',
+                    '    @Override',
+                    '    public int update(Book entity) { /* 구현 */ return 0; }',
+                    '    @Override',
+                    '    public int remove(String id) { /* 구현 */ return 0; }',
+                    '    @Override',
+                    '    public int getCount() { /* 구현 */ return 0; }',
+                    '}'
+                ]
+            },
+            'BookService': {
+                name: 'BookService.java',
+                description: '서비스 인터페이스',
+                lines: [
+                    'package com.bookmgm.service;',
+                    '',
+                    '/**',
+                    ' * 도서 서비스 인터페이스',
+                    ' */',
+                    'public interface BookService {',
+                    '    void register();',
+                    '    void list();',
+                    '    void search();',
+                    '    void update();',
+                    '    void delete();',
+                    '    void exit();',
+                    '    int getCount();',
+                    '}'
+                ]
+            },
+            'BookServiceImpl': {
+                name: 'BookServiceImpl.java',
+                description: '서비스 구현체',
+                lines: [
+                    'package com.bookmgm.service;',
+                    '',
+                    'import java.util.*;',
+                    'import com.bookmgm.application.BookManagementApplication;',
+                    'import com.bookmgm.model.Book;',
+                    'import com.bookmgm.repository.*;',
+                    'import db.GenericRepositoryInterface;',
+                    '',
+                    '/**',
+                    ' * 도서 서비스 구현 클래스',
+                    ' */',
+                    'public class BookServiceImpl implements BookService {',
+                    '    private BookManagementApplication bma;',
+                    '    private GenericRepositoryInterface<Book> repository;',
+                    '    private Random random = new Random();',
+                    '',
+                    '    public BookServiceImpl(BookManagementApplication bma) {',
+                    '        this.bma = bma;',
+                    '        selectRepository();',
+                    '    }',
+                    '',
+                    '    public Book createBook() {',
+                    '        Book book = new Book();',
+                    '        book.setBid("B" + String.format("%04d", random.nextInt(10000)));',
+                    '        book.setIsbn(random.nextInt(9000) + 1000);',
+                    '        System.out.print("도서명을 입력하세요 > ");',
+                    '        book.setTitle(bma.scan.nextLine().trim());',
+                    '        System.out.print("저자를 입력하세요 > ");',
+                    '        book.setAuthor(bma.scan.nextLine().trim());',
+                    '        System.out.print("가격을 입력하세요 > ");',
+                    '        book.setPrice(bma.scan.nextInt());',
+                    '        return book;',
+                    '    }',
+                    '',
+                    '    public void selectRepository() {',
+                    '        System.out.println("저장소를 선택하세요:");',
+                    '        System.out.println("1. 메모리 저장소  2. 데이터베이스 저장소");',
+                    '        int choice = bma.scan.nextInt();',
+                    '        if(choice == 1) {',
+                    '            repository = new InMemoryBookRepository("기본도서관");',
+                    '        } else {',
+                    '            repository = new DatabaseBookRepository("DB도서관", "books");',
+                    '        }',
+                    '    }',
+                    '',
+                    '    @Override',
+                    '    public void register() {',
+                    '        try {',
+                    '            Book book = createBook();',
+                    '            if(repository.insert(book) > 0) {',
+                    '                System.out.println("✅ 도서가 등록되었습니다.");',
+                    '            } else {',
+                    '                System.out.println("🚫 도서 등록에 실패했습니다.");',
+                    '            }',
+                    '        } catch(Exception e) {',
+                    '            System.err.println("등록 중 오류: " + e.getMessage());',
+                    '        }',
+                    '        bma.showMenu();',
+                    '    }',
+                    '',
+                    '    // 기타 메서드들...',
+                    '    @Override',
+                    '    public void list() { /* 구현 */ }',
+                    '    @Override',
+                    '    public void search() { /* 구현 */ }',
+                    '    @Override',
+                    '    public void update() { /* 구현 */ }',
+                    '    @Override',
+                    '    public void delete() { /* 구현 */ }',
+                    '    @Override',
+                    '    public void exit() { System.exit(0); }',
+                    '    @Override',
+                    '    public int getCount() { return repository.getCount(); }',
+                    '}'
+                ]
+            },
+            'BookManagementApplication': {
+                name: 'BookManagementApplication.java',
+                description: '메인 애플리케이션',
+                lines: [
+                    'package com.bookmgm.application;',
+                    '',
+                    'import java.util.Scanner;',
+                    'import com.bookmgm.service.*;',
+                    '',
+                    '/**',
+                    ' * 도서 관리 시스템 메인 애플리케이션',
+                    ' */',
+                    'public class BookManagementApplication {',
+                    '    public static final int REGISTER = 1;',
+                    '    public static final int LIST = 2;',
+                    '    public static final int SEARCH = 3;',
+                    '    public static final int UPDATE = 4;',
+                    '    public static final int DELETE = 5;',
+                    '    public static final int EXIT = 6;',
+                    '',
+                    '    public Scanner scan;',
+                    '    public BookService service;',
+                    '',
+                    '    public BookManagementApplication() {',
+                    '        System.out.println("📚 도서 관리 시스템을 시작합니다!");',
+                    '        scan = new Scanner(System.in);',
+                    '        service = new BookServiceImpl(this);',
+                    '        showMenu();',
+                    '    }',
+                    '',
+                    '    public void showMenu() {',
+                    '        try {',
+                    '            String[] labels = {"도서 등록", "도서 목록", "도서 검색", "도서 수정", "도서 삭제", "종료"};',
+                    '            System.out.println("=================== 도서 관리 시스템 ===================");',
+                    '            System.out.printf("현재 등록된 도서 수: %d권\\n", service.getCount());',
+                    '            System.out.println("====================================================");',
+                    '            for(int i = 0; i < labels.length; i++) {',
+                    '                System.out.printf("%d. %s\\n", (i + 1), labels[i]);',
+                    '            }',
+                    '            System.out.println("----------------------------------------------------");',
+                    '            selectMenu();',
+                    '        } catch(Exception e) {',
+                    '            System.err.println("메뉴 출력 중 오류: " + e.getMessage());',
+                    '        }',
+                    '    }',
+                    '',
+                    '    public void selectMenu() {',
+                    '        System.out.print("메뉴를 선택하세요 (1-6) > ");',
+                    '        try {',
+                    '            if(scan.hasNextInt()) {',
+                    '                int choice = scan.nextInt();',
+                    '                scan.nextLine();',
+                    '                switch(choice) {',
+                    '                    case REGISTER: service.register(); break;',
+                    '                    case LIST: service.list(); break;',
+                    '                    case SEARCH: service.search(); break;',
+                    '                    case UPDATE: service.update(); break;',
+                    '                    case DELETE: service.delete(); break;',
+                    '                    case EXIT: service.exit(); break;',
+                    '                    default:',
+                    '                        System.out.println("올바른 메뉴를 선택하세요.");',
+                    '                        showMenu();',
+                    '                }',
+                    '            } else {',
+                    '                System.out.println("숫자를 입력하세요.");',
+                    '                scan.nextLine();',
+                    '                showMenu();',
+                    '            }',
+                    '        } catch(Exception e) {',
+                    '            System.err.println("메뉴 선택 중 오류: " + e.getMessage());',
+                    '            showMenu();',
+                    '        }',
+                    '    }',
+                    '',
+                    '    public static void main(String[] args) {',
+                    '        try {',
+                    '            new BookManagementApplication();',
+                    '        } catch(Exception e) {',
+                    '            System.err.println("시스템 시작 중 오류: " + e.getMessage());',
+                    '            e.printStackTrace();',
+                    '        }',
+                    '    }',
+                    '}'
+                ]
+            }
+        };
+
+        let isBuilding = false;
+        let buildQueue = [];
+        let currentFileIndex = 0;
+
+        function updateStatus(message) {
+            document.getElementById('statusIndicator').textContent = message;
+        }
+
+        function updateProgress(percent, text = '') {
+            document.getElementById('progressFill').style.width = percent + '%';
+            if (text) {
+                document.getElementById('progressText').textContent = text;
+            }
+        }
+
+        function addLogEntry(type, message) {
+            const logContainer = document.getElementById('logContainer');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.innerHTML = `<strong>[${type.toUpperCase()}]</strong> ${message}`;
+            logContainer.appendChild(entry);
+            
+            setTimeout(() => entry.classList.add('visible'), 100);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        function highlightSyntax(line) {
+            return line
+                .replace(/\b(package|import|public|private|protected|class|interface|extends|implements|static|final|void|int|String|boolean|try|catch|if|else|for|while|return|new|this|super|override)\b/g, '<span class="keyword">$1</span>')
+                .replace(/"([^"]*)"/g, '<span class="string">"$1"</span>')
+                .replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '<span class="comment">$&</span>')
+                .replace(/\b([A-Z][a-zA-Z0-9]*)\b/g, '<span class="class-name">$1</span>')
+                .replace(/\b([a-z][a-zA-Z0-9]*)\s*\(/g, '<span class="method">$1</span>(')
+                .replace(/\b(\d+)\b/g, '<span class="number">$1</span>')
+                .replace(/@\w+/g, '<span class="annotation">$&</span>');
+        }
+
+        async function typeCode(lines, container, speed = 50) {
+            container.innerHTML = '';
+            
+            for (let i = 0; i < lines.length; i++) {
+                const codeLine = document.createElement('div');
+                codeLine.className = 'code-line';
+                
+                const lineNumber = document.createElement('span');
+                lineNumber.className = 'line-number';
+                lineNumber.textContent = (i + 1).toString().padStart(3, ' ');
+                codeLine.appendChild(lineNumber);
+                
+                const codeContent = document.createElement('span');
+                codeLine.appendChild(codeContent);
+                
+                container.appendChild(codeLine);
+                
+                // 줄 단위로 타이핑 효과
+                await new Promise(resolve => {
+                    setTimeout(() => {
+                        codeLine.classList.add('visible', 'building');
+                        const line = lines[i];
+                        let charIndex = 0;
+                        
+                        const typeInterval = setInterval(() => {
+                            if (charIndex <= line.length) {
+                                const currentText = line.substring(0, charIndex);
+                                codeContent.innerHTML = highlightSyntax(currentText);
+                                
+                                if (charIndex === line.length) {
+                                    // 타이핑 완료 후 커서 제거
+                                    setTimeout(() => {
+                                        codeLine.classList.remove('building');
+                                        resolve();
+                                    }, 200);
+                                    clearInterval(typeInterval);
+                                } else {
+                                    // 타이핑 중일 때 커서 표시
+                                    codeContent.innerHTML = highlightSyntax(currentText) + '<span class="typing-cursor"></span>';
+                                }
+                                charIndex++;
+                            }
+                        }, speed);
+                    }, 100);
+                });
+                
+                // 스크롤 자동 조정
+                container.scrollTop = container.scrollHeight;
+            }
+        }
+
+        async function buildFile(fileName) {
+            if (!fileContents[fileName]) return;
+            
+            const fileData = fileContents[fileName];
+            const fileItem = document.querySelector(`[data-file="${fileName}"]`);
+            const buildTitle = document.getElementById('buildTitle');
+            const buildStatus = document.getElementById('buildStatus');
+            const codeEditor = document.getElementById('codeEditor');
+            
+            // 파일 상태 업데이트
+            document.querySelectorAll('.file-item').forEach(item => {
+                item.classList.remove('active', 'building');
+            });
+            fileItem.classList.add('active', 'building');
+            
+            // 빌드 상태 업데이트
+            buildTitle.textContent = `💻 ${fileData.name}`;
+            buildStatus.textContent = '빌드 중';
+            buildStatus.style.background = 'rgba(255, 193, 7, 0.2)';
+            buildStatus.style.color = '#ffc107';
+            buildStatus.style.borderColor = '#ffc107';
+            
+            updateStatus(`🔧 ${fileName} 빌드 중...`);
+            addLogEntry('info', `${fileName} 컴파일 시작`);
+            
+            // 코드 타이핑 시작
+            await typeCode(fileData.lines, codeEditor, 30);
+            
+            // 빌드 완료 처리
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            fileItem.classList.remove('building');
+            fileItem.classList.add('completed');
+            
+            buildStatus.textContent = '완료';
+            buildStatus.style.background = 'rgba(40, 167, 69, 0.2)';
+            buildStatus.style.color = '#28a745';
+            buildStatus.style.borderColor = '#28a745';
+            
+            addLogEntry('success', `${fileName} 컴파일 성공`);
+            updateStatus(`✅ ${fileName} 빌드 완료`);
+        }
+
+        async function startFullBuild() {
+            if (isBuilding) return;
+            isBuilding = true;
+            
+            const btn = event.target;
+            btn.classList.add('active');
+            
+            updateStatus('🏗️ 전체 프로젝트 빌드 시작');
+            updateProgress(0, '빌드 준비 중...');
+            
+            addLogEntry('info', '전체 프로젝트 빌드 시작');
+            addLogEntry('info', 'Maven 의존성 확인 중...');
+            addLogEntry('success', '의존성 다운로드 완료');
+            
+            const buildOrder = [
+                'GenericRepositoryInterface',
+                'DBConn',
+                'Book',
+                'InMemoryBookRepository',
+                'DatabaseBookRepository',
+                'BookService',
+                'BookServiceImpl',
+                'BookManagementApplication'
+            ];
+            
+            for (let i = 0; i < buildOrder.length; i++) {
+                const fileName = buildOrder[i];
+                const progress = ((i + 1) / buildOrder.length) * 100;
+                
+                updateProgress(progress, `${fileName} 빌드 중... (${i + 1}/${buildOrder.length})`);
+                await buildFile(fileName);
+                
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }
+            
+            // 빌드 완료
+            updateProgress(100, '전체 프로젝트 빌드 완료!');
+            updateStatus('🎉 빌드 성공! 모든 파일이 컴파일되었습니다.');
+            addLogEntry('success', '전체 프로젝트 빌드 완료');
+            addLogEntry('info', 'JAR 파일 생성 완료: book-management-system.jar');
+            
+            btn.classList.remove('active');
+            isBuilding = false;
+        }
+
+        async function startStepByStepBuild() {
+            if (isBuilding) return;
+            isBuilding = true;
+            
+            const btn = event.target;
+            btn.classList.add('active');
+            
+            updateStatus('📝 단계별 코드 작성 시작');
+            addLogEntry('info', '단계별 빌드 모드 시작');
+            
+            const buildOrder = [
+                'GenericRepositoryInterface',
+                'DBConn',
+                'Book',
+                'InMemoryBookRepository',
+                'DatabaseBookRepository',
+                'BookService',
+                'BookServiceImpl',
+                'BookManagementApplication'
+            ];
+            
+            for (let i = 0; i < buildOrder.length; i++) {
+                const fileName = buildOrder[i];
+                updateProgress(((i + 1) / buildOrder.length) * 100, `${fileName} 작성 중...`);
+                
+                addLogEntry('info', `Step ${i + 1}: ${fileName} 작성 시작`);
+                await buildFile(fileName);
+                addLogEntry('success', `Step ${i + 1}: ${fileName} 작성 완료`);
+                
+                // 각 단계 사이에 더 긴 대기 시간
+                await new Promise(resolve => setTimeout(resolve, 2000));
+            }
+            
+            updateStatus('🎉 단계별 코드 작성 완료!');
+            addLogEntry('success', '모든 단계 완료');
+            
+            btn.classList.remove('active');
+            isBuilding = false;
+        }
+
+        async function startInteractiveBuild() {
+            if (isBuilding) return;
+            isBuilding = true;
+            
+            const btn = event.target;
+            btn.classList.add('active');
+            
+            updateStatus('🎯 대화형 빌드 시작');
+            addLogEntry('info', '대화형 빌드 모드 - 파일을 클릭하세요');
+            
+            // 파일 클릭 이벤트 활성화
+            document.querySelectorAll('.file-item').forEach(item => {
+                item.style.cursor = 'pointer';
+                item.addEventListener('click', async function() {
+                    if (this.classList.contains('completed')) return;
+                    
+                    const fileName = this.getAttribute('data-file');
+                    await buildFile(fileName);
+                });
+            });
+            
+            updateProgress(0, '파일을 클릭하여 개별 빌드하세요');
+            
+            // 10초 후 자동으로 대화형 모드 종료
+            setTimeout(() => {
+                btn.classList.remove('active');
+                isBuilding = false;
+                updateStatus('🎯 대화형 빌드 종료');
+                addLogEntry('info', '대화형 빌드 모드 종료');
+            }, 30000);
+        }
+
+        function resetBuild() {
+            if (isBuilding) {
+                updateStatus('⏸️ 빌드 중지 중...');
+                isBuilding = false;
+            }
+            
+            // 모든 상태 초기화
+            document.querySelectorAll('.file-item').forEach(item => {
+                item.classList.remove('active', 'building', 'completed');
+            });
+            
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById('buildTitle').textContent = '💻 코드 에디터';
+            const buildStatus = document.getElementById('buildStatus');
+            buildStatus.textContent = '대기 중';
+            buildStatus.style.background = 'rgba(0, 255, 136, 0.2)';
+            buildStatus.style.color = '#00ff88';
+            buildStatus.style.borderColor = '#00ff88';
+            
+            document.getElementById('codeEditor').innerHTML = `
+                <div class="code-line visible">
+                    <span class="line-number">1</span>
+                    <span class="comment">// 📚 실시간 코드 빌드 시뮬레이터</span>
+                </div>
+                <div class="code-line visible">
+                    <span class="line-number">2</span>
+                    <span class="comment">// 버튼을 클릭하여 빌드 과정을 시작하세요!</span>
+                </div>
+                <div class="code-line visible">
+                    <span class="line-number">3</span>
+                    <span class="comment">// 코드가 실시간으로 작성되는 모습을 확인할 수 있습니다</span>
+                </div>
+            `;
+            
+            document.getElementById('logContainer').innerHTML = `
+                <div class="log-entry info visible">
+                    <strong>[INFO]</strong> 빌드 시스템이 초기화되었습니다.
+                </div>
+                <div class="log-entry success visible">
+                    <strong>[READY]</strong> 새로운 빌드를 시작할 준비가 되었습니다.
+                </div>
+            `;
+            
+            updateProgress(0, '빌드 시스템 준비 완료');
+            updateStatus('🚀 빌드 시스템 준비 완료');
+        }
+
+        // 초기화
+        window.onload = function() {
+            updateStatus('🚀 시스템 초기화 중...');
+            
+            // 로딩 애니메이션
+            let progress = 0;
+            const loadingInterval = setInterval(() => {
+                progress += 2;
+                updateProgress(progress, '빌드 시스템 구성 요소 로딩 중...');
+                
+                if (progress >= 100) {
+                    clearInterval(loadingInterval);
+                    setTimeout(() => {
+                        updateStatus('🎓 실시간 빌드 시스템 준비 완료!');
+                        updateProgress(0, '빌드 시스템 준비 완료 - 버튼을 클릭하여 시작하세요!');
+                        
+                        // 파일 아이템 애니메이션
+                        document.querySelectorAll('.file-item').forEach((item, index) => {
+                            setTimeout(() => {
+                                item.style.opacity = '0';
+                                item.style.transform = 'translateX(-20px)';
+                                item.style.transition = 'all 0.5s ease';
+                                
+                                setTimeout(() => {
+                                    item.style.opacity = '1';
+                                    item.style.transform = 'translateX(0)';
+                                }, 100);
+                            }, index * 100);
+                        });
+                    }, 500);
+                }
+            }, 30);
+            
+            // 환영 메시지
+            setTimeout(() => {
+                if (confirm('🎓 실시간 코드 빌드 데모를 시작하시겠습니까?\n\n• 전체 프로젝트 빌드: 모든 파일을 순서대로 빌드\n• 단계별 코드 작성: 각 파일을 천천히 작성\n• 대화형 빌드: 원하는 파일을 클릭하여 빌드')) {
+                    startFullBuild();
+                }
+            }, 3000);
+        };
+    </script>
+</body>
+</html>

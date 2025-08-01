@@ -1,99 +1,170 @@
 package c20_JDBC.C2007_com.scoremgm.repository;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import c13_collectionframework.C1304_com.scoremgm.model.Member;
+//-
+//import java.util.Iterator;
+//-
 
-public class ScoreRepositoryImpl implements ScoreRepository { // 추상 메소드 오버라이드
+//+
+import c20_JDBC.C2007_db.DBConn;
+import c20_JDBC.C2007_db.GenericRepositoryInterface;
+//+
+
+import c20_JDBC.C2007_com.scoremgm.model.MemberVo;
+
+//-
+//public class ScoreRepositoryImpl implements ScoreRepository { // 추상 메소드 오버라이드
+//-
+
+//+
+
+public class ScoreRepositoryImpl extends DBConn 
+			implements GenericRepositoryInterface<MemberVo>{
 	
-	List<Member> storage = new ArrayList<Member>();
-	
-	@Override
-	public boolean insert(Member member) {
-		if(member == null) return false;
-		return storage.add(member);
-//		System.out.println("storage.size() --> " + storage.size());
-	};
-	
-	@Override
-	public int getCount() {
-		return storage.size();
-	}
-	
-	@Override
-	public List<Member> findAll() {
-		return storage;
-	}
+	public ScoreRepositoryImpl() { super(); } 
 	
 	@Override
-	public Member find(String no) {
-		no = "2025-" + no;
-		Member member = null;
-		
-		if(no != null) {
-			for(Member m : storage) {
-//				if(m.getNo().equals("2025-" + no)) { // 조정하는 과정은 상위에서 진행하길 권장
-				if(m.getNo().equals(no)) {
-					member = m;
-				}
-			}
-		}
+	public int insert(MemberVo member) {
+		int rows = 0;
+		String sql = """
+				insert into score_member(name, department, kor, eng, math, mdate)
+						values(?, ?, ?, ?, ?, now())
+		""";
+		try {
+			getPreparedStatement(sql);
+			pstmt.setString(1, member.getName());
+			pstmt.setString(2, member.getDepartment());
+			pstmt.setInt(3, member.getKor());
+			pstmt.setInt(4, member.getEng());
+			pstmt.setInt(5, member.getMath());
+			rows = pstmt.executeUpdate();
 			
-//		if(no != null) {
-		// 강사님과 학생들 오류나는 코드 > 외부에서 생성된 member 변수의 scope Iterable 관리
-		// forEach는 메소드 호출이므로 스택에 새로운 블록으로 생성되어 실행됨
-		// 실행 중이던 find는 중지하고 나서 forEach로 주도권이 넘어오므로 find의 member는 삭제됨
-		// 자바스크립트에서도 동일하게 실행안되는 예제
-		
-		// 람다식 메소드여서 스택에서 새롭게 넘어가서 실행되기 때문에 상위의 맴버가 초기화되서 사라져 맴버를 불러오지 못함
-		// 새로운 블럭으로 불러와짐
-
-//			storage.forEach(m -> {
-//				if(m.getNo().equals(no)) {
-//					member = m;
-//				}
-//			});
-//		}
-		
-//		if(no != null) { // 강사님과 학생들은 에러가 뜨는데 나는 아래 코드가 에러가 안뜸, 비교 분석하기
-//			storage.forEach(m -> {
-//				if(m.getNo().equals(no)) {
-//					member = m;
-//				}
-//			}
-//		);
-		
-		return member;
-	}
-	
-	@Override
-	public void update(Member member) {
-		int idx = -1;
-		
-		for(int i = 0; i < storage.size(); i++) {
-			Member m = storage.get(i);
-			if(m.getNo().equals(member.getNo())) {
-				idx = i;
-				break; // search 인덱스 구성 짜는거랑 비슷함
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		storage.set(idx, member);
+		
+		return rows;
 	}
 	
 	@Override
 	public void remove(String no) {
-		// 별도의 개체가 아닌 스토리지에 붙어있는 주머니 개념으로 인덱스를 내부적으로 처리해 오류를 방지할 수 있음 / 컨트롤+쉬프트 O로 연동 필요
 		no = "2025-" + no;
-		Iterator<Member> ie = storage.iterator();
+		Iterator<MemberVo> ie = storage.iterator();
 		while(ie.hasNext()) {
-			Member member = ie.next();
-			if(member.getNo().equals(no)) {
+			MemberVo memeber = ie.next();
+			if(memeber.getNo().equals(no)) {
 				ie.remove();
-				break; // 재정비 작업은 알아서 작업 진행, remove로 직접 삭제보다는 이터레이터로 삭제 진행
+				break;
 			}
 		}
 	}
-
+	
+	
+	@Override
+	public void update(MemberVo member) {
+		int idx = -1;
+		for(int i=0; i<storage.size();i++) {
+			MemberVo m = storage.get(i);
+			if(m.getNo().equals(member.getNo())) {
+				idx = i;
+				break;
+			}
+		}
+		
+		storage.set(idx, member);
+	}
+	
+	
+	@Override
+	public MemberVo find(String mid) {
+		MemberVo member = null;
+		String sql = """
+				select mid, name, department, kor, eng, math, mdate
+					from score_member
+					where mid = ?
+				""";
+		try {
+			getPreparedStatement(sql);
+			pstmt.setString(1, mid);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				member = new MemberVo();
+				member.setMid(rs.getString(1));
+				member.setName(rs.getString(2));
+				member.setDepartment(rs.getString(3));
+				member.setKor(rs.getInt(4));
+				member.setEng(rs.getInt(5));
+				member.setMath(rs.getInt(6));
+				member.setMdate(rs.getString(7));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return member;
+	}
+	
+	@Override
+	public List<MemberVo> findAll() {
+		List<MemberVo> list = new ArrayList<MemberVo>();
+		String sql = """
+				select row_number() over() as rno, 
+					mid, name, department, kor, eng, math, mdate
+					from score_member
+				""";
+		try {
+			getPreparedStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				MemberVo member = new MemberVo();
+				member.setRno(rs.getInt(1));
+				member.setMid(rs.getString(2));
+				member.setName(rs.getString(3));
+				member.setDepartment(rs.getString(4));
+				member.setKor(rs.getInt(5));
+				member.setEng(rs.getInt(6));
+				member.setMath(rs.getInt(7));
+				member.setMdate(rs.getString(8));
+				
+				list.add(member);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public int getCount() {
+		int rows = 0;
+		String sql = "select count(*) from score_member";
+		
+		try {
+			getPreparedStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) rows = rs.getInt(1);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return rows;
+	}
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
